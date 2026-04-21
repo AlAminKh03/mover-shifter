@@ -4,27 +4,41 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { SocialLinks } from "@/components/SocialLinks";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TopBar } from "@/components/TopBar";
 import { Toaster } from "@/components/ui/toaster";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Figtree, Syne } from "next/font/google";
+
+import { SITE } from "@/config/site";
 
 import GoogleAnalytics from "./_components/GoogleAnalytics";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = Figtree({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fontDisplay = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://qatarfurnituredecor.com"),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Qatar Furniture & Decor Services | Luxury Furniture in Qatar",
-    template: "%s | Qatar Furniture & Decor",
+    default: `${SITE.name} | Home & office moves in Doha, Qatar`,
+    template: `%s | ${SITE.name}`,
   },
   description:
-    "Premium furniture and home decor in Qatar. Explore our collection of luxury furniture, modern decorations, and interior design services in Doha, Qatar.",
+    "Qatar Moving & Shifting: surveyed relocations, disciplined packing, and clear timelines — plus optional furniture, curtains, and flooring when your next chapter needs more than transport.",
   keywords:
-    "Qatar Furniture Decor, qatarfurnituredecor, qatar furniture, furniture in qatar, home decor qatar, luxury furniture doha, majlish, premium furniture, sofa, interior design qatar, furniture store qatar, أثاث قطر, ديكور منزلي قطر, متجر أثاث في قطر, أثاث فاخر الدوحة, furniture al waab, furniture the pearl qatar, furniture lusail, اثاث الدوحة, اثاث اللؤلؤة قطر, اثاث لوسيل, custom furniture qatar, modern furniture qatar, office furniture qatar, bedroom furniture qatar, living room furniture qatar, dining room sets qatar, outdoor furniture qatar",
-  category: "furniture, home decor, interior design, qatar business",
+    "moving company Qatar, movers Doha, villa relocation Qatar, office shifting Doha, furniture movers Qatar, packing service Qatar, home moving Lusail, Pearl Qatar movers, shifting service Qatar, نقل عفش قطر, نقل اثاث الدوحة, furniture upholstery Qatar, curtains installation Qatar",
+  category: "moving, relocation, logistics, Qatar business",
   verification: {
     google: "wuWIEoRpkPuTjhHF6OVoAPH5lxltE5qq5qeKfgC-7fs",
   },
@@ -36,34 +50,34 @@ export const metadata: Metadata = {
     "property:fb:app_id": "1234567890",
   },
   alternates: {
-    canonical: "https://qatarfurnituredecor.com",
+    canonical: SITE.url,
     languages: {
-      "en-US": "https://qatarfurnituredecor.com",
-      "ar-QA": "https://qatarfurnituredecor.com/ar",
+      "en-US": SITE.url,
+      "ar-QA": `${SITE.url}/ar`,
     },
   },
   openGraph: {
     type: "website",
-    title: "Qatar Furniture & Decor Services | Luxury Furniture in Qatar",
+    title: `${SITE.name} | Moves & shifting in Qatar`,
     description:
-      "Premium furniture and home decor in Qatar. Explore our collection of luxury furniture, modern decorations, and interior design services in Doha, Qatar.",
-    url: "https://qatarfurnituredecor.com",
-    siteName: "Qatar Furniture & Decor",
+      "Residential and office moves, packing, and safe transport — plus furniture making, upholstery, and decor services in Doha, Qatar.",
+    url: SITE.url,
+    siteName: SITE.name,
     images: [
       {
         url: "https://qatarfurnituredecor.com/social.jpg",
         width: 1200,
         height: 630,
-        alt: "Qatar Furniture & Decor Services",
+        alt: `${SITE.name} — Qatar`,
       },
     ],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Qatar Furniture & Decor | Luxury Furniture in Qatar",
+    title: `${SITE.name} | Movers in Qatar`,
     description:
-      "Premium furniture and home decor in Qatar. Explore our collection of luxury furniture, modern decorations, and interior design services.",
+      "Moving, packing, and shifting across Qatar — with full furniture and interior support when you need it.",
     images: ["/social.jpg"],
     creator: "@qatarfurniture",
   },
@@ -110,10 +124,10 @@ export const metadata: Metadata = {
       sizes: "180x180",
     },
   },
-  applicationName: "Qatar Furniture Decor",
-  authors: [{ name: "Qatar Furniture Decor" }],
+  applicationName: SITE.shortName,
+  authors: [{ name: SITE.name }],
   generator: "Next.js",
-  publisher: "Qatar Furniture Decor",
+  publisher: SITE.name,
   formatDetection: {
     telephone: true,
     address: true,
@@ -131,7 +145,9 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={inter.className}>
+      <body
+        className={`${fontSans.variable} ${fontDisplay.variable} ${fontSans.className} flex min-h-screen flex-col bg-background`}
+      >
         <GoogleAnalytics GA_MEASUREMENT_ID="G-934R2JYRD8" />
         <ThemeProvider
           attribute="class"
@@ -139,8 +155,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main>{children}</main>
+          <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm">
+            <TopBar />
+            <Navbar />
+          </div>
+          <main className="flex min-h-0 w-full flex-1 flex-col">
+            {children}
+          </main>
           <Footer />
           <SocialLinks />
           <ContactButtons />
@@ -152,19 +173,19 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "@id": "https://qatarfurnituredecor.com",
-              name: "Qatar Furniture Decor",
+              "@type": ["MovingCompany", "LocalBusiness"],
+              "@id": `${SITE.url}#business`,
+              name: SITE.name,
               image: {
                 "@type": "ImageObject",
-                url: "https://qatarfurnituredecor.com/social.jpg",
+                url: `${SITE.url}/social.jpg`,
                 width: 1200,
                 height: 630,
               },
               description:
-                "Premium furniture and home decor store in Qatar offering luxury furniture and interior design services.",
-              url: "https://qatarfurnituredecor.com",
-              telephone: "+97466631317",
+                "Moving, packing, and shifting services in Qatar — home and office relocations with optional furniture making, upholstery, curtains, and installation.",
+              url: SITE.url,
+              telephone: "+97400000000",
               priceRange: "$$$$",
               address: {
                 "@type": "PostalAddress",
@@ -234,26 +255,36 @@ export default function RootLayout({
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Custom Furniture Making",
-                    description: "Bespoke furniture design and manufacturing",
+                    name: "Home and villa moving",
+                    description:
+                      "Residential relocation, loading, transport, and placement in Qatar",
                   },
                 },
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Upholstery Services",
+                    name: "Office and commercial shifting",
                     description:
-                      "Professional furniture upholstery and reupholstery",
+                      "Business moves with scheduling to minimise downtime",
                   },
                 },
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Interior Design",
+                    name: "Packing and furniture transport",
                     description:
-                      "Complete interior design and decoration services",
+                      "Careful packing, unpacking, and delivery of furniture and goods",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Custom furniture and upholstery",
+                    description:
+                      "Bespoke furniture, reupholstery, curtains, and installation",
                   },
                 },
               ],

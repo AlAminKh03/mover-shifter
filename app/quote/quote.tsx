@@ -13,47 +13,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { quoteServices } from "@/config/quote-services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { Metadata } from "next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-export const metadata: Metadata = {
-  title: "Get a Free Quote | Qatar Furniture & Decor",
-  description:
-    "Request a free quote for our furniture and decor services in Qatar. We offer sofa making, upholstery, wallpaper installation, and more.",
-  openGraph: {
-    title: "Get a Free Quote | Qatar Furniture & Decor",
-    description:
-      "Request a free quote for our furniture and decor services in Qatar. We offer sofa making, upholstery, wallpaper installation, and more.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Get a Free Quote | Qatar Furniture & Decor",
-    description:
-      "Request a free quote for our furniture and decor services in Qatar. We offer sofa making, upholstery, wallpaper installation, and more.",
-  },
-};
-
-const services = [
-  "ARABIC MAJLIS MAKING",
-  "NEW SOFA MAKING",
-  "ALL UPHOLSTERY SERVICE",
-  "WARDROBE/CLOSET INSTALLATION",
-  "WALLPAPER INSTALLATION",
-  "BED/HEAD BOX INSTALLATION",
-  "BLIND INSTALLATION",
-  "CURTAIN INSTALLATION",
-  "DINING TABLE MAKING",
-  "DRESSING MIRROR MAKING",
-  "BARKIYA SPC",
-  "TV Stand Installation Services",
-  "BEDROOM SETUP",
-  "Others",
-] as const;
+const services = quoteServices;
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -178,11 +145,13 @@ export default function QuotePage() {
   return (
     <div className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Get a Free Quote</h1>
-          <p className="text-muted-foreground">
-            Select a service and provide your details. We&apos;ll get back to
-            you with a quote as soon as possible.
+        <div className="text-center mb-12 px-1">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+            Get a free quote
+          </h1>
+          <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Choose moving, packing, or an interior service — add your locations
+            and dates. We&apos;ll respond with next steps.
           </p>
         </div>
 

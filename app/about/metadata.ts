@@ -1,19 +1,19 @@
+import { SITE } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "About Qatar Furniture Decor | #1 Luxury Furniture Store in Doha, Qatar",
+  title: `About ${SITE.name} | Movers & interior services in Qatar`,
   description:
-    "Leading furniture store in Al Waab, Doha. Specializing in luxury majlis sets, Arabic style furniture, modern curtains, and custom cabinets. Serving The Pearl, Lusail, and all Qatar.",
+    "Learn about our team — trusted for residential and office moves in Qatar, with full furniture, upholstery, and decor support.",
   keywords:
-    "furniture store doha, majlis qatar الدوحة, اثاث قطر, furniture al waab, curtains qatar, cabinets doha, مجلس عربي قطر, اثاث منزلي الدوحة, furniture pearl qatar, furniture lusail, bedroom sets qatar, sofa sets doha, خزائن قطر, ستائر الدوحة, اثاث اللؤلؤة قطر",
+    "about movers Qatar, moving company Doha, relocation Qatar, furniture services Qatar, نقل عفش قطر",
   openGraph: {
-    title: "About Qatar Furniture Decor | Premium Furniture Store in Qatar",
+    title: `About ${SITE.name}`,
     description:
-      "Discover our extensive collection of luxury furniture in Qatar. Specializing in majlis sets, curtains, cabinets, and premium home decor solutions.",
+      "Moving and shifting across Qatar — plus the craftsmanship to finish your space.",
     images: [
       {
-        url: "https://qatarfurnituredecor.com/about-og-image.jpg",
+        url: `${SITE.url}/social.jpg`,
         width: 1200,
         height: 630,
       },
@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     type: "website",
   },
   alternates: {
-    canonical: "https://qatarfurnituredecor.com/about",
+    canonical: `${SITE.url}/about`,
     languages: {
-      "ar-QA": "/ar/about",
-      "en-QA": "/about",
+      "ar-QA": `${SITE.url}/ar/about`,
+      "en-QA": `${SITE.url}/about`,
     },
   },
 };

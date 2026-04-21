@@ -7,9 +7,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-// Define categories based on your folder structure
 const categories = [
   "All",
+  "Moving",
   "Wardrobe",
   "TV Table",
   "Carpet",
@@ -18,8 +18,17 @@ const categories = [
   "Majlish",
 ] as const;
 
-// Define work items based on your folder structure
 const workItems = [
+  {
+    title: "Villa relocation — Lusail",
+    category: "Moving",
+    description:
+      "Full pack, load, and delivery — coordinated access and placement",
+    images: [
+      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=85&w=1600",
+    ],
+    location: "Lusail, Qatar",
+  },
   {
     title: "Modern Sofa Reupholstery",
     category: "Sofa",
@@ -87,16 +96,15 @@ const workItems = [
     description:
       "Custom Majlish with premium materials and traditional elements",
     images: [
-      "sofa/sofa-living-room2.jpg",
-      "sofa/sofa-living-room-3.jpg",
-      "sofa/sofa-living-room-4.jpg",
-      "sofa/sofa-living-room-5.jpg",
-      "sofa/sofa-living-room-6.jpg",
-      "sofa/sofa-living-room-9.jpg",
+      "/sofa/sofa-living-room2.jpg",
+      "/sofa/sofa-living-room-3.jpg",
+      "/sofa/sofa-living-room-4.jpg",
+      "/sofa/sofa-living-room-5.jpg",
+      "/sofa/sofa-living-room-6.jpg",
+      "/sofa/sofa-living-room-9.jpg",
     ],
     location: "The Pearl, Doha",
   },
-  // Add more items based on your actual images...
 ];
 
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -118,7 +126,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           alt="Project image"
           fill
           className="object-contain"
-          sizes="90vw"
+          sizes="(max-width: 768px) 90vw, 85vw"
         />
       </div>
 
@@ -164,31 +172,31 @@ export default function WorkPage() {
 
   return (
     <div className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="layout-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold mb-4">Our Work</h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Explore our portfolio of custom furniture, curtains, and interior
-            solutions. Each project showcases our commitment to quality and
-            attention to detail.
+          <h1 className="font-display text-4xl font-bold mb-4">Our work</h1>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Moves, installs, and interiors — a sample of projects we have
+            delivered across Qatar. Filter by category to browse.
           </p>
         </motion.div>
 
         {/* Category Filter */}
-        <div className="flex justify-center gap-4 mb-12 flex-wrap">
+        <div className="flex justify-center gap-2 sm:gap-3 mb-12 flex-wrap px-1">
           {categories.map((category) => (
             <button
               key={category}
+              type="button"
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full transition-colors ${
+              className={`min-h-11 px-4 py-2 rounded-full text-sm font-medium transition-colors touch-manipulation ${
                 selectedCategory === category
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-accent hover:bg-accent/80"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-accent hover:bg-accent/80 text-foreground"
               }`}
             >
               {category}
@@ -200,19 +208,21 @@ export default function WorkPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredWork.map((work, index) => (
             <motion.div
-              key={index}
+              key={work.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden border-border/80">
                 <Dialog>
-                  <DialogTrigger className="w-full">
-                    <div className="aspect-video relative overflow-hidden">
+                  <DialogTrigger className="w-full text-left">
+                    <div className="aspect-video relative overflow-hidden bg-muted">
                       <Image
                         src={work.images[0]}
                         alt={work.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading={index < 6 ? "eager" : "lazy"}
                         className="object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
@@ -222,7 +232,9 @@ export default function WorkPage() {
                   </DialogContent>
                 </Dialog>
                 <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-1">{work.title}</h3>
+                  <h3 className="font-display font-semibold text-lg mb-1">
+                    {work.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground mb-2">
                     {work.description}
                   </p>

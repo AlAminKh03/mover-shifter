@@ -1,5 +1,6 @@
 "use client";
 
+import { SITE } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -20,7 +21,7 @@ export default function AboutPage() {
       icon: <History className="h-8 w-8 text-primary" />,
       title: "Established 2008",
       description:
-        "Over 15 years of excellence in furniture and decor services in Qatar",
+        "Over 15 years serving Qatar — today focused on moves, packing, and full interior delivery",
     },
     {
       icon: <Trophy className="h-8 w-8 text-primary" />,
@@ -30,9 +31,9 @@ export default function AboutPage() {
     },
     {
       icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Expert Team",
+      title: "Expert team",
       description:
-        "Skilled professionals with years of experience in furniture making and design",
+        "Coordinated crews for relocation plus carpenters and installers for fit-out work",
     },
     {
       icon: <HandshakeIcon className="h-8 w-8 text-primary" />,
@@ -42,9 +43,9 @@ export default function AboutPage() {
     },
     {
       icon: <Target className="h-8 w-8 text-primary" />,
-      title: "Custom Solutions",
+      title: "Custom solutions",
       description:
-        "Tailored furniture and decor solutions to match your unique style",
+        "Tailored move plans and optional furniture, curtains, and flooring packages",
     },
     {
       icon: <Award className="h-8 w-8 text-primary" />,
@@ -56,7 +57,7 @@ export default function AboutPage() {
 
   return (
     <div className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="layout-container">
         {/* About Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -64,14 +65,13 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h1 className="text-4xl font-bold mb-6">
-            About Qatar Furniture Decor
+          <h1 className="font-display text-4xl font-bold mb-6">
+            About {SITE.name}
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            Qatar Furniture Decor is a premier furniture and interior solutions
-            provider in Qatar. With over 15 years of experience, we specialize
-            in custom furniture, upholstery, curtains, and comprehensive
-            interior decoration services.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
+            We help families and businesses relocate with confidence across
+            Qatar — and we stay with you for custom furniture, upholstery,
+            curtains, and installation when your new space needs finishing.
           </p>
         </motion.div>
 
@@ -89,11 +89,10 @@ export default function AboutPage() {
                     <Target className="h-6 w-6 text-primary" />
                     Our Mission
                   </h2>
-                  <p className="text-muted-foreground">
-                    To provide exceptional furniture and decor solutions that
-                    transform spaces and exceed customer expectations through
-                    quality craftsmanship, innovative design, and outstanding
-                    service.
+                  <p className="text-muted-foreground leading-relaxed">
+                    To deliver dependable moving and shifting services — with
+                    optional interior craftsmanship — so every handover feels
+                    complete and stress-free.
                   </p>
                 </CardContent>
               </Card>
@@ -110,10 +109,10 @@ export default function AboutPage() {
                     <HeartHandshake className="h-6 w-6 text-primary" />
                     Our Vision
                   </h2>
-                  <p className="text-muted-foreground">
-                    To be Qatar&apos;s leading furniture and decor solution
-                    provider, known for our commitment to excellence, innovative
-                    designs, and customer satisfaction.
+                  <p className="text-muted-foreground leading-relaxed">
+                    To be Qatar&apos;s go-to partner for relocations and
+                    interior finishing — known for punctual crews, careful
+                    handling, and lasting workmanship.
                   </p>
                 </CardContent>
               </Card>

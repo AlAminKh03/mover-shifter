@@ -1,28 +1,29 @@
+import { SITE } from "@/config/site";
 import { Metadata } from "next";
 import QuotePage from "./quote";
 
 export const metadata: Metadata = {
-  title: "Get a Free Quote for Furniture & Decor Services in Qatar",
+  title: `Get a quote | ${SITE.name}`,
   description:
-    "Request a personalized quote for premium furniture and decor services in Qatar. Custom sofas, upholstery, curtains, and interior design solutions.",
+    "Request a quote for home or office moves, packing, transport, or furniture and interior services in Qatar.",
   openGraph: {
-    title: "Get a Free Quote for Furniture & Decor Services in Qatar",
+    title: `Get a quote | ${SITE.name}`,
     description:
-      "Request a personalized quote for premium furniture and decor services in Qatar. Custom sofas, upholstery, curtains, and interior design solutions.",
+      "Moving, packing, and shifting — plus upholstery, curtains, and installation when you need them.",
     images: [
       {
-        url: "https://qatarfurnituredecor.com/social.jpg",
+        url: `${SITE.url}/social.jpg`,
         width: 1200,
         height: 630,
-        alt: "Qatar Furniture & Decor Services Quote",
+        alt: `${SITE.name} quote`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Get a Free Quote | Qatar Furniture & Decor",
+    title: `Get a quote | ${SITE.name}`,
     description:
-      "Request a free quote for our furniture and decor services in Qatar. We offer sofa making, upholstery, wallpaper installation, and more.",
+      "Moves and interior services in Doha and across Qatar — tell us what you need.",
   },
 };
 

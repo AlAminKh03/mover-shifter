@@ -1,6 +1,6 @@
 {
-  "name": "Qatar Furniture & Decor",
-  "short_name": "Qatar Furniture",
+  "name": "Qatar Moving & Shifting",
+  "short_name": "QMS Qatar",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -23,7 +23,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#ea580c",
+  "background_color": "#faf8f5",
   "display": "standalone"
 }

@@ -111,6 +111,8 @@ const Carousel = React.forwardRef<
         return;
       }
 
+      /* Embla: sync selected slide to React state; not a cascading-render bug */
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- onSelect wires Embla events to setCanScroll*
       onSelect(api);
       api.on('reInit', onSelect);
       api.on('select', onSelect);

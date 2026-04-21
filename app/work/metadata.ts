@@ -1,21 +1,22 @@
+import { SITE } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our Work | Interior Solutions Portfolio",
+  title: `Our work | ${SITE.name}`,
   description:
-    "Explore our portfolio of custom furniture, curtains, and interior solutions in Qatar. View our completed projects including wardrobes, TV tables, carpets, curtains, sofas, and majlis designs.",
+    "Gallery of moves, interiors, and installs — furniture, curtains, flooring, and more across Qatar.",
   keywords:
-    "interior design portfolio, furniture projects, Qatar interior work, custom furniture, curtain installation, sofa reupholstery, wardrobe design, carpet installation, majlis design",
+    "moving projects Qatar, interior portfolio Doha, furniture installation Qatar, curtain projects Qatar",
   openGraph: {
-    title: "Our Work | Interior Solutions Portfolio",
+    title: `Our work | ${SITE.name}`,
     description:
-      "Explore our portfolio of custom furniture, curtains, and interior solutions in Qatar.",
+      "Recent projects: relocations and interior work completed by our team.",
     images: [
       {
         url: "/social.jpg",
         width: 1200,
         height: 630,
-        alt: "Interior Solutions Portfolio",
+        alt: `${SITE.name} portfolio`,
       },
     ],
     locale: "en_US",
@@ -23,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Our Work | Interior Solutions Portfolio",
+    title: `Our work | ${SITE.name}`,
     description:
-      "Explore our portfolio of custom furniture, curtains, and interior solutions in Qatar.",
+      "Moves and interior projects — portfolio highlights from Qatar.",
     images: ["/social.jpg"],
   },
 };

@@ -2,50 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Theme: “Shift” — warm paper, ink text, amber signal (distinct from prior teal).
+  Replace imagery via SlideData + page sections; tokens stay centralized here.
+*/
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 24 9% 27%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --background: 40 33% 97%;
+    --foreground: 240 35% 12%;
+    --card: 40 40% 99%;
+    --card-foreground: 240 35% 12%;
+    --popover: 40 40% 99%;
+    --popover-foreground: 240 35% 12%;
+    --primary: 28 92% 48%;
+    --primary-foreground: 240 35% 8%;
+    --secondary: 35 25% 92%;
+    --secondary-foreground: 240 30% 15%;
+    --muted: 35 18% 92%;
+    --muted-foreground: 240 12% 38%;
+    --accent: 28 45% 94%;
+    --accent-foreground: 28 80% 22%;
+    --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 24 9% 27%;
-    --radius: 0.5rem;
+    --border: 35 16% 86%;
+    --input: 35 16% 86%;
+    --ring: 28 92% 48%;
+    --radius: 1rem;
+    --chart-1: 28 92% 48%;
+    --chart-2: 240 35% 35%;
+    --chart-3: 35 25% 70%;
+    --chart-4: 200 60% 45%;
+    --chart-5: 15 80% 55%;
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 24 9% 57%;
-    --primary-foreground: 144 9.8% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 24 9% 57%;
+    --background: 240 28% 8%;
+    --foreground: 40 20% 96%;
+    --card: 240 26% 11%;
+    --card-foreground: 40 20% 96%;
+    --popover: 240 28% 9%;
+    --popover-foreground: 40 20% 96%;
+    --primary: 38 100% 54%;
+    --primary-foreground: 240 35% 8%;
+    --secondary: 240 22% 16%;
+    --secondary-foreground: 40 20% 96%;
+    --muted: 240 18% 18%;
+    --muted-foreground: 35 12% 68%;
+    --accent: 28 35% 18%;
+    --accent-foreground: 38 95% 88%;
+    --destructive: 0 62% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 18% 20%;
+    --input: 240 18% 20%;
+    --ring: 38 100% 54%;
+    --chart-1: 38 100% 54%;
+    --chart-2: 200 70% 55%;
+    --chart-3: 35 40% 60%;
+    --chart-4: 280 50% 60%;
+    --chart-5: 15 85% 55%;
   }
 }
 
@@ -54,11 +68,28 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground relative min-h-screen;
+    @apply text-foreground relative min-h-screen antialiased;
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(
+        ellipse 100% 60% at 50% -15%,
+        hsl(var(--primary) / 0.11),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 80% 50% at 100% 50%,
+        hsl(240 35% 20% / 0.04),
+        transparent 50%
+      );
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    @apply tracking-tight;
   }
 }
 
-/* Update the blur effect styles */
 .blur-overlay {
   position: relative;
 }
@@ -69,7 +100,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50%; /* Show half of the content */
+  height: 50%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -89,5 +120,15 @@
       hsl(var(--background) / 0.5) 30%,
       hsl(var(--background) / 0.95) 100%
     );
+  }
+}
+
+@layer utilities {
+  .layout-container {
+    @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10;
+  }
+
+  .layout-section {
+    @apply py-14 md:py-20 lg:py-24;
   }
 }

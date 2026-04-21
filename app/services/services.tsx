@@ -8,15 +8,63 @@ import {
 } from "@/lib/animations";
 import { motion } from "framer-motion";
 import {
+  Building2,
+  CarFront,
   Hammer,
   Home,
+  Package,
   PencilRuler,
   Scissors,
   Settings,
   Sofa,
+  Truck,
 } from "lucide-react";
 
 const services = [
+  {
+    icon: <Truck className="h-12 w-12 text-primary" />,
+    title: "Home & villa moves",
+    description:
+      "Full or partial relocations with blanket-wrapped furniture, appliance handling, and room-by-room placement.",
+    features: [
+      "Pre-move survey",
+      "Access & lift planning",
+      "Unpacking support",
+    ],
+  },
+  {
+    icon: <Building2 className="h-12 w-12 text-primary" />,
+    title: "Office & retail moves",
+    description:
+      "Phased packing, labelled inventory, and desk-to-desk delivery to reduce business downtime.",
+    features: [
+      "After-hours slots",
+      "Workstation breakdown & setup",
+      "Coordination with building management",
+    ],
+  },
+  {
+    icon: <Package className="h-12 w-12 text-primary" />,
+    title: "Packing & materials",
+    description:
+      "Boxes, bubble wrap, and wardrobe cartons — we pack to survive Qatar roads and stairs.",
+    features: [
+      "Fragile & glass packing",
+      "Crating for art or glass tops",
+      "Debris removal",
+    ],
+  },
+  {
+    icon: <CarFront className="h-12 w-12 text-primary" />,
+    title: "Transport & delivery",
+    description:
+      "Right-sized vehicles for single pieces, bulk delivery, or last-mile drop-offs.",
+    features: [
+      "Load securing",
+      "Blankets & straps",
+      "Proof of delivery walkthrough",
+    ],
+  },
   {
     icon: <PencilRuler className="h-12 w-12 text-primary" />,
     title: "Custom Furniture Design",
@@ -96,17 +144,21 @@ export default function ServicesPage() {
       initial="hidden"
       animate="show"
       variants={staggerContainer}
-      className="container mx-auto py-16 px-4"
+      className="layout-container layout-section"
     >
       <motion.div className="text-center mb-16" variants={staggerItem}>
-        <motion.h1 variants={fadeIn} className="text-4xl font-bold mb-4">
-          Our Services
+        <motion.h1
+          variants={fadeIn}
+          className="font-display text-4xl font-bold mb-4"
+        >
+          Our services
         </motion.h1>
         <motion.p
           variants={fadeIn}
-          className="text-muted-foreground max-w-2xl mx-auto"
+          className="text-muted-foreground max-w-2xl mx-auto leading-relaxed"
         >
-          Discover our comprehensive range of furniture and curtain services
+          Moving and shifting first — then furniture, curtains, flooring, and
+          care for everything you install.
         </motion.p>
       </motion.div>
 

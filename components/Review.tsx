@@ -7,7 +7,7 @@ function LetterAvatar({ name }: { name: string }) {
   const firstLetter = name.charAt(0).toUpperCase();
 
   return (
-    <div className="w-12 h-12 rounded-full bg-zinc-800 text-white flex items-center justify-center text-lg font-semibold">
+    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-semibold">
       {firstLetter}
     </div>
   );
@@ -20,8 +20,8 @@ export function Review({ name, text }: ReviewProps) {
         <LetterAvatar name={name} />
       </div>
       <div>
-        <h3 className="font-semibold">{name}</h3>
-        <p className="mt-2 text-gray-600">{text}</p>
+        <h3 className="font-display font-semibold">{name}</h3>
+        <p className="mt-2 text-muted-foreground text-sm leading-relaxed">{text}</p>
       </div>
     </div>
   );

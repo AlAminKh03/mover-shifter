@@ -7,7 +7,7 @@ export function WhatsAppButton() {
   // Format: Remove spaces and any special characters, just keep the numbers
   const whatsappNumber = "97466631317"; // Removed the + and spaces
   const message = encodeURIComponent(
-    "Hi! I'm interested in your furniture services."
+    "Hi! I'd like a quote for a move / shifting in Qatar."
   );
 
   return (
