@@ -6,7 +6,6 @@ import { SocialLinks } from "@/components/SocialLinks";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TopBar } from "@/components/TopBar";
 import { Toaster } from "@/components/ui/toaster";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import type { Metadata } from "next";
 import { Figtree, Syne } from "next/font/google";
 
@@ -165,7 +164,6 @@ export default function RootLayout({
           <Footer />
           <SocialLinks />
           <ContactButtons />
-          <WhatsAppButton />
           <Toaster />
         </ThemeProvider>
         <script
@@ -185,7 +183,7 @@ export default function RootLayout({
               description:
                 "Moving, packing, and shifting services in Qatar — home and office relocations with optional furniture making, upholstery, curtains, and installation.",
               url: SITE.url,
-              telephone: "+97400000000",
+              telephone: SITE.phoneE164,
               priceRange: "$$$$",
               address: {
                 "@type": "PostalAddress",

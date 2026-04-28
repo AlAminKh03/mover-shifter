@@ -1,740 +1,570 @@
 "use client";
+
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { ValueBand } from "@/components/home/ValueBand";
-import { Review } from "@/components/Review";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SITE } from "@/config/site";
 import { motion } from "framer-motion";
 import {
+  ArrowRight,
+  ArrowUpRight,
   BadgeCheck,
   Building2,
-  ChevronLeft,
-  ChevronRight,
   Clock,
-  HeartHandshake,
   Home as HomeIcon,
+  MessageCircle,
   Package,
-  Palette,
-  PencilRuler,
+  Phone,
+  Quote,
   Scissors,
+  ShieldCheck,
   Sofa,
   Sparkles,
+  Star,
   Truck,
-  Wrench,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
+/* -------------------------------------------------------------------------- */
+/*                                   DATA                                     */
+/* -------------------------------------------------------------------------- */
+
+const moveServices = [
+  {
+    icon: HomeIcon,
+    title: "Villa & home moves",
+    text: "Full or partial villa relocations across compounds, towers, and standalone homes.",
+    tag: "Most booked",
   },
-};
+  {
+    icon: Building2,
+    title: "Office shifting",
+    text: "Phased moves, after-hours options, IT-safe handling, desk-to-desk delivery.",
+  },
+  {
+    icon: Package,
+    title: "Pack & unpack",
+    text: "Materials supplied. Fragile, glass, art — wrapped, boxed, and unpacked at the other end.",
+  },
+  {
+    icon: Truck,
+    title: "Furniture transport",
+    text: "Single piece or full lorry. Last-mile delivery, lift coordination, load securing.",
+  },
+];
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
+const interiorServices = [
+  {
+    icon: Sofa,
+    title: "Custom sofas & majlis",
+    text: "Made to measure. Frames, foam, fabric, leather — built for Qatar living.",
+    tag: "Bespoke",
+  },
+  {
+    icon: Scissors,
+    title: "Curtains & blinds",
+    text: "Fabric library, motorised tracks, professional install and dressing.",
+  },
+  {
+    icon: Sparkles,
+    title: "SPC & wood flooring",
+    text: "Waterproof systems, subfloor prep, clean handover. Supplied and fitted.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Reupholstery",
+    text: "Bring tired furniture back to factory-new. Frame check, refoam, refabric.",
+  },
+];
 
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+/**
+ * REPLACE-IMAGES: every project `image` is an Unsplash placeholder, themed to category.
+ * Swap with real Qatar work when ready.
+ */
+const projects = [
+  {
+    title: "High-rise pack & move",
+    location: "West Bay",
+    category: "Moving",
+    // Stacked moving boxes in a bright apartment
+    image:
+      "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&q=85&w=1400",
+  },
+  {
+    title: "Majlis curtain install",
+    location: "The Pearl",
+    category: "Curtains",
+    // Elegant curtains in a designed living room
+    image:
+      "https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?auto=format&fit=crop&q=85&w=900",
+  },
+  {
+    title: "Custom TV cabinet",
+    location: "Lusail",
+    category: "Furniture",
+    // Modern living room with TV media unit
+    image:
+      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=85&w=900",
+  },
+  {
+    title: "Walk-in wardrobe",
+    location: "Al Wakrah",
+    category: "Furniture",
+    // Built-in wardrobe / closet interior
+    image:
+      "https://images.unsplash.com/photo-1558211583-d26f610c1eb1?auto=format&fit=crop&q=85&w=900",
+  },
+  {
+    title: "Family room sofa set",
+    location: "Al Rayyan",
+    category: "Upholstery",
+    // Premium sofa in a warm living room
+    image:
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=85&w=900",
+  },
+  {
+    title: "Barkiya SPC flooring",
+    location: "Doha",
+    category: "Flooring",
+    // Wood / SPC flooring close-up in a finished room
+    image:
+      "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&q=85&w=900",
+  },
+];
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
+const testimonials = [
+  {
+    name: "Khalid Al Muhannadi",
+    role: "Villa relocation · West Bay",
+    text: "Two days, villa to villa, labels on every carton. Crew showed up when they said they would — rare in this town.",
+    rating: 5,
+  },
+  {
+    name: "Mohammed Al Naimi",
+    role: "Majlis + curtains · The Pearl",
+    text: "Same team did the move and the majlis fit-out. The room finally feels like ours, and we didn’t repeat ourselves once.",
+    rating: 5,
+  },
+  {
+    name: "Fatima Al Sayed",
+    role: "Reupholstery · Lusail",
+    text: "Sofa came back looking factory-new. They were honest about which fabrics would survive our kids.",
+    rating: 5,
+  },
+  {
+    name: "Ahmed Al Emadi",
+    role: "Retail unit move · Doha",
+    text: "Weekend move, shelves back up for Monday opening. Zero drama, zero damage.",
+    rating: 5,
+  },
+  {
+    name: "Maryam Al Thani",
+    role: "Interior designer · Doha",
+    text: "I keep sending clients here for SPC. Installs stay flat and quiet — that’s all I need.",
+    rating: 5,
+  },
+  {
+    name: "Sara Al Mansouri",
+    role: "Whole-house curtains · Al Khor",
+    text: "Tracks level, pleats even, hoovered after. Small things, big difference.",
+    rating: 5,
+  },
+];
 
-  const previousImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+const whyUs = [
+  {
+    icon: Clock,
+    title: "On-time, every time",
+    text: "We don’t double-book crews. The team that quoted you is the team that shows up.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Insured handling",
+    text: "Optional cover for high-value items. Documented inventory before and after.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Local knowledge",
+    text: "Compounds, tower lift booking, weekend rules — we know the access quirks.",
+  },
+  {
+    icon: Sparkles,
+    title: "One partner",
+    text: "Move, then furnish. Curtains, sofas, floors — same trust, same crew.",
+  },
+];
 
-  return (
-    <div className="relative">
-      <div className="aspect-video relative overflow-hidden rounded-lg">
-        <Image
-          src={images[currentImageIndex]}
-          alt="Project image"
-          fill
-          className="object-cover"
-        />
-      </div>
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={previousImage}
-            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-        </>
-      )}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentImageIndex ? "bg-white" : "bg-white/50"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
+const trustLocations = [
+  "West Bay villas",
+  "Lusail compounds",
+  "Pearl Qatar",
+  "Al Wakrah",
+  "Al Rayyan",
+  "Al Khor",
+  "Doha CBD",
+  "Education City",
+];
+
+/* -------------------------------------------------------------------------- */
+/*                                   PAGE                                     */
+/* -------------------------------------------------------------------------- */
 
 export default function Home() {
-  const serviceGroups = [
-    {
-      title: "Moving & shifting",
-      subtitle:
-        "Scheduled crews, proper equipment, and clear communication from survey to handover.",
-      items: [
-        {
-          icon: <HomeIcon className="h-12 w-12 mb-4 text-primary" />,
-          title: "Home & villa moves",
-          description:
-            "Full or partial relocations for apartments and villas — careful handling of furniture, appliances, and fragile items.",
-          features: [
-            "Pre-move planning & survey",
-            "Floor and door protection",
-            "Placement at destination",
-          ],
-        },
-        {
-          icon: <Building2 className="h-12 w-12 mb-4 text-primary" />,
-          title: "Office & commercial",
-          description:
-            "Minimise downtime with phased packing, labelled inventory, and desk-to-desk delivery.",
-          features: [
-            "After-hours options",
-            "IT-friendly handling",
-            "Storage coordination",
-          ],
-        },
-        {
-          icon: <Package className="h-12 w-12 mb-4 text-primary" />,
-          title: "Packing & unpacking",
-          description:
-            "Materials supplied or bring your own — we wrap, box, and unpack so you can focus on settling in.",
-          features: [
-            "Fragile & glass packing",
-            "Wardrobe cartons",
-            "Unpack & debris removal",
-          ],
-        },
-        {
-          icon: <Truck className="h-12 w-12 mb-4 text-primary" />,
-          title: "Transport & delivery",
-          description:
-            "Right-sized vehicles for Qatar roads — single pieces, bulk delivery, or last-mile to your door.",
-          features: [
-            "Load securing & blankets",
-            "Lift / stair planning",
-            "Insured handling options",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Furniture & interior",
-      subtitle:
-        "When your space needs more than a move — the same team can design, build, and install.",
-      items: [
-        {
-          icon: <PencilRuler className="h-12 w-12 mb-4 text-primary" />,
-          title: "Custom furniture",
-          description:
-            "Bespoke pieces from dining tables to wardrobes — measured for your layout.",
-          features: [
-            "Design consultation",
-            "Premium materials",
-            "Fit & finish guarantee",
-          ],
-        },
-        {
-          icon: <Scissors className="h-12 w-12 mb-4 text-primary" />,
-          title: "Curtains & blinds",
-          description:
-            "Fabric selection through to professional installation and dressing.",
-          features: [
-            "Made-to-measure",
-            "Motorised options",
-            "Wide fabric library",
-          ],
-        },
-        {
-          icon: <Palette className="h-12 w-12 mb-4 text-primary" />,
-          title: "Wood & SPC flooring",
-          description:
-            "SPC, Barkiya PVC, and waterproof systems — supplied and fitted.",
-          features: [
-            "Subfloor assessment",
-            "Waterproof systems",
-            "Clean handover",
-          ],
-        },
-        {
-          icon: <Sofa className="h-12 w-12 mb-4 text-primary" />,
-          title: "Upholstery",
-          description:
-            "Reupholstery and cushion refresh — leather, fabric, and bespoke stitching.",
-          features: [
-            "Fabric sourcing",
-            "Leather work",
-            "Frame inspection",
-          ],
-        },
-      ],
-    },
-  ];
+  const [activeTab, setActiveTab] = useState<"moving" | "interior">("moving");
+  const services = activeTab === "moving" ? moveServices : interiorServices;
 
-  const testimonials = [
-    {
-      name: "Khalid Al Muhannadi",
-      role: "Villa relocation — West Bay",
-      content:
-        "Two days, villa to villa, labels on every carton. Crew showed up when they said they would — rare in this town.",
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: [],
-    },
-    {
-      name: "Mohammed Al Naimi",
-      role: "Villa Owner",
-      content:
-        "Majlis build and curtains afterwards — same team, same standards. The room finally feels like ours.",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: [
-        "/curtain/curtain1.jpg",
-        "/curtain/curtain2.jpg",
-        "/curtain/curtain3.jpg",
-      ],
-    },
-    {
-      name: "Fatima Al Sayed",
-      role: "Home Owner",
-      content:
-        "Reupholstery that looks factory-new. They were honest about which fabrics would survive our kids.",
-      image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: ["/sofa/sofa-living-room-3.jpg"],
-    },
-    {
-      name: "Ahmed Al Emadi",
-      role: "Business Owner",
-      content:
-        "Retail unit move over a weekend — shelves back up for Monday opening. Zero drama.",
-      image:
-        "https://images.unsplash.com/photo-1519085360753-af0119f7c576?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: [
-        "/cabinet/tv1.jpg",
-        "/cabinet/tv-cabinet2.jpg",
-        "/cabinet/tv-cabinet-3.jpg",
-      ],
-    },
-    {
-      name: "Maryam Al Thani",
-      role: "Interior Designer",
-      content:
-        "SPC installs for my clients stay flat and quiet — I keep sending them here.",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: [
-        "/carpet/carpet1.jpg",
-        "/carpet/carpet2.jpg",
-        "/carpet/carpet3.jpg",
-      ],
-    },
-    {
-      name: "Abdullah Al Kuwari",
-      role: "Property Developer",
-      content:
-        "Multiple units, wardrobes and kitchens — schedules actually match the Gantt for once.",
-      image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: ["/almira/almira1.jpg"],
-    },
-    {
-      name: "Sara Al Mansouri",
-      role: "Home Owner",
-      content:
-        "Whole-house curtains — tracks level, pleats even, and they hoovered after. Small thing, big difference.",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80",
-      rating: 5,
-      projectImages: [
-        "/curtain/curtain7.jpg",
-        "/curtain/curtain8.jpg",
-        "/curtain/curtain9.jpg",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      title: "High-rise pack & move",
-      image:
-        "https://images.unsplash.com/photo-1600566752355-3577003e8e7a?auto=format&fit=crop&q=85&w=1200",
-      category: "Moving",
-    },
-    {
-      title: "Luxury Curtain Design",
-      image: "/curtain/curtain1.jpg",
-      category: "Curtains",
-    },
-    {
-      title: "Modern TV Table",
-      image: "/cabinet/tv1.jpg",
-      category: "Table",
-    },
-    {
-      title: "Custom Wardrobe",
-      image: "/almira/almira1.jpg",
-      category: "Wardrobe",
-    },
-    {
-      title: "Premium Sofa",
-      image: "/sofa/sofa-living-room-3.jpg",
-      category: "Sofa",
-    },
-    {
-      title: "Barkiya SPC",
-      image: "/carpet/carpet1.jpg",
-      category: "Barkiya",
-    },
-    {
-      title: "Modern Curtain Design",
-      image: "/curtain/curtain4.jpg",
-      category: "Curtains",
-    },
-  ];
-
-  const [visibleTestimonials, setVisibleTestimonials] = useState(3);
-  const hasMoreTestimonials = visibleTestimonials < testimonials.length;
-
-  const loadMore = () => {
-    setVisibleTestimonials((prev) => Math.min(prev + 3, testimonials.length));
-  };
-
-  const beforeAfterWork = [
-    {
-      title: "Sofa Transformation",
-      category: "Sofa",
-      description: "Complete sofa reupholstery with premium fabric",
-      beforeImage: "/work/before-after/sofa/sofa-1-before.jpg",
-      afterImage: "/work/before-after/sofa/sofa-1-after.jpg",
-      location: "Pearl Qatar",
-    },
-    // Add 3-4 more showcase items
-  ];
+  const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
+    "Hi! I'd like a quote.",
+  )}`;
 
   return (
-    <div>
-      {/* 1. Hero Slider - First impression */}
+    <>
       <HeroSlider />
 
-      {/* 2. Value proposition — plan, pack, deliver */}
+      {/* ─────────────────────────  TRUST MARQUEE  ───────────────────────── */}
+      <section className="border-y border-border bg-background py-6">
+        <div className="layout-container">
+          <p className="mb-3 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Trusted across Qatar
+          </p>
+          <div className="relative overflow-hidden">
+            <div className="flex w-max gap-12 animate-marquee">
+              {[0, 1].map((dup) => (
+                <div key={dup} className="flex shrink-0 gap-12">
+                  {trustLocations.map((loc) => (
+                    <span
+                      key={loc + dup}
+                      className="font-display text-base font-semibold uppercase tracking-wider text-muted-foreground/70"
+                    >
+                      ✦ {loc}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <ValueBand />
 
-      {/* 3. Why Choose Us Cards - Build trust early */}
-      <section className="layout-section bg-accent">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="layout-container"
-        >
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold mb-4">
-              Why families and offices choose us
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Fast responses, careful handling, and crews who know Qatar&apos;s
-              compounds, towers, and villas.
-            </p>
-          </div>
+      {/* ─────────────────────────  SERVICES (TABS)  ─────────────────────── */}
+      <section className="layout-section bg-background">
+        <div className="layout-container">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-4">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                Our services
+              </p>
+              <h2 className="font-display mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                Two trades.
+                <br />
+                <span className="text-gradient-orange">One bill.</span>
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
+                Most clients call us for the move. Half of them keep us on for the
+                fit-out. Switch the tab to see why.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <Clock className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Fast Service</h3>
-                  <p className="text-muted-foreground">
-                    Quick response time and efficient service delivery. We value
-                    your time and ensure timely completion of projects.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <Sparkles className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">
-                    Premium Quality
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Using only the finest materials and expert craftsmanship to
-                    ensure lasting quality and beauty.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <HeartHandshake className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">
-                    Customer Satisfaction
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Dedicated to exceeding expectations with personalized
-                    service and attention to detail.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <Wrench className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Logistics mindset</h3>
-                  <p className="text-muted-foreground">
-                    Route planning, parking, and access sorted before trucks
-                    arrive — fewer surprises on moving day.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <Palette className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">One partner</h3>
-                  <p className="text-muted-foreground">
-                    Move first, then furnish — upholstery, curtains, and
-                    wardrobes from the same trusted team.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <Card className="relative overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-primary">
-                    <BadgeCheck className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Clear handover</h3>
-                  <p className="text-muted-foreground">
-                    Walkthrough at delivery, labelled rooms, and support if
-                    something needs adjusting after the move.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* 4. Our Services - Show what you offer */}
-      <section className="layout-section">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="layout-container"
-        >
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold mb-4">
-              What we offer
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Moving and shifting first — plus furniture, curtains, and
-              flooring when you need the full package.
-            </p>
-          </div>
-
-          <div className="space-y-14">
-            {serviceGroups.map((group) => (
-              <div key={group.title} className="space-y-6">
-                <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0">
-                  <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                    {group.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                    {group.subtitle}
-                  </p>
-                </div>
-                <motion.div
-                  variants={container}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+              <div className="mt-8 inline-flex rounded-full border border-border bg-muted p-1">
+                <button
+                  onClick={() => setActiveTab("moving")}
+                  className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                    activeTab === "moving"
+                      ? "bg-secondary text-white shadow-md"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
-                  {group.items.map((service) => (
-                    <motion.div key={service.title} variants={item}>
-                      <Card className="h-full hover:shadow-lg transition-shadow border-border/80">
-                        <CardHeader>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            className="flex justify-center"
-                          >
-                            {service.icon}
-                          </motion.div>
-                          <CardTitle className="text-center mb-2 font-display text-lg">
-                            {service.title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground text-center mb-4 text-sm leading-relaxed">
-                            {service.description}
-                          </p>
-                          <ul className="space-y-2">
-                            {service.features.map((feature, featureIndex) => (
-                              <motion.li
-                                key={featureIndex}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ delay: featureIndex * 0.1 }}
-                                viewport={{ once: true }}
-                                className="flex items-center gap-2 text-sm"
-                              >
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                                <span>{feature}</span>
-                              </motion.li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                  Moving & shifting
+                </button>
+                <button
+                  onClick={() => setActiveTab("interior")}
+                  className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                    activeTab === "interior"
+                      ? "bg-secondary text-white shadow-md"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Furniture & interior
+                </button>
               </div>
-            ))}
+
+              <div className="mt-8">
+                <Link
+                  href="/services"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                >
+                  Full service list
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8"
+            >
+              {services.map(({ icon: Icon, title, text, tag }) => (
+                <div
+                  key={title}
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl"
+                >
+                  {tag && (
+                    <span className="absolute right-4 top-4 rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                      {tag}
+                    </span>
+                  )}
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <h3 className="font-display mt-5 text-xl font-bold">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {text}
+                  </p>
+                  <Link
+                    href="/services"
+                    className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    Learn more <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              ))}
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* 5. Recent Work - Show proof of quality */}
-      <section className="layout-section bg-accent">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="layout-container"
-        >
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold mb-4">
-              Recent projects
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Moves, interiors, and installs — a snapshot of what we deliver
-              across Qatar.
-            </p>
+      {/* ─────────────────────────  PROJECTS  ────────────────────────────── */}
+      <section className="layout-section bg-secondary text-white">
+        <div className="layout-container">
+          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+            <div>
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                Recent work
+              </p>
+              <h2 className="font-display mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                Real moves.
+                <br />
+                <span className="text-gradient-orange">Real spaces.</span>
+              </h2>
+            </div>
+            <Link
+              href="/work"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white"
+            >
+              View full portfolio
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((p, i) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
+                key={p.title}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="group relative overflow-hidden rounded-lg"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className={`group relative overflow-hidden rounded-2xl ${
+                  i === 0
+                    ? "sm:col-span-2 sm:row-span-2 aspect-square"
+                    : "aspect-[4/3]"
+                }`}
               >
-                <div className="aspect-square relative">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-center text-white p-4">
-                      <h3 className="text-lg font-semibold mb-1">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-white/80">
-                        {project.category}
-                      </p>
-                    </div>
-                  </div>
+                {/* REPLACE-IMAGE: project showcase — final shoot should be real Qatar work */}
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/30 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <span className="inline-block rounded-full bg-primary/90 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
+                    {p.category}
+                  </span>
+                  <h3 className="font-display mt-2 text-xl font-bold text-white">
+                    {p.title}
+                  </h3>
+                  <p className="text-xs text-white/60">{p.location}</p>
+                </div>
+                <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white opacity-0 backdrop-blur-md transition-opacity group-hover:opacity-100">
+                  <ArrowUpRight className="h-4 w-4" />
                 </div>
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* 6. Testimonials - Social proof */}
-      <section className="layout-section">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="layout-container"
-        >
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold mb-4">
-              What our clients say
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              From full villa moves to upholstery and curtains — feedback from
-              across Qatar.
-            </p>
-          </div>
+      {/* ─────────────────────────  WHY US  ──────────────────────────────── */}
+      <section className="layout-section bg-background">
+        <div className="layout-container">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                Why us
+              </p>
+              <h2 className="font-display mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                Built on <span className="text-gradient-orange">repeat</span>{" "}
+                bookings.
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
+                We’d rather move you twice in five years than chase you for a
+                review. The result is a quieter sales pipeline — and a fuller
+                schedule.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {testimonials
-              .slice(0, visibleTestimonials)
-              .map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
+              {/* REPLACE-IMAGE: candid crew shot in Qatar — real shoot needed */}
+              <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1698917414969-feade59e3343?auto=format&fit=crop&q=85&w=1400"
+                  alt="Qatar Moving & Shifting crew at work"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/40 to-transparent" />
+                <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold backdrop-blur">
+                  <span className="flex h-2 w-2 rounded-full bg-green-500" />
+                  Booking now for next week
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+              {whyUs.map(({ icon: Icon, title, text }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-md"
                 >
-                  <Card className="h-full">
-                    <CardContent className="pt-6">
-                      <Review
-                        name={testimonial.name}
-                        text={testimonial.content}
-                      />
-                      <p className="text-sm text-muted-foreground ml-16 -mt-2">
-                        {testimonial.role}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display mt-4 text-lg font-bold">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {text}
+                  </p>
+                </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────  TESTIMONIALS  ────────────────────────── */}
+      <section className="layout-section bg-muted">
+        <div className="layout-container">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+              Reviews
+            </p>
+            <h2 className="font-display mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+              Word travels{" "}
+              <span className="text-gradient-orange">in compounds.</span>
+            </h2>
           </div>
 
-          {hasMoreTestimonials && (
-            <div className="mt-12 text-center">
-              <Button
-                onClick={loadMore}
-                variant="outline"
-                size="lg"
-                className="min-w-[200px] text-lg font-semibold hover:bg-primary hover:text-primary-foreground relative z-20"
+          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <motion.figure
+                key={t.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.1 }}
+                className="relative flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
               >
-                View All Reviews
+                <Quote
+                  className="absolute right-5 top-5 h-7 w-7 text-primary/15"
+                  aria-hidden
+                />
+                <div className="flex gap-0.5 text-primary">
+                  {Array.from({ length: t.rating }).map((_, idx) => (
+                    <Star key={idx} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="mt-4 font-display text-base font-medium leading-relaxed text-foreground">
+                  “{t.text}”
+                </blockquote>
+                <figcaption className="mt-5 border-t border-border pt-4">
+                  <p className="font-display text-sm font-bold">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────  FINAL CTA  ───────────────────────────── */}
+      <section className="relative overflow-hidden bg-secondary py-20 text-white sm:py-28">
+        <div className="absolute inset-0 bg-grid-dark opacity-20" aria-hidden />
+        <div
+          className="pointer-events-none absolute -right-32 top-1/2 h-[30rem] w-[30rem] -translate-y-1/2 rounded-full bg-primary/30 blur-[120px]"
+          aria-hidden
+        />
+        <div className="layout-container relative">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+              Ready when you are
+            </p>
+            <h2 className="font-display mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+              Let’s plan your{" "}
+              <span className="text-gradient-orange">next move.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+              Tell us your dates, address, and what needs to move. We’ll come
+              back within 48 hours with a clear plan and a fixed quote.
+            </p>
+
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button
+                size="lg"
+                className="h-14 min-w-[220px] gap-2 rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground hover:bg-primary/90 glow-orange"
+                asChild
+              >
+                <Link href="/quote">
+                  Get a free quote
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-14 gap-2 rounded-full border-white/20 bg-white/5 px-8 text-base font-medium text-white backdrop-blur hover:bg-white/10 hover:text-white"
+                asChild
+              >
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="h-4 w-4" />
+                  Chat on WhatsApp
+                </a>
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
+                className="h-14 gap-2 rounded-full px-8 text-base font-medium text-white hover:bg-white/10 hover:text-white"
+                asChild
+              >
+                <a href={`tel:${SITE.phoneE164}`}>
+                  <Phone className="h-4 w-4" />
+                  {SITE.phoneDisplay}
+                </a>
               </Button>
             </div>
-          )}
-        </motion.div>
-      </section>
-
-      {/* 7. Call to Action - Final push for conversion */}
-      <section className="layout-section bg-accent">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="layout-container text-center"
-        >
-          <h2 className="font-display text-3xl font-bold mb-4">
-            Ready to book your move?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Tell us your dates, locations, and what needs to move — we&apos;ll
-            reply with a clear plan and quote. Interior work can be scheduled
-            after you land.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/quote">
-              <Button size="lg" className="w-full sm:w-auto">
-                Get Free Quote
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                Contact Us
-              </Button>
-            </Link>
           </div>
-        </motion.div>
+        </div>
       </section>
-
-    </div>
+    </>
   );
 }
