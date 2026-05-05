@@ -2,15 +2,15 @@ import { SITE } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: `About ${SITE.name} | Movers & interior services in Qatar`,
+  title: `About ${SITE.name} | Movers & interior fit-out in Qatar`,
   description:
-    "Learn about our team — trusted for residential and office moves in Qatar, with full furniture, upholstery, and decor support.",
+    "Since 2008. Two trades, one shop — moving, packing, and the interior fit-out that follows. Meet the team Qatar trusts twice.",
   keywords:
-    "about movers Qatar, moving company Doha, relocation Qatar, furniture services Qatar, نقل عفش قطر",
+    "about movers Qatar, moving company Doha, relocation Qatar, furniture services Qatar, interior fit-out Doha, نقل عفش قطر",
   openGraph: {
     title: `About ${SITE.name}`,
     description:
-      "Moving and shifting across Qatar — plus the craftsmanship to finish your space.",
+      "Built for Qatar. Backed by repeat business. Moving + interior fit-out under one team.",
     images: [
       {
         url: `${SITE.url}/social.jpg`,

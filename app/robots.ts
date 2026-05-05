@@ -1,3 +1,4 @@
+import { SITE } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
@@ -7,18 +8,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: [
-          "/",
-          "/about",
-          "/services",
-          "/work",
-          "/contact",
-          "/quote",
-          "/ar",
-        ],
+        allow: "/",
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://qatarfurnituredecor.com/sitemap.xml",
+    sitemap: `${SITE.url}/sitemap.xml`,
+    host: SITE.url,
   };
 }

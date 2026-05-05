@@ -3,32 +3,45 @@ import { Metadata } from "next";
 import QuotePage from "./quote";
 
 export const metadata: Metadata = {
-  title: `Get a quote | ${SITE.name}`,
+  title: `Ask for a quote | ${SITE.name}`,
   description:
-    "Request a quote for home or office moves, packing, transport, or furniture and interior services in Qatar.",
+    "A few details now, a fixed quote in 48 hours. Free survey at your place. Moves, packing, sofas, curtains, flooring, wardrobes — across Qatar.",
+  keywords: [
+    "moving quote Qatar",
+    "moving quote Doha",
+    "free survey movers Qatar",
+    "fixed quote moving company",
+    "furniture quote Doha",
+    "interior fit-out quote Qatar",
+  ],
+  alternates: {
+    canonical: `${SITE.url}/quote`,
+  },
   openGraph: {
-    title: `Get a quote | ${SITE.name}`,
+    title: `Ask for a quote | ${SITE.name}`,
     description:
-      "Moving, packing, and shifting — plus upholstery, curtains, and installation when you need them.",
+      "Free survey, fixed itemised quote within 48 hours — moves and fit-out across Qatar.",
+    url: `${SITE.url}/quote`,
+    siteName: SITE.name,
     images: [
       {
         url: `${SITE.url}/social.jpg`,
         width: 1200,
         height: 630,
-        alt: `${SITE.name} quote`,
+        alt: `${SITE.name} — Ask for a quote`,
       },
     ],
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `Get a quote | ${SITE.name}`,
-    description:
-      "Moves and interior services in Doha and across Qatar — tell us what you need.",
+    title: `Ask for a quote | ${SITE.name}`,
+    description: "Tell us about the job — fixed quote within 48 hours.",
+    images: [`${SITE.url}/social.jpg`],
   },
 };
 
-const page = () => {
+export default function Page() {
   return <QuotePage />;
-};
-
-export default page;
+}

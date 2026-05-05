@@ -5,7 +5,12 @@
       "Bash(npm run *)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
       "Bash(curl -s http://localhost:3000/)",
-      "Bash(curl -s -o /dev/null -w \"picsum HTTP %{http_code}\\\\n\" \"https://picsum.photos/seed/qms-hero-move/2400/1600\")"
+      "Bash(curl -s -o /dev/null -w \"picsum HTTP %{http_code}\\\\n\" \"https://picsum.photos/seed/qms-hero-move/2400/1600\")",
+      "Bash(ls public/images public/social public/work)",
+      "Bash(ls -la public/furniture-favicon.svg)",
+      "Bash(curl -s -o /dev/null -w \"/ → %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"/work → %{http_code}\\\\n\" http://localhost:3000/work)",
+      "Bash(curl -s -o /dev/null -w \"/about HTTP %{http_code}\\\\n\" http://localhost:3000/about)"
     ]
   }
 }

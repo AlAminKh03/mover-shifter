@@ -1,139 +1,88 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { quoteServices } from "@/config/quote-services";
+import { SITE } from "@/config/site";
+import { quoteServiceGroups } from "@/config/quote-services";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-const services = quoteServices;
-
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().min(8, "Please enter a valid phone number"),
-  location: z.string().min(2, "Please enter your location"),
-  service: z.enum(services, {
-    required_error: "Please select a service",
-  }),
-  details: z.string().optional(),
+  name: z.string().min(2, "Tell us your name"),
+  phone: z.string().min(8, "Phone number please"),
+  email: z.string().email("Valid email please"),
+  location: z.string().min(2, "Where is the job?"),
+  services: z.array(z.string()).min(1, "Pick at least one service"),
+  notes: z.string().optional(),
 });
 
-export default function QuotePage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+type FormValues = z.infer<typeof formSchema>;
 
-  const form = useForm<z.infer<typeof formSchema>>({
+export default function QuotePage() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      email: "",
       phone: "",
+      email: "",
       location: "",
-      details: "",
+      services: [],
+      notes: "",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     try {
       const formData = new FormData();
+      const html = `
+        <h2>New quote request</h2>
+        <table style="width:100%;border-collapse:collapse;font-family:system-ui;font-size:14px;">
+          <tr><td style="padding:10px;border:1px solid #dee2e6;width:140px;"><strong>Name</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.name}</td></tr>
+          <tr><td style="padding:10px;border:1px solid #dee2e6;"><strong>Phone</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.phone}</td></tr>
+          <tr><td style="padding:10px;border:1px solid #dee2e6;"><strong>Email</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.email}</td></tr>
+          <tr><td style="padding:10px;border:1px solid #dee2e6;"><strong>Location</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.location}</td></tr>
+          <tr><td style="padding:10px;border:1px solid #dee2e6;"><strong>Services</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.services.join(", ")}</td></tr>
+          <tr><td style="padding:10px;border:1px solid #dee2e6;"><strong>Notes</strong></td><td style="padding:10px;border:1px solid #dee2e6;">${data.notes || "—"}</td></tr>
+        </table>`;
 
-      // Create an HTML email template
-      const emailTemplate = `
-        <h2>New Quote Request</h2>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr style="background-color: #f8f9fa;">
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Field</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Information</th>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Name</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.name
-            }</td>
-          </tr>
-          <tr style="background-color: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Email</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.email
-            }</td>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Phone</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.phone
-            }</td>
-          </tr>
-          <tr style="background-color: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Location</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.location
-            }</td>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Service Requested</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.service
-            }</td>
-          </tr>
-          <tr style="background-color: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;"><strong>Additional Details</strong></td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">${
-              data.details || "No additional details provided"
-            }</td>
-          </tr>
-        </table>
-      `;
-
-      // Add all form data
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value as string);
-      });
-
-      // Add email template and configuration
+      Object.entries({
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        location: data.location,
+        services: data.services.join(", "),
+        notes: data.notes ?? "",
+      }).forEach(([k, v]) => formData.append(k, v));
+      formData.append("_subject", `Quote request: ${data.name}`);
       formData.append("_template", "box");
-      formData.append("_subject", `New Quote Request from ${data.name}`);
       formData.append("_captcha", "false");
-      formData.append("_html", emailTemplate);
+      formData.append("_html", html);
 
       const response = await fetch(
-        "https://formsubmit.co/ajax/qatarfurnituredecor@gmail.com",
-        {
-          method: "POST",
-          body: formData,
-        }
+        `https://formsubmit.co/ajax/${SITE.email}`,
+        { method: "POST", body: formData },
       );
-
       if (!response.ok) throw new Error("Submission failed");
 
       toast({
-        title: "Quote Request Sent",
-        description: "We'll get back to you as soon as possible!",
+        title: "Sent — we'll come back within 48 hours.",
         duration: 5000,
       });
-
       form.reset();
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description:
-          "There was a problem sending your request. Please try again.",
+        title: "Could not send",
+        description: "Try again, or reach us on WhatsApp.",
         variant: "destructive",
         duration: 5000,
       });
@@ -143,142 +92,189 @@ export default function QuotePage() {
   };
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12 px-1">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Get a free quote
-          </h1>
-          <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Choose moving, packing, or an interior service — add your locations
-            and dates. We&apos;ll respond with next steps.
+    <article className="bg-muted/40 min-h-screen">
+      <section className="mx-auto w-full max-w-md px-4 pt-12 pb-12 sm:max-w-lg sm:pt-16 sm:pb-16">
+        {/* Header */}
+        <div className="text-center">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+            Ask for a quote
           </p>
+          <h1 className="font-display mt-2 text-xl font-extrabold leading-[1.2] tracking-tight text-secondary sm:text-2xl">
+            A few details. Quote in 48h.
+          </h1>
         </div>
 
-        <Card>
-          <CardContent className="p-6">
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Contact Information */}
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    {...form.register("name")}
-                    placeholder="Your name"
-                  />
-                  {form.formState.errors.name && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.name.message}
-                    </p>
-                  )}
-                </div>
+        {/* Form card with primary accent stripe */}
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+          className="mt-6 overflow-hidden rounded-2xl border border-border bg-card shadow-xl"
+        >
+          {/* Top accent stripe */}
+          <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60" />
 
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    {...form.register("email")}
-                    placeholder="your.email@example.com"
-                  />
-                  {form.formState.errors.email && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    {...form.register("phone")}
-                    placeholder="Your phone number"
-                  />
-                  {form.formState.errors.phone && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.phone.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="location">Location</Label>
-                  <Input
-                    id="location"
-                    {...form.register("location")}
-                    placeholder="Your address in Qatar"
-                  />
-                  {form.formState.errors.location && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.location.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Service Selection */}
-              <div className="grid gap-2">
-                <Label>Select Service</Label>
-                <Select
-                  onValueChange={(value) =>
-                    form.setValue("service", value as (typeof services)[number])
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose a service" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {services.map((service) => (
-                      <SelectItem key={service} value={service}>
-                        {service}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {form.formState.errors.service && (
-                  <p className="text-sm text-red-500">
-                    {form.formState.errors.service.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Additional Details */}
-              <div className="grid gap-2">
-                <Label htmlFor="details">Additional Details (Optional)</Label>
-                <Textarea
-                  id="details"
-                  {...form.register("details")}
-                  placeholder="Please provide any specific requirements or questions..."
-                  rows={4}
+          <div className="space-y-4 p-5 sm:p-6">
+            <Row>
+              <Field label="Name" required error={form.formState.errors.name?.message}>
+                <Input
+                  {...form.register("name")}
+                  autoComplete="name"
+                  placeholder="Khalid"
+                  className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
                 />
-              </div>
+              </Field>
+              <Field label="Phone" required error={form.formState.errors.phone?.message}>
+                <Input
+                  type="tel"
+                  {...form.register("phone")}
+                  autoComplete="tel"
+                  placeholder="+974 …"
+                  className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
+                />
+              </Field>
+            </Row>
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending Request...
-                  </>
-                ) : (
-                  "Request Quote"
-                )}
-              </Button>
-
-              {/* Hidden fields for FormSubmit configuration */}
-              <input
-                type="hidden"
-                name="_subject"
-                value="New Quote Request from Website"
+            <Field label="Email" required error={form.formState.errors.email?.message}>
+              <Input
+                type="email"
+                {...form.register("email")}
+                autoComplete="email"
+                placeholder="you@example.com"
+                className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
               />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+            </Field>
+
+            <Field label="Location" required error={form.formState.errors.location?.message}>
+              <Input
+                {...form.register("location")}
+                placeholder="e.g. West Bay villa → Lusail apartment"
+                className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
+              />
+            </Field>
+
+            <div>
+              <p className="text-sm font-semibold text-secondary">
+                Services <span className="text-primary">*</span>
+              </p>
+              <Controller
+                control={form.control}
+                name="services"
+                render={({ field }) => (
+                  <div className="mt-2.5 space-y-3">
+                    {quoteServiceGroups.map((group) => (
+                      <div key={group.label}>
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          {group.label}
+                        </p>
+                        <div className="mt-1.5 flex flex-wrap gap-1.5">
+                          {group.options.map((option) => {
+                            const checked = field.value.includes(option);
+                            return (
+                              <button
+                                type="button"
+                                key={option}
+                                onClick={() =>
+                                  field.onChange(
+                                    checked
+                                      ? field.value.filter((v) => v !== option)
+                                      : [...field.value, option],
+                                  )
+                                }
+                                className={`flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-all sm:text-[13px] ${
+                                  checked
+                                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                                    : "border-border bg-background text-foreground/85 hover:border-primary/40 hover:bg-primary/5"
+                                }`}
+                              >
+                                {checked && (
+                                  <Check
+                                    className="h-3 w-3"
+                                    strokeWidth={3}
+                                  />
+                                )}
+                                {option}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                    {form.formState.errors.services && (
+                      <p className="text-sm text-destructive">
+                        {form.formState.errors.services.message as string}
+                      </p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+
+            <Field label="Notes (optional)">
+              <Textarea
+                rows={3}
+                {...form.register("notes")}
+                placeholder="Dates, fragile items, parking — anything that helps us quote."
+                className="rounded-lg border-border bg-background focus-visible:ring-primary resize-none"
+              />
+            </Field>
+          </div>
+
+          {/* Submit footer */}
+          <div className="flex flex-col items-center justify-between gap-3 border-t border-border bg-muted/30 px-5 py-4 sm:flex-row sm:px-6">
+            <p className="text-[11px] text-muted-foreground sm:text-left">
+              Goes to{" "}
+              <span className="font-mono text-foreground">{SITE.email}</span>
+              {" · "}Never shared.
+            </p>
+            <Button
+              type="submit"
+              className="h-10 gap-1.5 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Sending
+                </>
+              ) : (
+                <>
+                  Send
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </section>
+    </article>
+  );
+}
+
+/* ──────────────────────  primitives  ─────────────────── */
+
+function Row({ children }: { children: React.ReactNode }) {
+  return <div className="grid gap-5 sm:grid-cols-2">{children}</div>;
+}
+
+function Field({
+  label,
+  children,
+  error,
+  required,
+}: {
+  label: string;
+  children: React.ReactNode;
+  error?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-secondary">
+        {label}
+        {required && <span className="ml-0.5 text-primary">*</span>}
+      </span>
+      <div className="mt-1.5">{children}</div>
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
+    </label>
   );
 }

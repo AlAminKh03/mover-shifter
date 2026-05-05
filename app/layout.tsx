@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     images: [
       {
-        url: "https://qatarfurnituredecor.com/social.jpg",
+        url: `${SITE.url}/social.jpg`,
         width: 1200,
         height: 630,
         alt: `${SITE.name} — Qatar`,
@@ -77,8 +77,7 @@ export const metadata: Metadata = {
     title: `${SITE.name} | Movers in Qatar`,
     description:
       "Moving, packing, and shifting across Qatar — with full furniture and interior support when you need it.",
-    images: ["/social.jpg"],
-    creator: "@qatarfurniture",
+    images: [`${SITE.url}/social.jpg`],
   },
   robots: {
     index: true,
@@ -184,6 +183,7 @@ export default function RootLayout({
                 "Moving, packing, and shifting services in Qatar — home and office relocations with optional furniture making, upholstery, curtains, and installation.",
               url: SITE.url,
               telephone: SITE.phoneE164,
+              email: SITE.email,
               priceRange: "$$$$",
               address: {
                 "@type": "PostalAddress",
@@ -212,10 +212,9 @@ export default function RootLayout({
                 opens: "00:00",
                 closes: "23:59",
               },
-              sameAs: [
-                "https://www.facebook.com/qatarfurnituredecor",
-                "https://www.instagram.com/qatarfurnituredecor",
-              ],
+              sameAs: Object.values(SITE.socials).filter(
+                (u): u is string => typeof u === "string" && u.length > 0,
+              ),
               hasMap:
                 "https://www.google.com/maps/place/Al+Mansoura,+Doha,+Qatar/@25.2688726,51.5238892,1966m/",
               areaServed: {

@@ -3,7 +3,7 @@
 import { SITE } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Phone, Star } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -137,24 +137,27 @@ export function HeroSlider() {
             </div>
           </div>
 
-          {/* Right: trust card + slide indicator */}
+          {/* Right: how it works callout + slide indicator */}
           <div className="lg:col-span-4 lg:pb-2">
             <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur-md">
-              <div className="flex items-center gap-1 text-primary">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
-                ))}
-                <span className="ml-2 text-xs font-semibold text-white/80">
-                  4.9 · 200+ reviews
-                </span>
-              </div>
-              <p className="mt-3 font-display text-base font-medium leading-snug text-white">
-                &ldquo;Showed up on time, wrapped everything, and even helped with
-                the curtains the next week.&rdquo;
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">
+                How it works
               </p>
-              <p className="mt-2 text-xs text-white/60">
-                — Khalid, Lusail villa relocation
-              </p>
+              <ol className="mt-4 space-y-3 text-sm text-white/85">
+                <li className="flex gap-3">
+                  <span className="font-mono text-[11px] text-primary">01.</span>
+                  Free survey — we confirm access, parking, and what&apos;s
+                  fragile.
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-mono text-[11px] text-primary">02.</span>
+                  Fixed quote within 48 hours. No surprises after.
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-mono text-[11px] text-primary">03.</span>
+                  Pack, move, place — and finish the rooms if you&apos;d like.
+                </li>
+              </ol>
             </div>
 
             {/* Slide pills */}
@@ -173,12 +176,12 @@ export function HeroSlider() {
           </div>
         </div>
 
-        {/* Bottom stats strip */}
+        {/* Bottom strip — honest, no inflated numbers */}
         <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/10 pt-6 text-white/80">
-          <Stat n="800+" label="moves & projects" />
-          <Stat n="15+" label="years in Qatar" />
-          <Stat n="48h" label="avg quote turnaround" />
-          <Stat n="100%" label="local crews" />
+          <Stat n="2" label="trades, one shop" />
+          <Stat n="6" label="cities we cover" />
+          <Stat n="0" label="ads run, ever" />
+          <Stat n="48h" label="quote turnaround" />
         </div>
       </div>
     </section>

@@ -1,44 +1,23 @@
+import { SITE } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://qatarfurnituredecor.com",
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 1,
-    },
-    {
-      url: "https://qatarfurnituredecor.com/about",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://qatarfurnituredecor.com/services",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: "https://qatarfurnituredecor.com/work",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://qatarfurnituredecor.com/contact",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://qatarfurnituredecor.com/quote",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
+  const lastModified = new Date();
+  const routes: { path: string; priority: number; changeFrequency: "yearly" | "monthly" | "weekly" }[] = [
+    { path: "", priority: 1, changeFrequency: "monthly" },
+    { path: "/about", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/services", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/work", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/quote", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   ];
+
+  return routes.map((r) => ({
+    url: `${SITE.url}${r.path}`,
+    lastModified,
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
+  }));
 }
