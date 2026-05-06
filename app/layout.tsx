@@ -212,8 +212,8 @@ export default function RootLayout({
                 opens: "00:00",
                 closes: "23:59",
               },
-              sameAs: Object.values(SITE.socials).filter(
-                (u): u is string => typeof u === "string" && u.length > 0,
+              sameAs: (Object.values(SITE.socials) as string[]).filter(
+                (u) => u.length > 0,
               ),
               hasMap:
                 "https://www.google.com/maps/place/Al+Mansoura,+Doha,+Qatar/@25.2688726,51.5238892,1966m/",
