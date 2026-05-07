@@ -78,6 +78,24 @@
     font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
     @apply tracking-tight;
   }
+
+}
+
+@layer utilities {
+  /*
+    `text-secondary` is used sitewide as the dark heading color on light
+    surfaces. In dark mode the --secondary token must stay dark navy so
+    `bg-secondary` (hero, badges, etc.) keeps its brand surface — but that
+    makes dark navy text invisible against the dark background. Remap the
+    text utility to the readable foreground in dark mode without touching
+    the background utility.
+  */
+  .dark .text-secondary {
+    color: hsl(var(--foreground));
+  }
+  .dark .border-secondary\/20 {
+    border-color: hsl(var(--border));
+  }
 }
 
 @layer utilities {

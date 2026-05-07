@@ -1,118 +1,101 @@
 "use client";
 
-import { SITE } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { SITE } from "@/config/site";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { slides } from "./SlideData";
 
-const AUTO_MS = 6500;
+const u = (id: string, w: number) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
+
+const showcase = {
+  hero: {
+    src: u("1715645948484-da40dd56bc93", 1600),
+    alt: "Crew loading furniture and boxes into a moving truck",
+    label: "Move",
+  },
+  side: [
+    {
+      src: u("1618221195710-dd6b41faaea6", 800),
+      alt: "Furnished living room with sofa, curtains, and warm daylight",
+      label: "Furnish",
+    },
+    {
+      src: u("1558211583-d26f610c1eb1", 800),
+      alt: "Built-in wardrobe with soft-close hardware",
+      label: "Maintain",
+    },
+  ],
+};
+
+const trades = [
+  "Home & office moves",
+  "Packing & transport",
+  "Fitted cabinets & wardrobes",
+  "Custom sofas & majlis",
+  "Curtains & flooring",
+  "House maintenance",
+];
 
 export function HeroSlider() {
-  const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
-
-  const next = useCallback(
-    () => setIndex((i) => (i + 1) % slides.length),
-    [],
-  );
-  const goTo = useCallback((i: number) => setIndex(i), []);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const t = window.setInterval(next, AUTO_MS);
-    return () => window.clearInterval(t);
-  }, [next, reduceMotion]);
-
-  const slide = slides[index];
 
   return (
     <section
       className="relative isolate overflow-hidden bg-secondary text-white"
-      aria-label="Featured services"
+      aria-label="Qatar Moving & Shifting — moves, furniture, and house maintenance in Doha"
     >
-      {/* Background image stack */}
-      <div className="absolute inset-0 -z-10">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={index}
-            className="absolute inset-0"
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0.2 : 1.1, ease: "easeOut" }}
-          >
-            {/* REPLACE-IMAGE: hero background — see SlideData for description */}
-            <Image
-              src={slide.image}
-              alt={slide.imageAlt}
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className="object-cover"
-            />
-          </motion.div>
-        </AnimatePresence>
-        {/* Dark gradient + grain overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/40 to-transparent" />
-        <div className="absolute inset-0 bg-grid-dark opacity-30 mask-fade-b" />
-      </div>
-
-      {/* Orange ambient glow */}
       <div
-        className="pointer-events-none absolute -top-32 -left-32 h-[40rem] w-[40rem] rounded-full bg-primary/30 blur-[120px]"
+        className="pointer-events-none absolute -top-32 -left-40 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[120px]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-primary/10 blur-[120px]"
         aria-hidden
       />
 
-      <div className="layout-container relative flex min-h-[88vh] flex-col justify-between pt-28 pb-16 sm:pt-32 lg:min-h-[92vh]">
-        {/* Top eyebrow */}
-        <div className="flex items-center gap-3">
-          <span className="h-px w-10 bg-primary" />
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-            {SITE.shortName} · Doha, Qatar
-          </p>
-        </div>
+      <div className="layout-container relative pt-10 pb-16 sm:pt-10 sm:pb-20">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          {/* ───── Text panel ───── */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-6"
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-primary" />
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                {SITE.shortName} · Doha, Qatar
+              </p>
+            </div>
 
-        {/* Main content */}
-        <div className="grid max-w-7xl gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
-          <div className="lg:col-span-8">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.p
-                key={`eyebrow-${index}`}
-                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-                transition={{ duration: 0.4 }}
-                className="font-display text-sm font-medium uppercase tracking-[0.2em] text-white/60"
-              >
-                {slide.eyebrow}
-              </motion.p>
-            </AnimatePresence>
-
-            <h1 className="font-display mt-4 text-[3rem] font-extrabold leading-[0.95] tracking-tighter sm:text-[4.5rem] lg:text-[6.5rem] xl:text-[7.5rem]">
+            <h1 className="font-display mt-6 text-4xl font-extrabold leading-[1] tracking-tight sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
               <span className="block">Move it.</span>
               <span className="block">Furnish it.</span>
-              <span className="block text-gradient-orange">Done.</span>
+              <span className="block text-gradient-orange">Maintain it.</span>
             </h1>
 
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.p
-                key={`sub-${index}`}
-                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
-                transition={{ duration: 0.45 }}
-                className="mt-8 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg lg:text-xl"
-              >
-                {slide.subtitle}
-              </motion.p>
-            </AnimatePresence>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+              One Doha crew for home and office moves, fitted cabinets and
+              custom furniture, curtains, flooring — and the small repairs after
+              you&apos;ve settled in.
+            </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <ul className="mt-7 flex flex-wrap gap-2">
+              {trades.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/85 backdrop-blur-sm"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button
                 size="lg"
                 className="group h-14 gap-2 rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:bg-primary/90 glow-orange"
@@ -135,66 +118,57 @@ export function HeroSlider() {
                 </a>
               </Button>
             </div>
-          </div>
 
-          {/* Right: how it works callout + slide indicator */}
-          <div className="lg:col-span-4 lg:pb-2">
-            <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur-md">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">
-                How it works
-              </p>
-              <ol className="mt-4 space-y-3 text-sm text-white/85">
-                <li className="flex gap-3">
-                  <span className="font-mono text-[11px] text-primary">01.</span>
-                  Free survey — we confirm access, parking, and what&apos;s
-                  fragile.
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-mono text-[11px] text-primary">02.</span>
-                  Fixed quote within 48 hours. No surprises after.
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-mono text-[11px] text-primary">03.</span>
-                  Pack, move, place — and finish the rooms if you&apos;d like.
-                </li>
-              </ol>
-            </div>
+            <p className="mt-5 text-sm text-white/60">
+              Free survey · Fixed quote within 48 hours · No surprises after.
+            </p>
+          </motion.div>
 
-            {/* Slide pills */}
-            <div className="mt-6 flex gap-2">
-              {slides.map((s, i) => (
-                <button
-                  key={s.eyebrow}
-                  onClick={() => goTo(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className={`h-1 flex-1 rounded-full transition-all ${
-                    i === index ? "bg-primary" : "bg-white/20 hover:bg-white/40"
-                  }`}
+          {/* ───── Image showcase ───── */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            className="lg:col-span-6"
+          >
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {/* Big primary tile — Furnish (the dream state) */}
+              <figure className="relative col-span-2 aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-2xl">
+                <Image
+                  src={showcase.hero.src}
+                  alt={showcase.hero.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
+                <span className="absolute left-3 top-3 rounded-full bg-secondary/85 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
+                  {showcase.hero.label}
+                </span>
+              </figure>
+
+              {/* Two smaller tiles — Move + Maintain */}
+              {showcase.side.map((tile) => (
+                <figure
+                  key={tile.label}
+                  className="relative aspect-[4/3] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-xl"
+                >
+                  <Image
+                    src={tile.src}
+                    alt={tile.alt}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                  <span className="absolute left-3 top-3 rounded-full bg-secondary/85 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
+                    {tile.label}
+                  </span>
+                </figure>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* Bottom strip — honest, no inflated numbers */}
-        <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/10 pt-6 text-white/80">
-          <Stat n="2" label="trades, one shop" />
-          <Stat n="6" label="cities we cover" />
-          <Stat n="0" label="ads run, ever" />
-          <Stat n="48h" label="quote turnaround" />
+          </motion.div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Stat({ n, label }: { n: string; label: string }) {
-  return (
-    <div className="flex items-baseline gap-2">
-      <span className="font-display text-2xl font-bold text-white">{n}</span>
-      <span className="text-xs uppercase tracking-wider text-white/55">
-        {label}
-      </span>
-    </div>
   );
 }

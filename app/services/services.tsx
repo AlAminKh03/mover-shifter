@@ -53,6 +53,22 @@ const moveServices: Service[] = [
 
 const interiorServices: Service[] = [
   {
+    slug: "fitted-cabinets",
+    title: "Fitted cabinets",
+    blurb:
+      "Kitchen, storage, and TV-unit cabinets — measured, built, and installed. Soft-close hardware, your finish.",
+    img: u("1556909114-f6e7ad7d3136"),
+    alt: "Built-in fitted cabinets in a furnished room",
+  },
+  {
+    slug: "wardrobes",
+    title: "Built-in wardrobes",
+    blurb:
+      "Measured, built, installed. Soft-close hardware, configured to your clothes.",
+    img: u("1558211583-d26f610c1eb1"),
+    alt: "Built-in wardrobe interior",
+  },
+  {
     slug: "custom-sofas",
     title: "Custom sofas & majlis",
     blurb:
@@ -84,17 +100,36 @@ const interiorServices: Service[] = [
     img: u("1493663284031-b7e3aefcae8e"),
     alt: "Reupholstered seating",
   },
+];
+
+const maintenanceServices: Service[] = [
   {
-    slug: "wardrobes",
-    title: "Built-in wardrobes",
+    slug: "handyman",
+    title: "Handyman callouts",
     blurb:
-      "Measured, built, installed. Soft-close hardware, configured to your clothes.",
-    img: u("1558211583-d26f610c1eb1"),
-    alt: "Built-in wardrobe interior",
+      "Hanging shelves, frames, and TVs. Tightening hinges and handles. Small repairs the day after you've moved in.",
+    img: u("1581094794329-c8112a89af12"),
+    alt: "Toolbox and hand tools on a workbench",
+  },
+  {
+    slug: "touch-up-paint",
+    title: "Touch-up paint",
+    blurb:
+      "Scuffs, scratches, knocks. Colour-matched touch-ups and small re-coats — wall by wall, not a full repaint.",
+    img: u("1562259949-e8e7689d7828"),
+    alt: "Paint roller against a freshly painted wall",
+  },
+  {
+    slug: "fixings-repairs",
+    title: "Fixings & small repairs",
+    blurb:
+      "Squeaky doors, broken handles, drawer runners, loose fittings. One visit, one invoice.",
+    img: u("1503387762-592deb58ef4e"),
+    alt: "Hand tightening a door hinge with a screwdriver",
   },
 ];
 
-const allServices = [...moveServices, ...interiorServices];
+const allServices = [...moveServices, ...interiorServices, ...maintenanceServices];
 
 /* ──────────────────────────  PAGE  ─────────────────────── */
 
@@ -120,15 +155,16 @@ export default function ServicesPage() {
           </div>
 
           <h1 className="font-display mt-5 max-w-3xl text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem]">
-            Two chapters,{" "}
+            Three chapters,{" "}
             <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
               one workshop.
             </em>
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
-            Moves on the left. Fit-out on the right. After your call, the
-            survey is free and a fixed quote follows within 48 hours.
+            Move you in. Furnish the rooms. Fix the small things after.
+            One free survey, one fixed quote within 48 hours — for any of them
+            or all three.
           </p>
         </div>
       </section>
@@ -136,7 +172,7 @@ export default function ServicesPage() {
       {/* ────────  SERVICES — two-column list  ──────── */}
       <section className="layout-section pt-0">
         <div className="layout-container">
-          <div className="grid gap-12 border-t border-border pt-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid gap-12 border-t border-border pt-12 lg:grid-cols-3 lg:gap-12">
             <ServiceColumn
               roman="I"
               chapter="Moving & shifting"
@@ -146,6 +182,11 @@ export default function ServicesPage() {
               roman="II"
               chapter="Furniture & fit-out"
               services={interiorServices}
+            />
+            <ServiceColumn
+              roman="III"
+              chapter="House maintenance"
+              services={maintenanceServices}
             />
           </div>
         </div>

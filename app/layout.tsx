@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description:
-    "Qatar Moving & Shifting: surveyed relocations, disciplined packing, and clear timelines — plus optional furniture, curtains, and flooring when your next chapter needs more than transport.",
+    "Qatar Moving & Shifting: home and office moves, fitted cabinets and custom furniture, curtains, flooring, and small house maintenance — one Doha crew, one fixed quote within 48 hours.",
   keywords:
-    "moving company Qatar, movers Doha, villa relocation Qatar, office shifting Doha, furniture movers Qatar, packing service Qatar, home moving Lusail, Pearl Qatar movers, shifting service Qatar, نقل عفش قطر, نقل اثاث الدوحة, furniture upholstery Qatar, curtains installation Qatar",
+    "moving company Qatar, movers Doha, villa relocation Qatar, office shifting Doha, furniture movers Qatar, packing service Qatar, home moving Lusail, Pearl Qatar movers, shifting service Qatar, نقل عفش قطر, نقل اثاث الدوحة, furniture upholstery Qatar, curtains installation Qatar, fitted cabinets Doha, kitchen cabinet maker Qatar, house maintenance Doha, handyman Qatar",
   category: "moving, relocation, logistics, Qatar business",
   verification: {
     google: "wuWIEoRpkPuTjhHF6OVoAPH5lxltE5qq5qeKfgC-7fs",
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: `${SITE.name} | Moves & shifting in Qatar`,
+    title: `${SITE.name} | Moves, furniture & maintenance in Qatar`,
     description:
-      "Residential and office moves, packing, and safe transport — plus furniture making, upholstery, and decor services in Doha, Qatar.",
+      "Home and office moves, fitted cabinets and custom furniture, curtains, flooring, and small house maintenance — one Doha crew, one fixed quote.",
     url: SITE.url,
     siteName: SITE.name,
     images: [
@@ -180,7 +180,7 @@ export default function RootLayout({
                 height: 630,
               },
               description:
-                "Moving, packing, and shifting services in Qatar — home and office relocations with optional furniture making, upholstery, curtains, and installation.",
+                "Moving, packing, and shifting services in Qatar — home and office relocations, fitted cabinets and custom furniture making, upholstery, curtains, flooring, and small house maintenance.",
               url: SITE.url,
               telephone: SITE.phoneE164,
               email: SITE.email,

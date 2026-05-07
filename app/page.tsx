@@ -25,7 +25,11 @@ const services = [
   },
   {
     title: "Furniture & interior fit-out.",
-    text: "Custom sofas, majlis builds, curtains, SPC flooring, reupholstery. Built in our Al Mansoura workshop and installed by the same crew who moved you in.",
+    text: "Fitted cabinets, built-in wardrobes, custom sofas and majlis, curtains, SPC flooring, reupholstery. Built in our Al Mansoura workshop and installed by the same crew who moved you in.",
+  },
+  {
+    title: "House maintenance.",
+    text: "The small jobs after you've settled in: hanging shelves and frames, tightening hinges, broken handles, touch-up paint, squeaky doors. One callout, one invoice.",
   },
   {
     title: "What we don’t do.",
@@ -66,7 +70,11 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Can you just do the furniture work without the move?",
-    a: "Yes. Custom sofas, majlis builds, curtains, SPC flooring, and reupholstery are bookable on their own — same workshop, same crews.",
+    a: "Yes. Fitted cabinets, built-in wardrobes, custom sofas and majlis, curtains, SPC flooring, and reupholstery are bookable on their own — same workshop, same crews.",
+  },
+  {
+    q: "Do you handle small house maintenance jobs?",
+    a: "Yes. After-move tasks like hanging shelves, fixing handles and hinges, touching up paint, and small repairs. Bookable as a single visit or a half-day package.",
   },
 ];
 
@@ -98,7 +106,7 @@ export default function Home() {
               Issue No. 02 — What we do
             </p>
             <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-              Two trades. And the things we leave to others.
+              Three trades. And the things we leave to others.
             </h2>
 
             <ol className="mt-12">
