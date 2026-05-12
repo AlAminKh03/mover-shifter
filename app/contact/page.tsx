@@ -37,9 +37,8 @@ export default function Contact() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
-            WhatsApp gets the fastest reply. Email is best for forwarding
-            photos or a building plan. Phone if you&apos;d rather talk it
-            through.
+            WhatsApp gets the fastest reply. Email is best for forwarding photos
+            or a building plan. Phone if you&apos;d rather talk it through.
           </p>
         </div>
       </section>
@@ -61,7 +60,7 @@ export default function Contact() {
               label="Phone"
               value={SITE.phoneDisplay}
               href={`tel:${SITE.phoneE164}`}
-              note="Open Sun–Thu, 8am to 6pm. Sat by appointment."
+              note="24/7 Support"
             />
             <ContactPill
               kind="email"
@@ -89,9 +88,9 @@ export default function Contact() {
                 The workshop in Al Mansoura.
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Surveys are done at your place — no need to come over. But
-                if you&apos;d like to see the workshop or check fabric
-                samples, you&apos;re welcome to drop in.
+                Surveys are done at your place — no need to come over. But if
+                you&apos;d like to see the workshop or check fabric samples,
+                you&apos;re welcome to drop in.
               </p>
 
               <dl className="mt-6 space-y-4 text-sm">
