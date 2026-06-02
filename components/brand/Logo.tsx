@@ -5,7 +5,7 @@ type LogoProps = {
 };
 
 /**
- * Site mark — truck + cargo box (moving & shifting).
+ * Site mark — wall cabinet with twin doors (Doha Interiors).
  * Replace this component if you add a custom `/public` brand pack later.
  */
 export function Logo({ className }: LogoProps) {
@@ -33,18 +33,18 @@ export function Logo({ className }: LogoProps) {
         strokeLinejoin="round"
         fill="none"
       >
-        {/* Cargo box */}
-        <path d="M11 17.5l7-3 7 3v6l-7 3-7-3z" />
-        <path d="M11 17.5v6l7 3" className="opacity-50" />
-        <path d="M25 17.5v6l-7 3" className="opacity-50" />
-        {/* Truck bed + cab */}
-        <path d="M8 27.5h14v-4H8z" />
-        <path d="M22 23.5h5.5l4.2 4.2V27.5H22" />
-        <path d="M31.7 27.7l.3.8v3H22" />
-        {/* Wheels */}
-        <circle cx="13" cy="30.5" r="2.35" className="fill-primary stroke-none" />
-        <circle cx="26" cy="30.5" r="2.35" className="fill-primary stroke-none" />
+        {/* Wall-mount rail */}
+        <path d="M9 10h22" className="opacity-50" />
+        {/* Cabinet carcass */}
+        <rect x="10" y="13" width="20" height="17" rx="1.5" />
+        {/* Centre divider — twin doors */}
+        <path d="M20 13v17" />
+        {/* Mid shelf */}
+        <path d="M10 21.5h20" className="opacity-50" />
       </g>
+      {/* Door handles */}
+      <circle cx="18" cy="21.5" r="1.15" className="fill-primary stroke-none" />
+      <circle cx="22" cy="21.5" r="1.15" className="fill-primary stroke-none" />
     </svg>
   );
 }

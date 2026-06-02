@@ -2,17 +2,17 @@ import { SITE } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: `Look book — moves, sofas, curtains, flooring | ${SITE.name}`,
+  title: `Look book — cabinets, curtains, sofas & more | ${SITE.name}`,
   description:
-    "Reference imagery by category for the kind of work we do across Qatar — moves, sofas & majlis, curtains, flooring, wardrobes. Real shoots replacing these soon.",
+    "Reference imagery by category for what we do across Qatar — wall cabinets, kitchens, wardrobes, curtains and blinds, custom sofas and majlis, flooring, and furniture moving. Real shoots replacing these soon.",
   keywords: [
-    "moving company portfolio Qatar",
-    "interior fit-out Doha",
-    "majlis maker Qatar",
+    "wall cabinets portfolio Qatar",
+    "kitchen cabinets Doha",
+    "built-in wardrobes Qatar",
+    "curtains Qatar",
     "custom sofa Doha",
-    "curtain installation Qatar",
+    "majlis maker Qatar",
     "SPC flooring portfolio",
-    "wardrobe gallery Qatar",
   ],
   alternates: {
     canonical: `${SITE.url}/work`,
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Look book | ${SITE.name}`,
     description:
-      "Reference imagery for moves, sofas, curtains, flooring, and wardrobes — by category.",
+      "Reference imagery for cabinets, kitchens, wardrobes, curtains, sofas, flooring, and moving — by category.",
     url: `${SITE.url}/work`,
     siteName: SITE.name,
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Look book | ${SITE.name}`,
     description:
-      "Reference imagery for the kind of work we do across Qatar.",
+      "Reference imagery for the rooms we build and finish across Qatar.",
     images: [`${SITE.url}/social.jpg`],
   },
 };

@@ -4,89 +4,94 @@ import { HeroSlider } from "@/components/home/HeroSlider";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  MessageCircle,
-  Quote,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-/* REPLACE-IMAGES: every image is an Unsplash placeholder, all verified working. */
-const u = (id: string, w = 1400) =>
+/* Curated, high-quality interior photography (Unsplash). Swap for your own
+   job photos by replacing the IDs. */
+const u = (id: string, w = 700) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
 
-/* What we do — honest, including what we don't. */
+/* What we do — a multi-service studio, cabinets shown first, and what we don't. */
 const services = [
   {
-    title: "Moving & shifting.",
-    text: "Villas, apartments, offices. We do the survey, pack, drive, and place. Most jobs run one or two days; bigger ones we phase over a week.",
+    title: "Wall cabinets & joinery.",
+    text: "Wall-mounted cabinets, storage walls, display units, and bespoke shelving. Surveyed, built, and fitted flush and level. Soft-close hardware, your choice of finish.",
   },
   {
-    title: "Furniture & interior fit-out.",
-    text: "Fitted cabinets, built-in wardrobes, custom sofas and majlis, curtains, SPC flooring, reupholstery. Built in our Al Mansoura workshop and installed by the same crew who moved you in.",
+    title: "Kitchens & wardrobes.",
+    text: "Full kitchen cabinetry, built-in wardrobes, and TV units — measured to the room and made to order. Same team that surveyed you.",
   },
   {
-    title: "House maintenance.",
-    text: "The small jobs after you've settled in: hanging shelves and frames, tightening hinges, broken handles, touch-up paint, squeaky doors. One callout, one invoice.",
+    title: "Curtains & blinds.",
+    text: "Measured, made, and hung — sheers, blackout, roman and roller blinds, and motorised tracks. Our own fabric library on site.",
+  },
+  {
+    title: "Sofas, majlis & reupholstery.",
+    text: "Custom sofas and majlis built to measure, plus reupholstery — frames, foam, and fabric or leather.",
+  },
+  {
+    title: "Flooring & furniture moving.",
+    text: "SPC and wood flooring with clean subfloor prep, and home, villa, and office furniture moving across Qatar — wrap, load, drive, place.",
   },
   {
     title: "What we don’t do.",
-    text: "Long-haul international moves. Dedicated storage. Same-day jobs we haven’t surveyed. We’ll point you to people who do those well.",
+    text: "Flat-pack assembly only. Long-haul international moves. Dedicated storage. Same-day jobs we haven’t surveyed. We’ll point you to people who do those well.",
   },
 ];
 
-/* How it goes — process as a timeline track. */
+/* How a job runs — process as a timeline track. */
 const process = [
-  { stamp: "Day 0", title: "Survey", note: "Free walk-through. We confirm access, lifts, parking, and what’s fragile." },
-  { stamp: "Day 1", title: "Pack & label", note: "Materials supplied. Glass, electronics, art — wrapped, boxed, tracked." },
-  { stamp: "Day 2", title: "Move", note: "Right-sized vehicle, room-by-room placement at the other end." },
-  { stamp: "Optional", title: "Finish the rooms", note: "Curtains, sofas, wardrobes, flooring — same crew, scheduled when you’re ready." },
+  { stamp: "Day 0", title: "Survey", note: "Free site measure. We check the room, fixings, services, and the finish you want." },
+  { stamp: "Week 1", title: "Quote", note: "Drawings and a fixed, itemised quote. Materials ordered once you approve." },
+  { stamp: "Build", title: "Make", note: "Cabinets, curtains, and furniture made to your measurements and finish." },
+  { stamp: "Fit day", title: "Install", note: "Delivered and fitted flush and level. Aligned, set, site left clean." },
+  { stamp: "Done", title: "Handover", note: "One team, one invoice — cabinets, curtains, sofas, flooring, or a full fit-out." },
 ];
 
-/* FAQ — honest answers to questions clients actually ask. SEO-rich:
+/* FAQ — direct answers to questions clients actually ask. SEO-rich:
    each question + answer is also emitted as FAQPage JSON-LD below. */
 const faq: { q: string; a: string }[] = [
   {
     q: "How much notice do you need?",
-    a: "Two to three days for a standard apartment, a week for villas, and two weeks if a fit-out follows the move. Same-week is sometimes possible — call and we'll tell you straight.",
+    a: "About a week from approved drawings to fitting for a standard run of wall or kitchen cabinets; two to three weeks for a full kitchen or several wardrobes. Tell us your deadline and we'll be straight about whether it's doable.",
   },
   {
     q: "What areas in Qatar do you cover?",
     a: "Doha, Lusail, The Pearl, Al Wakrah, Al Rayyan, and Al Khor. If you're outside those, ask — we'll tell you whether it makes sense.",
   },
   {
-    q: "Do you provide packing materials?",
-    a: "Yes. Boxes, bubble wrap, blankets, wardrobe cartons, and tape are included on full-service jobs. If you're packing yourself, we can drop materials beforehand.",
+    q: "Do you make the cabinets, or just fit them?",
+    a: "We make them. Carcasses, doors, and shelves are built in our Al Wokra workshop and installed by the same crew that surveyed you — not flat-pack, not subcontracted.",
+  },
+  {
+    q: "What materials and finishes can I choose?",
+    a: "Moisture-resistant MDF and plywood carcasses, with laminate, acrylic, or lacquer fronts and soft-close hinges and runners as standard. Bring a reference photo or a sample and we'll match it.",
   },
   {
     q: "Can I get a quote without a survey?",
-    a: "We can give a rough range over the phone, but the fixed quote always comes after a free walk-through (or a video call for smaller jobs). It's the only way to avoid surprises on the day.",
+    a: "We can give a rough range from photos and rough sizes, but the fixed quote always follows a free site measure. Cabinets are unforgiving — a few millimetres decides whether doors line up.",
   },
   {
-    q: "Do you do international or long-haul moves?",
-    a: "No. We stay inside Qatar. If you're moving abroad we'll point you to a freight forwarder who handles that well.",
+    q: "Can I book just curtains, a sofa, or a move on its own?",
+    a: "Yes. Curtains and blinds, custom sofas and majlis, flooring, reupholstery, and furniture moving are full services — book any one on its own, or bundle several with a cabinet job on a single quote and invoice.",
   },
   {
-    q: "Can you just do the furniture work without the move?",
-    a: "Yes. Fitted cabinets, built-in wardrobes, custom sofas and majlis, curtains, SPC flooring, and reupholstery are bookable on their own — same workshop, same crews.",
-  },
-  {
-    q: "Do you handle small house maintenance jobs?",
-    a: "Yes. After-move tasks like hanging shelves, fixing handles and hinges, touching up paint, and small repairs. Bookable as a single visit or a half-day package.",
+    q: "Do you remove or rework old cabinets?",
+    a: "Yes. We can strip out and dispose of old units, adjust an existing run, or re-door and re-hardware anything that's still structurally sound.",
   },
 ];
 
-/* Recent work — polaroid scrapbook. Stock photos for now; no captions
-   that imply they are our specific jobs. */
-const polaroids = [
-  { id: "1530124566582-a618bc2615dc", alt: "Cardboard moving boxes", rot: -2.5 },
-  { id: "1715645948484-da40dd56bc93", alt: "Crew loading a moving truck", rot: 2 },
-  { id: "1513161455079-7dc1de15ef3e", alt: "Curtained living room", rot: -1.5 },
-  { id: "1555041469-a586c61ea9bc", alt: "Living room sofa", rot: 2.5 },
-  { id: "1558211583-d26f610c1eb1", alt: "Built-in wardrobe", rot: -2 },
-  { id: "1581858726788-75bc0f6a952d", alt: "Wood-look flooring", rot: 1.5 },
+/* Recent-work gallery — curated interior photography. Replace IDs with your
+   own job photos when ready. */
+const gallery: { label: string; id: string; rot: number }[] = [
+  { label: "Wall cabinets", id: "1556909114-f6e7ad7d3136", rot: -2.5 },
+  { label: "Curtains & blinds", id: "1513161455079-7dc1de15ef3e", rot: 2 },
+  { label: "Custom sofas & majlis", id: "1555041469-a586c61ea9bc", rot: -1.5 },
+  { label: "Wardrobes & storage", id: "1672137233327-37b0c1049e77", rot: 2.5 },
+  { label: "SPC & wood flooring", id: "1581858726788-75bc0f6a952d", rot: -2 },
+  { label: "Furniture moving", id: "1715645948484-da40dd56bc93", rot: 1.5 },
 ];
 
 export default function Home() {
@@ -98,15 +103,15 @@ export default function Home() {
     <article className="bg-background">
       <HeroSlider />
 
-      {/* ────────────  WHAT WE DO (numbered manifesto) ─────────── */}
+      {/* ────────────  WHAT WE DO (numbered list) ─────────── */}
       <section className="layout-section">
         <div className="layout-container">
           <div className="mx-auto max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Issue No. 02 — What we do
+              What we do
             </p>
             <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-              Three trades. And the things we leave to others.
+              Everything for the room — cabinets to curtains.
             </h2>
 
             <ol className="mt-12">
@@ -148,15 +153,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────  HOW IT GOES (horizontal timeline) ─────────── */}
+      {/* ────────────  CURTAINS PROMO  ─────────── */}
+      <section className="layout-section">
+        <div className="layout-container">
+          <div className="mx-auto max-w-3xl">
+            <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8">
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                Featured service
+              </p>
+              <h3 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
+                Curtains & blinds — measured, made, hung
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                Sheers, blackout, roman and roller blinds, plus motorised tracks and an on-site fabric library. We measure, make and fit across Qatar.
+              </p>
+
+              <div className="mt-5 flex gap-3">
+                <Link href="/services#curtains" className="inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground">
+                  See curtains
+                </Link>
+                <Link href="/work" className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium text-secondary hover:bg-muted">
+                  See curtain projects
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────  HOW A JOB RUNS (horizontal timeline) ─────────── */}
       <section className="border-y border-border bg-muted/40">
         <div className="layout-container py-12 sm:py-16">
           <div className="mx-auto max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Issue No. 03 — How it goes
+              How it works
             </p>
             <h2 className="font-display mt-3 text-2xl font-bold leading-tight tracking-tight text-foreground sm:text-3xl">
-              From your call to keys-in-hand.
+              From your call to a finished room.
             </h2>
           </div>
 
@@ -202,16 +235,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────  RECENT JOBS (polaroid scrapbook) ──────────── */}
+      {/* ────────────  WHAT WE COVER (service tile grid) ──────────── */}
       <section className="layout-section">
         <div className="layout-container">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div className="max-w-2xl">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                Issue No. 04 — Recent jobs
+                Our work
               </p>
               <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-                Some moves and rooms from the last few months.
+                What we cover, across Qatar.
               </h2>
             </div>
             <Link
@@ -224,11 +257,11 @@ export default function Home() {
           </div>
 
           <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
-            {polaroids.map((p, i) => (
+            {gallery.map((g, i) => (
               <motion.figure
-                key={p.id}
+                key={g.label}
                 initial={{ opacity: 0, y: 30, rotate: 0 }}
-                whileInView={{ opacity: 1, y: 0, rotate: p.rot }}
+                whileInView={{ opacity: 1, y: 0, rotate: g.rot }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
                 whileHover={{ rotate: 0, scale: 1.05, zIndex: 10 }}
@@ -237,11 +270,11 @@ export default function Home() {
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                   <Image
-                    src={u(p.id, 700)}
-                    alt={p.alt}
+                    src={u(g.id)}
+                    alt={g.label}
                     fill
                     sizes="(max-width: 640px) 50vw, 33vw"
-                    className="object-cover grayscale-[15%]"
+                    className="object-cover"
                   />
                 </div>
               </motion.figure>
@@ -250,12 +283,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────  FAQ (SEO-rich, honest) ──────────────────── */}
+      {/* ────────────  FAQ (SEO-rich) ──────────────────── */}
       <section className="bg-secondary text-white">
         <div className="layout-container py-16 sm:py-24">
           <div className="mx-auto max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Issue No. 05 — Common questions
+              FAQ
             </p>
             <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
               The things people ask before booking.
@@ -318,7 +351,7 @@ export default function Home() {
         />
       </section>
 
-      {/* ────────────  LETTER FROM THE WORKSHOP (sign-off card) ──── */}
+      {/* ────────────  GET STARTED (sign-off card) ──── */}
       <section className="layout-section">
         <div className="layout-container">
           <div className="mx-auto max-w-2xl">
@@ -329,17 +362,15 @@ export default function Home() {
               />
 
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                — A note from the workshop —
+                — Get started —
               </p>
               <h2 className="font-display mt-4 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                A small workshop, an honest quote.
+                Free survey. Fixed quote in 48 hours.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                We&apos;re a small team. We say yes when we can do the job
-                well, and we say no when we can&apos;t. If you call and
-                we&apos;re booked, we&apos;ll tell you. If your move is
-                straightforward, we&apos;ll come back with a fixed quote within
-                48 hours.
+                Tell us the room and what you want done — cabinets, a kitchen,
+                curtains, a sofa, flooring, a move, or a full fit-out. We survey
+                free and come back within 48 hours with a fixed, itemised quote.
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -349,7 +380,7 @@ export default function Home() {
                   asChild
                 >
                   <Link href="/quote">
-                    Ask for a quote
+                    Get a free quote
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>

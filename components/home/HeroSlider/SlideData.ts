@@ -1,44 +1,44 @@
 /**
- * Hero stories — Qatar Moving & Shifting.
+ * Hero stories — Doha Interiors.
  *
  * REPLACE-IMAGES: every `image` is an Unsplash placeholder, themed to its slide.
  * Final shoot direction:
- *   • Real Qatar locations (Lusail, Pearl, West Bay, compounds)
- *   • Branded crew uniforms in frame
+ *   • Real Qatar homes and kitchens (Lusail, Pearl, West Bay, compounds)
+ *   • Finished cabinetry with soft-close hardware in frame
  *   • Wide 16:10+ horizontal compositions
  */
 export const slides = [
   {
-    // Mover loading cardboard boxes into the back of a moving truck
+    // Custom wall cabinets and storage built into a home
     image:
-      "https://images.unsplash.com/photo-1715645948484-da40dd56bc93?auto=format&fit=crop&q=88&w=2400",
-    imageAlt: "Crew loading furniture and boxes into a moving truck",
-    eyebrow: "01 — Relocation",
-    title: "Move it.",
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=88&w=2400",
+    imageAlt: "Custom wall cabinets and storage built into a Doha home",
+    eyebrow: "01 — Wall cabinets",
+    title: "Built to fit.",
     subtitle:
-      "Surveyed, scheduled, and signed off — villa, apartment, or office moves done in one window.",
+      "Wall cabinets and storage units measured, made, and installed — flush to your walls, level every time.",
     chip: "Free survey",
   },
   {
-    // Warm, minimal living room with sofa, coffee table, soft daylight
+    // Built-in wardrobe with soft-close hardware
     image:
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=88&w=2400",
-    imageAlt: "Modern living room with sofa, curtains, and warm daylight",
-    eyebrow: "02 — Furnish",
-    title: "Furnish it.",
+      "https://images.unsplash.com/photo-1558211583-d26f610c1eb1?auto=format&fit=crop&q=88&w=2400",
+    imageAlt: "Built-in wardrobe with soft-close hardware",
+    eyebrow: "02 — Kitchens & wardrobes",
+    title: "Made to measure.",
     subtitle:
-      "Bespoke sofas, majlis builds, curtains, and floors — the same crew that moved you in.",
+      "Kitchen cabinetry, built-in wardrobes, and TV units — configured to your space and your finish.",
     chip: "Made-to-measure",
   },
   {
-    // Stylish furnished interior — finished, lived-in
+    // Living room with sofa and curtains
     image:
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=88&w=2400",
-    imageAlt: "Finished, fully-furnished home interior",
-    eyebrow: "03 — Done",
-    title: "Done.",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=88&w=2400",
+    imageAlt: "Living room with custom sofa and made-to-measure curtains",
+    eyebrow: "03 — Curtains & sofas",
+    title: "And the rest.",
     subtitle:
-      "One contact, one timeline, one invoice. From keys-in-hand to handover — no chasing.",
-    chip: "End-to-end",
+      "Curtains and blinds, custom sofas and majlis, flooring, and furniture moving — full services, one studio.",
+    chip: "One studio",
   },
 ] as const;

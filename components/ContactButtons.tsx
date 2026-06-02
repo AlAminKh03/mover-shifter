@@ -6,7 +6,7 @@ import { MessageCircle, Phone } from "lucide-react";
 
 export function ContactButtons() {
   const whatsappMessage = encodeURIComponent(
-    "Hi! I'd like a quote for moving / shifting in Qatar.",
+    "Hi! I'd like a quote for cabinets / interiors in Qatar.",
   );
 
   return (

@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
+  // Export every route as <route>/index.html so static hosts resolve clean URLs
+  // (e.g. /blog/, /blog/kitchen-cabinets-qatar-guide/) via directory-index
+  // lookup. Without this, routes export as flat .html files and many hosts 404
+  // on direct navigation or refresh.
+  trailingSlash: true,
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -14,7 +19,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "qatarfurnituredecor.com",
+        hostname: "dohainteriors.com",
       },
       {
         protocol: "https",

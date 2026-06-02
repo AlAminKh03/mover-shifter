@@ -4,132 +4,116 @@ import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
-import Image from "next/image";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import Link from "next/link";
 
 /* ──────────────────────────  DATA  ──────────────────────── */
 
-/* REPLACE-IMAGES: each thumbnail is an Unsplash placeholder, themed to its
-   service. All verified working. */
+/* Curated, high-quality interior photography (Unsplash). Swap for your own
+   job photos by replacing the IDs. */
 const u = (id: string, w = 400) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
 
 type Service = { slug: string; title: string; blurb: string; img: string; alt: string };
 
-const moveServices: Service[] = [
+const cabinetServices: Service[] = [
   {
-    slug: "home-moves",
-    title: "Home & villa moves",
+    slug: "wall-cabinets",
+    title: "Wall cabinets",
     blurb:
-      "Full or partial relocations across compounds, towers, and standalone villas. Wrap, load, drive, place.",
-    img: u("1715645948484-da40dd56bc93"),
-    alt: "Crew loading furniture into a moving truck",
-  },
-  {
-    slug: "office-moves",
-    title: "Office & retail shifting",
-    blurb:
-      "Phased moves with workstation breakdown and labelled inventory — designed to keep the business running.",
-    img: u("1450101499163-c8848c66ca85"),
-    alt: "Loaded van ready to depart",
-  },
-  {
-    slug: "packing",
-    title: "Packing & materials",
-    blurb:
-      "Boxes, bubble wrap, blankets, wardrobe cartons, tape — supplied. Glass, art, and electronics get extra care.",
-    img: u("1530124566582-a618bc2615dc"),
-    alt: "Stacked moving boxes",
-  },
-  {
-    slug: "transport",
-    title: "Furniture transport",
-    blurb:
-      "Right-sized vehicles for one item or one truck. Lift coordination and parking sorted in advance.",
-    img: u("1698917414969-feade59e3343"),
-    alt: "Mover unloading wrapped furniture",
-  },
-];
-
-const interiorServices: Service[] = [
-  {
-    slug: "fitted-cabinets",
-    title: "Fitted cabinets",
-    blurb:
-      "Kitchen, storage, and TV-unit cabinets — measured, built, and installed. Soft-close hardware, your finish.",
+      "Wall-mounted cabinets, storage walls, and display units — measured, built, and fitted flush and level. Soft-close hardware, your finish.",
     img: u("1556909114-f6e7ad7d3136"),
-    alt: "Built-in fitted cabinets in a furnished room",
+    alt: "Custom fitted wall cabinets",
+  },
+  {
+    slug: "kitchen-cabinets",
+    title: "Kitchen cabinets",
+    blurb:
+      "Full kitchen cabinetry to measure — base and wall units, tall larders, drawer banks. Moisture-resistant carcasses, soft-close throughout.",
+    img: u("1649361811423-a55616f7ab11"),
+    alt: "Fitted kitchen cabinetry",
   },
   {
     slug: "wardrobes",
     title: "Built-in wardrobes",
     blurb:
-      "Measured, built, installed. Soft-close hardware, configured to your clothes.",
+      "Measured, built, installed. Hinged or sliding doors, soft-close hardware, configured to your clothes.",
     img: u("1558211583-d26f610c1eb1"),
     alt: "Built-in wardrobe interior",
+  },
+  {
+    slug: "tv-units",
+    title: "TV units & storage joinery",
+    blurb:
+      "Media walls, TV units, shoe and entry storage, and bespoke shelving — built to the wall, finished to match.",
+    img: u("1672137233327-37b0c1049e77"),
+    alt: "Built-in storage joinery",
+  },
+];
+
+const finishesServices: Service[] = [
+  {
+    slug: "curtains",
+    title: "Curtains & blinds",
+    blurb:
+      "Measure, make, hang, dress. Sheers, blackout, roman and roller blinds, motorised tracks — and our own fabric library on site.",
+    img: u("1513161455079-7dc1de15ef3e"),
+    alt: "Made-to-measure curtains in a living room",
   },
   {
     slug: "custom-sofas",
     title: "Custom sofas & majlis",
     blurb:
-      "Made to measure. Frames, foam, fabric, leather — built in our Al Mansoura workshop.",
+      "Made to measure. Frames, foam, fabric, and leather — built to the size and feel you want.",
     img: u("1555041469-a586c61ea9bc"),
-    alt: "Living room sofa",
-  },
-  {
-    slug: "curtains",
-    title: "Curtains & blinds",
-    blurb:
-      "Measure, make, hang, dress. Motorised tracks and a fabric library on site.",
-    img: u("1513161455079-7dc1de15ef3e"),
-    alt: "Curtained living room",
-  },
-  {
-    slug: "flooring",
-    title: "SPC & wood flooring",
-    blurb:
-      "Waterproof SPC, Barkiya PVC, engineered wood. Subfloor prep, clean handover.",
-    img: u("1581858726788-75bc0f6a952d"),
-    alt: "Wood-look flooring",
+    alt: "Custom sofa and majlis seating",
   },
   {
     slug: "reupholstery",
     title: "Reupholstery",
     blurb:
-      "Frame check, refoam, refabric — leather and fabric. Pickup and return delivery.",
+      "Frame check, refoam, refabric — leather and fabric. Pickup and return delivery across Qatar.",
     img: u("1493663284031-b7e3aefcae8e"),
     alt: "Reupholstered seating",
   },
+  {
+    slug: "flooring",
+    title: "SPC & wood flooring",
+    blurb:
+      "Waterproof SPC, Barkiya PVC, and engineered wood. Subfloor prep and a clean handover.",
+    img: u("1581858726788-75bc0f6a952d"),
+    alt: "Wood-look flooring",
+  },
 ];
 
-const maintenanceServices: Service[] = [
+const extrasServices: Service[] = [
+  {
+    slug: "furniture-moving",
+    title: "Furniture moving & shifting",
+    blurb:
+      "Home, villa, and office moves across Qatar — wrap, load, drive, place. Bookable on its own or alongside a fit-out.",
+    img: u("1715645948484-da40dd56bc93"),
+    alt: "Crew loading furniture into a moving truck",
+  },
+  {
+    slug: "packing",
+    title: "Packing & transport",
+    blurb:
+      "Boxes, bubble wrap, blankets, wardrobe cartons, tape — supplied. Right-sized vehicles, glass and electronics handled with extra care.",
+    img: u("1530124566582-a618bc2615dc"),
+    alt: "Stacked moving boxes",
+  },
   {
     slug: "handyman",
-    title: "Handyman callouts",
+    title: "Handyman & small repairs",
     blurb:
-      "Hanging shelves, frames, and TVs. Tightening hinges and handles. Small repairs the day after you've moved in.",
+      "Hanging shelves and TVs, adjusting hinges and handles, touch-up paint, loose fittings. One visit, one invoice.",
     img: u("1581094794329-c8112a89af12"),
-    alt: "Toolbox and hand tools on a workbench",
-  },
-  {
-    slug: "touch-up-paint",
-    title: "Touch-up paint",
-    blurb:
-      "Scuffs, scratches, knocks. Colour-matched touch-ups and small re-coats — wall by wall, not a full repaint.",
-    img: u("1562259949-e8e7689d7828"),
-    alt: "Paint roller against a freshly painted wall",
-  },
-  {
-    slug: "fixings-repairs",
-    title: "Fixings & small repairs",
-    blurb:
-      "Squeaky doors, broken handles, drawer runners, loose fittings. One visit, one invoice.",
-    img: u("1503387762-592deb58ef4e"),
-    alt: "Hand tightening a door hinge with a screwdriver",
+    alt: "Hand tools on a workbench",
   },
 ];
 
-const allServices = [...moveServices, ...interiorServices, ...maintenanceServices];
+const allServices = [...cabinetServices, ...finishesServices, ...extrasServices];
 
 /* ──────────────────────────  PAGE  ─────────────────────── */
 
@@ -155,38 +139,66 @@ export default function ServicesPage() {
           </div>
 
           <h1 className="font-display mt-5 max-w-3xl text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem]">
-            Three chapters,{" "}
+            Everything for the room,{" "}
             <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
-              one workshop.
+              one team.
             </em>
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
-            Move you in. Furnish the rooms. Fix the small things after.
-            One free survey, one fixed quote within 48 hours — for any of them
-            or all three.
+            Wall cabinets, kitchens, and wardrobes — alongside curtains and
+            blinds, custom sofas and majlis, flooring, and furniture moving.
+            Book one or several: one free survey, one fixed quote within 48
+            hours.
           </p>
         </div>
       </section>
 
-      {/* ────────  SERVICES — two-column list  ──────── */}
+      {/* Curtains spotlight */}
+      <section className="layout-section pt-6">
+        <div className="layout-container">
+          <div className="mx-auto max-w-3xl">
+            <div className="rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8">
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                Curtains & blinds
+              </p>
+              <h3 className="font-display mt-2 text-xl font-bold leading-tight text-secondary">
+                Measure, make, hang — an end-to-end curtains service
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We offer sheers, blackout, roman and roller blinds, motorised tracks and an on-site fabric library. Tell us the window and we&apos;ll advise the best finish.
+              </p>
+              <div className="mt-4 flex gap-3">
+                <Link href="/quote" className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+                  Request a curtain quote
+                </Link>
+                <Link href="/work" className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium text-secondary hover:bg-muted">
+                  See curtain projects
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────  SERVICES — three-column list  ──────── */}
       <section className="layout-section pt-0">
         <div className="layout-container">
           <div className="grid gap-12 border-t border-border pt-12 lg:grid-cols-3 lg:gap-12">
             <ServiceColumn
               roman="I"
-              chapter="Moving & shifting"
-              services={moveServices}
+              chapter="Cabinets & joinery"
+              services={cabinetServices}
             />
             <ServiceColumn
               roman="II"
-              chapter="Furniture & fit-out"
-              services={interiorServices}
+              chapter="Curtains, sofas & finishes"
+              services={finishesServices}
             />
             <ServiceColumn
               roman="III"
-              chapter="House maintenance"
-              services={maintenanceServices}
+              chapter="Moving & extras"
+              services={extrasServices}
             />
           </div>
         </div>
@@ -202,14 +214,15 @@ export default function ServicesPage() {
                 aria-hidden
               />
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                — Send us the job —
+                — Get a quote —
               </p>
               <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                Tell us a bit about it.
+                Tell us about the job.
               </h2>
               <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                Dates, address, and roughly what&apos;s involved. We&apos;ll
-                come back within 48 hours with a fixed quote.
+                The room, the address, and roughly what you want done.
+                We&apos;ll come back within 48 hours with a fixed, itemised
+                quote.
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -219,7 +232,7 @@ export default function ServicesPage() {
                   asChild
                 >
                   <Link href="/quote">
-                    Ask for a quote
+                    Get a free quote
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -306,12 +319,11 @@ function ServiceColumn({
             className="group flex items-start gap-4 border-b border-border py-5 last:border-b-0 scroll-mt-24 sm:gap-5"
           >
             <div className="relative aspect-square h-16 shrink-0 overflow-hidden rounded-md bg-muted ring-1 ring-secondary/10 sm:h-20">
-              <Image
+              <OptimizedImage
                 src={s.img}
                 alt={s.alt}
                 fill
-                sizes="(max-width: 640px) 64px, 80px"
-                className="object-cover grayscale-[15%] transition-transform duration-500 group-hover:scale-110 group-hover:grayscale-0"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </div>
             <div className="min-w-0 flex-1">

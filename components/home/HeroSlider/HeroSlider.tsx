@@ -7,36 +7,38 @@ import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+/* Curated, high-quality interior photography (Unsplash). Swap for your own
+   job photos by replacing the IDs. */
 const u = (id: string, w: number) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
 
 const showcase = {
   hero: {
-    src: u("1715645948484-da40dd56bc93", 1600),
-    alt: "Crew loading furniture and boxes into a moving truck",
-    label: "Move",
+    src: u("1649361811423-a55616f7ab11", 1600),
+    alt: "Custom built-in cabinetry in a Qatar home",
+    label: "Cabinets",
   },
   side: [
     {
-      src: u("1618221195710-dd6b41faaea6", 800),
-      alt: "Furnished living room with sofa, curtains, and warm daylight",
-      label: "Furnish",
+      src: u("1513161455079-7dc1de15ef3e", 800),
+      alt: "Made-to-measure curtains in a living room",
+      label: "Curtains",
     },
     {
-      src: u("1558211583-d26f610c1eb1", 800),
-      alt: "Built-in wardrobe with soft-close hardware",
-      label: "Maintain",
+      src: u("1715645948484-da40dd56bc93", 800),
+      alt: "Crew loading furniture for a Qatar move",
+      label: "Moving & shifting",
     },
   ],
 };
 
 const trades = [
-  "Home & office moves",
-  "Packing & transport",
-  "Fitted cabinets & wardrobes",
-  "Custom sofas & majlis",
-  "Curtains & flooring",
-  "House maintenance",
+  "Wall cabinets",
+  "Kitchens & wardrobes",
+  "Curtains & blinds",
+  "Sofas & majlis",
+  "SPC & wood flooring",
+  "Furniture moving",
 ];
 
 export function HeroSlider() {
@@ -45,7 +47,7 @@ export function HeroSlider() {
   return (
     <section
       className="relative isolate overflow-hidden bg-secondary text-white"
-      aria-label="Qatar Moving & Shifting — moves, furniture, and house maintenance in Doha"
+      aria-label="Doha Interiors — cabinets, curtains, full rooms, and moving & shifting across Qatar"
     >
       <div
         className="pointer-events-none absolute -top-32 -left-40 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[120px]"
@@ -68,20 +70,26 @@ export function HeroSlider() {
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-primary" />
               <p className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-                {SITE.shortName} · Doha, Qatar
+                {SITE.shortName} · Al Wokra, Qatar
               </p>
             </div>
 
-            <h1 className="font-display mt-6 text-4xl font-extrabold leading-[1] tracking-tight sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
-              <span className="block">Move it.</span>
-              <span className="block">Furnish it.</span>
-              <span className="block text-gradient-orange">Maintain it.</span>
+            <h1 className="font-display mt-6 font-extrabold leading-[1.05] tracking-tight">
+              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+                Cabinets. Curtains.
+              </span>
+              <span className="mt-3 block text-lg font-semibold text-white/80 sm:text-xl md:text-2xl lg:text-[1.6rem]">
+                Whole rooms and moving &amp; shifting
+              </span>
+              <span className="mt-1 block text-4xl text-gradient-orange sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+                across Qatar.
+              </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
-              One Doha crew for home and office moves, fitted cabinets and
-              custom furniture, curtains, flooring — and the small repairs after
-              you&apos;ve settled in.
+              Wall cabinets, kitchens, wardrobes, curtains &amp; blinds, custom
+              sofas &amp; majlis, flooring, and furniture moving — one Qatar team
+              for the whole job.
             </p>
 
             <ul className="mt-7 flex flex-wrap gap-2">
@@ -124,7 +132,7 @@ export function HeroSlider() {
             </p>
           </motion.div>
 
-          {/* ───── Image showcase ───── */}
+          {/* ───── Showcase photos ───── */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -132,7 +140,6 @@ export function HeroSlider() {
             className="lg:col-span-6"
           >
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {/* Big primary tile — Furnish (the dream state) */}
               <figure className="relative col-span-2 aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-2xl">
                 <Image
                   src={showcase.hero.src}
@@ -142,12 +149,8 @@ export function HeroSlider() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
-                <span className="absolute left-3 top-3 rounded-full bg-secondary/85 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
-                  {showcase.hero.label}
-                </span>
               </figure>
 
-              {/* Two smaller tiles — Move + Maintain */}
               {showcase.side.map((tile) => (
                 <figure
                   key={tile.label}
@@ -160,9 +163,6 @@ export function HeroSlider() {
                     sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
                   />
-                  <span className="absolute left-3 top-3 rounded-full bg-secondary/85 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
-                    {tile.label}
-                  </span>
                 </figure>
               ))}
             </div>

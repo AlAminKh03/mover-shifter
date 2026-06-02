@@ -1,3 +1,10 @@
+import { SITE } from "@/config/site";
+
+/**
+ * Standalone LocalBusiness schema. The primary structured data lives inline in
+ * `app/layout.tsx`; this component mirrors it from `SITE` so any future use
+ * stays consistent with the live brand identity.
+ */
 export function JsonLd() {
   return (
     <script
@@ -6,32 +13,30 @@ export function JsonLd() {
         __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          name: "Qatar Furniture Decor",
-          image: "https://qatarfurnituredecor.com/logo.jpg",
+          name: SITE.name,
+          image: `${SITE.url}/social.jpg`,
           description:
-            "Premium furniture and decor store in Qatar offering luxury furniture and interior design services.",
-          "@id": "https://qatarfurnituredecor.com",
-          url: "https://qatarfurnituredecor.com",
-          telephone: "YOUR-PHONE",
-          priceRange: "$$",
+            "A Doha interiors studio in Qatar offering custom cabinets, kitchens, wardrobes, curtains, sofas & majlis, flooring, and furniture moving.",
+          "@id": `${SITE.url}#business`,
+          url: SITE.url,
+          telephone: SITE.phoneE164,
+          email: SITE.email,
+          priceRange: "$$$$",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "YOUR-ADDRESS",
-            addressLocality: "Doha",
-            addressRegion: "Doha",
-            postalCode: "YOUR-POSTAL",
+            streetAddress: SITE.addressLine,
+            addressLocality: SITE.city,
+            addressRegion: SITE.country,
             addressCountry: "QA",
           },
           geo: {
             "@type": "GeoCoordinates",
-            latitude: "25.276987",
-            longitude: "55.296233",
+            latitude: 25.1654,
+            longitude: 51.6047,
           },
-          sameAs: [
-            "YOUR-FACEBOOK-URL",
-            "YOUR-INSTAGRAM-URL",
-            // Add other social media URLs
-          ],
+          sameAs: (Object.values(SITE.socials) as string[]).filter(
+            (u) => u.length > 0,
+          ),
         }),
       }}
     />
@@ -46,16 +51,16 @@ export function HomePageJsonLd() {
         __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Store",
-          name: "Your Store Name",
-          description: "Luxury furniture and home decor store in Qatar",
+          name: SITE.name,
+          description: SITE.tagline,
+          url: SITE.url,
+          telephone: SITE.phoneE164,
           address: {
             "@type": "PostalAddress",
-            addressCountry: "Qatar",
-            addressLocality: "Doha",
+            addressCountry: SITE.country,
+            addressLocality: SITE.city,
           },
           priceRange: "$$$$",
-          hasMap: "your-google-maps-url",
-          telephone: "your-phone-number",
           openingHours: "Mo-Su 09:00-22:00",
         }),
       }}

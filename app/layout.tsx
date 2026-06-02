@@ -30,22 +30,22 @@ const fontDisplay = Syne({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | Home & office moves in Doha, Qatar`,
+    default: `${SITE.name} | Wall Cabinets, Kitchens & Wardrobes in Doha, Qatar`,
     template: `%s | ${SITE.name}`,
   },
   description:
-    "Qatar Moving & Shifting: home and office moves, fitted cabinets and custom furniture, curtains, flooring, and small house maintenance — one Doha crew, one fixed quote within 48 hours.",
+    "Doha Interiors — a Qatar interiors studio. Custom wall cabinets, kitchen cabinets, and built-in wardrobes, plus curtains & blinds, custom sofas & majlis, SPC & wood flooring, reupholstery, and furniture moving across Qatar. Free survey, fixed quote within 48 hours.",
   keywords:
-    "moving company Qatar, movers Doha, villa relocation Qatar, office shifting Doha, furniture movers Qatar, packing service Qatar, home moving Lusail, Pearl Qatar movers, shifting service Qatar, نقل عفش قطر, نقل اثاث الدوحة, furniture upholstery Qatar, curtains installation Qatar, fitted cabinets Doha, kitchen cabinet maker Qatar, house maintenance Doha, handyman Qatar",
-  category: "moving, relocation, logistics, Qatar business",
+    "wall cabinets Qatar, wall cabinet Doha, kitchen cabinets Qatar, kitchen cabinet maker Doha, built-in wardrobes Qatar, fitted cabinets Doha, custom cabinets Qatar, TV unit cabinet Qatar, storage cabinet Doha, wardrobe maker Qatar, joinery Qatar, carpentry Doha, خزائن حائط قطر, خزائن مطبخ قطر, دواليب قطر, خزائن الدوحة, نجار قطر, custom sofa Qatar, majlis maker Doha, curtains Qatar, SPC flooring Qatar, furniture moving Qatar",
+  category: "cabinet maker, joinery, interior fit-out, Qatar business",
   verification: {
     google: "wuWIEoRpkPuTjhHF6OVoAPH5lxltE5qq5qeKfgC-7fs",
   },
   other: {
     "geo.region": "QA",
-    "geo.placename": "Doha",
-    "geo.position": "25.2854;51.5310",
-    ICBM: "25.2854, 51.5310",
+    "geo.placename": "Al Wakrah",
+    "geo.position": "25.1654;51.6047",
+    ICBM: "25.1654, 51.6047",
     "property:fb:app_id": "1234567890",
   },
   alternates: {
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: `${SITE.name} | Moves, furniture & maintenance in Qatar`,
+    title: `${SITE.name} | Cabinets, curtains, sofas & more in Qatar`,
     description:
-      "Home and office moves, fitted cabinets and custom furniture, curtains, flooring, and small house maintenance — one Doha crew, one fixed quote.",
+      "A Doha interiors studio: wall cabinets, kitchens, and wardrobes, plus curtains & blinds, custom sofas & majlis, flooring, and furniture moving across Qatar.",
     url: SITE.url,
     siteName: SITE.name,
     images: [
@@ -74,9 +74,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} | Movers in Qatar`,
+    title: `${SITE.name} | Cabinets, curtains & sofas in Qatar`,
     description:
-      "Moving, packing, and shifting across Qatar — with full furniture and interior support when you need it.",
+      "A Doha interiors studio — wall cabinets, kitchens, wardrobes, curtains & blinds, custom sofas & majlis, flooring, and furniture moving across Qatar.",
     images: [`${SITE.url}/social.jpg`],
   },
   robots: {
@@ -170,7 +170,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": ["MovingCompany", "LocalBusiness"],
+              "@type": ["HomeAndConstructionBusiness", "LocalBusiness"],
               "@id": `${SITE.url}#business`,
               name: SITE.name,
               image: {
@@ -180,23 +180,22 @@ export default function RootLayout({
                 height: 630,
               },
               description:
-                "Moving, packing, and shifting services in Qatar — home and office relocations, fitted cabinets and custom furniture making, upholstery, curtains, flooring, and small house maintenance.",
+                "Qatar interiors studio in Doha — wall cabinets, kitchen cabinets, built-in wardrobes, and TV units, plus curtains and blinds, custom sofas and majlis, SPC and wood flooring, reupholstery, and furniture moving across Qatar.",
               url: SITE.url,
               telephone: SITE.phoneE164,
               email: SITE.email,
               priceRange: "$$$$",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Al Mansoura",
-                addressLocality: "Doha",
+                streetAddress: "Al Wokra",
+                addressLocality: "Al Wakrah",
                 addressRegion: "Qatar",
                 addressCountry: "QA",
-                postalCode: "24242",
               },
               geo: {
                 "@type": "GeoCoordinates",
-                latitude: 25.2692576,
-                longitude: 51.5294645,
+                latitude: 25.1654,
+                longitude: 51.6047,
               },
               openingHoursSpecification: {
                 "@type": "OpeningHoursSpecification",
@@ -216,7 +215,7 @@ export default function RootLayout({
                 (u) => u.length > 0,
               ),
               hasMap:
-                "https://www.google.com/maps/place/Al+Mansoura,+Doha,+Qatar/@25.2688726,51.5238892,1966m/",
+                "https://www.google.com/maps/place/Al+Wakrah,+Qatar/@25.1654,51.6047,14z/",
               areaServed: {
                 "@type": "State",
                 name: "Qatar",
@@ -252,36 +251,54 @@ export default function RootLayout({
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Home and villa moving",
+                    name: "Custom wall cabinets",
                     description:
-                      "Residential relocation, loading, transport, and placement in Qatar",
+                      "Wall-mounted cabinets and storage units measured, built, and installed across Qatar",
                   },
                 },
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Office and commercial shifting",
+                    name: "Kitchen cabinets",
                     description:
-                      "Business moves with scheduling to minimise downtime",
+                      "Made-to-measure kitchen cabinetry with soft-close hardware, fitted in Doha",
                   },
                 },
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Packing and furniture transport",
+                    name: "Built-in wardrobes & TV units",
                     description:
-                      "Careful packing, unpacking, and delivery of furniture and goods",
+                      "Built-in wardrobes, TV units, and storage joinery configured to your space",
                   },
                 },
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Custom furniture and upholstery",
+                    name: "Curtains & blinds",
                     description:
-                      "Bespoke furniture, reupholstery, curtains, and installation",
+                      "Made-to-measure curtains, blinds, and motorised tracks fitted across Qatar",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Custom sofas & majlis",
+                    description:
+                      "Bespoke sofas, majlis builds, and reupholstery in fabric or leather",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Flooring & furniture moving",
+                    description:
+                      "SPC and wood flooring, plus home, villa, and office furniture moving across Qatar",
                   },
                 },
               ],

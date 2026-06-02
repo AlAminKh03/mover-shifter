@@ -147,7 +147,7 @@ export default function QuotePage() {
             <Field label="Location" required error={form.formState.errors.location?.message}>
               <Input
                 {...form.register("location")}
-                placeholder="e.g. West Bay villa → Lusail apartment"
+                placeholder="e.g. Lusail apartment — kitchen + 2 wardrobes"
                 className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
               />
             </Field>
@@ -213,7 +213,7 @@ export default function QuotePage() {
               <Textarea
                 rows={3}
                 {...form.register("notes")}
-                placeholder="Dates, fragile items, parking — anything that helps us quote."
+                placeholder="Rough sizes, finish ideas, deadline — anything that helps us quote."
                 className="rounded-lg border-border bg-background focus-visible:ring-primary resize-none"
               />
             </Field>

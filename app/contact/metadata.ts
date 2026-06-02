@@ -5,11 +5,11 @@ export const metadata: Metadata = {
   title: `Contact ${SITE.name} — Doha, Qatar`,
   description: `WhatsApp, phone, or email — pick what suits you. Workshop in ${SITE.addressLine}, ${SITE.city}. Replies within 48 hours, usually faster.`,
   keywords: [
-    "contact moving company Qatar",
-    "moving company phone Doha",
-    "movers Qatar email",
-    "WhatsApp moving Qatar",
-    "Al Mansoura moving company",
+    "contact cabinet maker Qatar",
+    "wall cabinets phone Doha",
+    "curtains Qatar contact",
+    "WhatsApp interiors studio Qatar",
+    "Al Wokra joinery workshop",
     "furniture workshop Doha",
   ],
   alternates: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Contact | ${SITE.name}`,
     description:
-      "WhatsApp, phone, or email — pick what suits you. Workshop in Al Mansoura, Doha.",
+      "WhatsApp, phone, or email — pick what suits you. Workshop in Al Wokra, Qatar.",
     url: `${SITE.url}/contact`,
     siteName: SITE.name,
     images: [

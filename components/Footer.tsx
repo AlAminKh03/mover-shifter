@@ -11,11 +11,11 @@ const Footer = () => {
         <div className="mb-12 rounded-2xl border border-border/70 bg-gradient-to-br from-primary/[0.12] via-card to-secondary/35 p-8 md:flex md:items-center md:justify-between md:gap-8 md:p-10">
           <div className="max-w-xl">
             <p className="font-display text-xl font-semibold text-foreground md:text-2xl">
-              Planning a move in Doha or beyond?
+              Planning cabinets, curtains, or a full fit-out in Doha?
             </p>
             <p className="mt-2 text-sm text-muted-foreground md:text-base">
-              Send your locations and dates — we&apos;ll reply with a clear plan
-              and quote.
+              Send your room sizes or a few photos — we&apos;ll reply with a
+              clear plan and a fixed quote.
             </p>
           </div>
           <div className="mt-6 flex shrink-0 flex-col gap-3 sm:flex-row md:mt-0">
@@ -35,8 +35,8 @@ const Footer = () => {
               <span className="font-display text-lg font-bold">{SITE.name}</span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-              {SITE.tagline} We also craft and install furniture, curtains, and
-              flooring when your space needs more than a move.
+              {SITE.tagline} One Qatar team — surveyed free, made, delivered,
+              and fitted across Qatar.
             </p>
           </div>
 
@@ -51,6 +51,7 @@ const Footer = () => {
                   ["/about", "About"],
                   ["/services", "Services"],
                   ["/work", "Our work"],
+                  ["/blog", "Blog"],
                   ["/contact", "Contact"],
                   ["/quote", "Get a quote"],
                 ].map(([href, label]) => (
@@ -70,10 +71,10 @@ const Footer = () => {
                 What we do
               </h3>
               <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-                <li>Home, villa & office moves</li>
-                <li>Packing, transport & delivery</li>
-                <li>Custom furniture & upholstery</li>
-                <li>Curtains, flooring & installation</li>
+                <li>Wall cabinets, kitchens & wardrobes</li>
+                <li>Curtains & blinds</li>
+                <li>Custom sofas, majlis & reupholstery</li>
+                <li>Flooring & furniture moving</li>
               </ul>
             </div>
           </div>
@@ -104,7 +105,7 @@ const Footer = () => {
               <li className="flex gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <span className="text-muted-foreground">
-                  {SITE.addressLine}, {SITE.city}, {SITE.country}
+                  {SITE.city}, {SITE.country}
                 </span>
               </li>
             </ul>

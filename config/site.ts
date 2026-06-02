@@ -1,16 +1,16 @@
 /** Public site identity — swap assets under /public when your final brand pack is ready. */
 export const SITE = {
-  name: "Qatar Moving & Shifting",
-  shortName: "QMS Qatar",
-  url: "https://qatarfurnituredecor.com",
+  name: "Doha Interiors",
+  shortName: "Doha Interiors",
+  url: "https://dohainteriors.com",
   tagline:
-    "Move it. Furnish it. Done. — One trusted crew for relocations, fit-outs, and everything between in Qatar.",
+    "Wall cabinets, built to fit. — A Doha interiors studio: cabinets, kitchens, wardrobes, curtains, sofas & majlis, flooring, and furniture moving across Qatar.",
   email: "yusufahmedjoy353@gmail.com",
-  phoneDisplay: "+974 6663 1317",
-  phoneE164: "+97466631317",
-  whatsappNumber: "97466631317",
-  addressLine: "Al Mansoura",
-  city: "Doha",
+  phoneDisplay: "+974 6661 9808",
+  phoneE164: "+97466619808",
+  whatsappNumber: "97466619808",
+  addressLine: "Al Wokra",
+  city: "Al Wokra",
   country: "Qatar",
   /**
    * Social URLs — empty until real handles are set.

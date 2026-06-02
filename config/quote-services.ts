@@ -4,25 +4,31 @@
  */
 export const quoteServiceGroups = [
   {
-    label: "Moving & shifting",
+    label: "Wall cabinets & joinery",
     options: [
-      "Home or villa move",
-      "Apartment move",
-      "Office or retail move",
-      "Packing only",
-      "Furniture transport",
+      "Wall cabinets",
+      "Kitchen cabinets",
+      "Built-in wardrobe",
+      "TV unit or media wall",
+      "Storage / shelving joinery",
+      "Rework or re-door existing cabinets",
     ],
   },
   {
-    label: "Furniture & fit-out",
+    label: "Curtains, sofas & finishes",
     options: [
+      "Curtains or blinds",
       "Custom sofa or majlis",
       "Reupholstery",
-      "Curtains or blinds",
       "SPC or wood flooring",
-      "Built-in wardrobe",
-      "Bed or headboard install",
-      "TV unit install",
+    ],
+  },
+  {
+    label: "Moving & extras",
+    options: [
+      "Furniture moving / shifting",
+      "Packing & transport",
+      "Handyman & small repairs",
     ],
   },
   {

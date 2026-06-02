@@ -2,15 +2,15 @@ import { SITE } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: `About ${SITE.name} | Movers & interior fit-out in Qatar`,
+  title: `About ${SITE.name} | A Doha interiors studio`,
   description:
-    "Since 2008. Two trades, one shop — moving, packing, and the interior fit-out that follows. Meet the team Qatar trusts twice.",
+    "An Al Wokra interiors studio for Qatar — wall cabinets, kitchens, and wardrobes alongside curtains, custom sofas and majlis, flooring, and furniture moving. Measured, made, and fitted by the same crew.",
   keywords:
-    "about movers Qatar, moving company Doha, relocation Qatar, furniture services Qatar, interior fit-out Doha, نقل عفش قطر",
+    "cabinet maker Qatar, interiors studio Doha, kitchen cabinets Qatar, curtains Doha, custom sofa Qatar, joinery workshop Doha, نجار قطر, خزائن قطر",
   openGraph: {
     title: `About ${SITE.name}`,
     description:
-      "Built for Qatar. Backed by repeat business. Moving + interior fit-out under one team.",
+      "Built for Qatar. Backed by repeat business. Cabinets, curtains, sofas, flooring, and moving from one workshop.",
     images: [
       {
         url: `${SITE.url}/social.jpg`,

@@ -85,12 +85,12 @@ export default function Contact() {
                 Find us
               </p>
               <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                The workshop in Al Mansoura.
+                Our Al Wokra workshop.
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Surveys are done at your place — no need to come over. But if
-                you&apos;d like to see the workshop or check fabric samples,
-                you&apos;re welcome to drop in.
+                Site measures are done at your place — no need to come over.
+                But if you&apos;d like to see the workshop or check door and
+                finish samples, you&apos;re welcome to drop in.
               </p>
 
               <dl className="mt-6 space-y-4 text-sm">
@@ -99,7 +99,7 @@ export default function Contact() {
                     Address
                   </dt>
                   <dd className="mt-1 font-display text-base font-bold text-secondary">
-                    {SITE.addressLine}, {SITE.city}, {SITE.country}
+                    {SITE.city}, {SITE.country}
                   </dd>
                 </div>
                 <div>
@@ -130,7 +130,7 @@ export default function Contact() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-muted shadow-md sm:aspect-video">
                 <iframe
                   src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-                  title="Al Mansoura, Doha — workshop location"
+                  title="Al Wokra, Qatar — workshop location"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="absolute inset-0 h-full w-full border-0"

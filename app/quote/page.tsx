@@ -5,13 +5,13 @@ import QuotePage from "./quote";
 export const metadata: Metadata = {
   title: `Ask for a quote | ${SITE.name}`,
   description:
-    "A few details now, a fixed quote in 48 hours. Free survey at your place. Moves, packing, sofas, curtains, flooring, wardrobes — across Qatar.",
+    "A few details now, a fixed quote in 48 hours. Free site measure across Qatar — cabinets, kitchens, wardrobes, curtains, sofas and majlis, flooring, and furniture moving. Book one or several.",
   keywords: [
-    "moving quote Qatar",
-    "moving quote Doha",
-    "free survey movers Qatar",
-    "fixed quote moving company",
-    "furniture quote Doha",
+    "wall cabinets quote Qatar",
+    "kitchen cabinets quote Doha",
+    "curtains quote Qatar",
+    "custom sofa quote Doha",
+    "furniture moving quote Qatar",
     "interior fit-out quote Qatar",
   ],
   alternates: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Ask for a quote | ${SITE.name}`,
     description:
-      "Free survey, fixed itemised quote within 48 hours — moves and fit-out across Qatar.",
+      "Free site measure, fixed itemised quote within 48 hours — cabinets, curtains, sofas, flooring, and moving across Qatar.",
     url: `${SITE.url}/quote`,
     siteName: SITE.name,
     images: [
