@@ -58,8 +58,8 @@ export function HeroSlider() {
         aria-hidden
       />
 
-      <div className="layout-container relative pt-10 pb-16 sm:pt-10 sm:pb-20">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+      <div className="layout-container relative pt-8 pb-12 sm:pt-10 sm:pb-16 lg:pb-20">
+        <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
           {/* ───── Text panel ───── */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -75,69 +75,70 @@ export function HeroSlider() {
             </div>
 
             <h1 className="font-display mt-6 font-extrabold leading-[1.05] tracking-tight">
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-[4.5rem]">
                 Cabinets. Curtains.
               </span>
-              <span className="mt-3 block text-lg font-semibold text-white/80 sm:text-xl md:text-2xl lg:text-[1.6rem]">
+              <span className="mt-2 block text-base font-semibold text-white/80 sm:text-lg md:text-xl lg:text-[1.6rem] lg:mt-3">
                 Whole rooms and moving &amp; shifting
               </span>
-              <span className="mt-1 block text-4xl text-gradient-orange sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+              <span className="mt-1 block text-3xl text-gradient-orange sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-[4.5rem]">
                 across Qatar.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:mt-6 sm:text-base lg:text-lg">
               Wall cabinets, kitchens, wardrobes, curtains &amp; blinds, custom
               sofas &amp; majlis, flooring, and furniture moving — one Qatar team
               for the whole job.
             </p>
 
-            <ul className="mt-7 flex flex-wrap gap-2">
+            <ul className="mt-5 flex flex-wrap gap-1.5 sm:gap-2 sm:mt-7">
               {trades.map((t) => (
                 <li
                   key={t}
-                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/85 backdrop-blur-sm"
+                  className="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-xs"
                 >
                   {t}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-wrap sm:flex-row sm:items-center sm:gap-3">
               <Button
                 size="lg"
-                className="group h-14 gap-2 rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:bg-primary/90 glow-orange"
+                className="group h-12 w-full gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg hover:bg-primary/90 glow-orange sm:h-14 sm:w-auto sm:px-8 sm:text-base"
                 asChild
               >
                 <Link href="/quote">
                   Get a free quote
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="h-14 gap-2 rounded-full border-white/30 bg-white/5 px-8 text-base font-medium text-white backdrop-blur-md hover:bg-white/10 hover:text-white"
+                className="h-12 w-full gap-2 rounded-full border-white/30 bg-white/5 px-6 text-sm font-medium text-white backdrop-blur-md hover:bg-white/10 hover:text-white sm:h-14 sm:w-auto sm:px-8 sm:text-base"
                 asChild
               >
                 <a href={`tel:${SITE.phoneE164}`}>
                   <Phone className="h-4 w-4" />
-                  {SITE.phoneDisplay}
+                  <span className="sm:inline">{SITE.phoneDisplay}</span>
+                  <span className="inline sm:hidden">Call</span>
                 </a>
               </Button>
             </div>
 
-            <p className="mt-5 text-sm text-white/60">
+            <p className="mt-4 text-xs text-white/60 sm:mt-5 sm:text-sm">
               Free survey · Fixed quote within 48 hours · No surprises after.
             </p>
           </motion.div>
 
-          {/* ───── Showcase photos ───── */}
+          {/* ───── Showcase photos (hidden on mobile, shown on tablet+) ───── */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-            className="lg:col-span-6"
+            className="hidden lg:block lg:col-span-6"
           >
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <figure className="relative col-span-2 aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-2xl">
@@ -146,7 +147,7 @@ export function HeroSlider() {
                   alt={showcase.hero.alt}
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="50vw"
                   className="object-cover"
                 />
               </figure>
@@ -160,7 +161,7 @@ export function HeroSlider() {
                     src={tile.src}
                     alt={tile.alt}
                     fill
-                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    sizes="25vw"
                     className="object-cover"
                   />
                 </figure>

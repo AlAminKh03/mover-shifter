@@ -46,14 +46,9 @@ export const metadata: Metadata = {
     "geo.placename": "Al Wakrah",
     "geo.position": "25.1654;51.6047",
     ICBM: "25.1654, 51.6047",
-    "property:fb:app_id": "1234567890",
   },
   alternates: {
     canonical: SITE.url,
-    languages: {
-      "en-US": SITE.url,
-      "ar-QA": `${SITE.url}/ar`,
-    },
   },
   openGraph: {
     type: "website",

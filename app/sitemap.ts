@@ -6,7 +6,6 @@ import { posts } from "./blog/posts";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const routes: { path: string; priority: number; changeFrequency: "yearly" | "monthly" | "weekly" }[] = [
     { path: "", priority: 1, changeFrequency: "monthly" },
     { path: "/about", priority: 0.8, changeFrequency: "monthly" },
@@ -17,9 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   ];
 
+  // No lastModified: these pages don't track real per-page edit dates, and
+  // stamping them with the build timestamp on every deploy would misrepresent
+  // freshness to crawlers.
   const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
     url: `${SITE.url}${r.path}`,
-    lastModified,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));

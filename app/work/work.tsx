@@ -11,11 +11,6 @@ import { useState } from "react";
 
 /* ──────────────────────────  DATA  ──────────────────────── */
 
-/* Curated, high-quality interior photography (Unsplash). Swap for your own
-   job photos by replacing the IDs. */
-const u = (id: string, w = 1000) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
-
 type Category =
   | "All"
   | "Wall cabinets"
@@ -33,30 +28,23 @@ type Tile = {
 };
 
 const tiles: Tile[] = [
-  // Wall cabinets
-  { id: "wall-1", category: "Wall cabinets", caption: "Wall-mounted cabinets", img: u("1556909114-f6e7ad7d3136") },
-  { id: "wall-2", category: "Wall cabinets", caption: "Storage walls", img: u("1672137233327-37b0c1049e77") },
-  { id: "wall-3", category: "Wall cabinets", caption: "Display & open shelving", img: u("1649361811423-a55616f7ab11") },
-
-  // Kitchens
-  { id: "kitchen-1", category: "Kitchens", caption: "Fitted kitchen cabinetry", img: u("1649361811423-a55616f7ab11") },
-  { id: "kitchen-2", category: "Kitchens", caption: "Islands & tall larders", img: u("1556909114-f6e7ad7d3136") },
-
-  // Wardrobes & storage
-  { id: "wardrobe-1", category: "Wardrobes & storage", caption: "Built-in wardrobes", img: u("1558211583-d26f610c1eb1") },
-  { id: "wardrobe-2", category: "Wardrobes & storage", caption: "Walk-in closets", img: u("1672137233327-37b0c1049e77") },
-  { id: "wardrobe-3", category: "Wardrobes & storage", caption: "TV & media units", img: u("1649361811423-a55616f7ab11") },
-
-  // Sofas
-  { id: "sofa-1", category: "Sofas", caption: "Custom sofas & majlis", img: u("1555041469-a586c61ea9bc") },
+  // Sofas & seating
+  { id: "sofa-1", category: "Sofas", caption: "Modern sofa arrangement", img: "/work/sofas/modern-sofa-arrangement.webp" },
+  { id: "sofa-4", category: "Sofas", caption: "Formal seating arrangement", img: "/work/sofas/formal-seating-arrangement.webp" },
+  { id: "chair-1", category: "Sofas", caption: "Cream upholstered chairs", img: "/work/chairs/cream-upholstered-chair-front.webp" },
+  { id: "chair-2", category: "Sofas", caption: "Chair embroidery detail", img: "/work/chairs/chair-embroidery-detail.webp" },
+  { id: "chair-4", category: "Sofas", caption: "Upholstered chair detail", img: "/work/chairs/upholstered-chair-detail.webp" },
+  { id: "dining-1", category: "Sofas", caption: "Luxury dining set", img: "/work/dining/luxury-dining-set-formal.webp" },
+  { id: "dining-2", category: "Sofas", caption: "Elegant dining interior", img: "/work/dining/elegant-dining-interior.webp" },
 
   // Curtains
-  { id: "curtain-1", category: "Curtains", caption: "Curtains & blinds", img: u("1513161455079-7dc1de15ef3e") },
-  { id: "curtain-2", category: "Curtains", caption: "Roman blinds & sheers", img: u("1513161455079-7dc1de15ef3e") },
+  { id: "curtain-1", category: "Curtains", caption: "Luxury office curtains", img: "/work/curtains/luxury-office-curtains-doha.webp" },
+  { id: "curtain-2", category: "Curtains", caption: "Elegant curtains & blinds", img: "/work/curtains/elegant-curtains-interior-design.webp" },
+  { id: "curtain-3", category: "Curtains", caption: "Floor-to-ceiling curtains", img: "/work/curtains/floor-to-ceiling-curtains-qatar.webp" },
 
   // Flooring & moving
-  { id: "floor-1", category: "Flooring & moving", caption: "SPC & wood flooring", img: u("1581858726788-75bc0f6a952d") },
-  { id: "moving-1", category: "Flooring & moving", caption: "Furniture moving & shifting", img: u("1715645948484-da40dd56bc93") },
+  { id: "moving-4", category: "Flooring & moving", caption: "Careful furniture handling", img: "/work/moving/careful-furniture-handling.webp" },
+  { id: "moving-5", category: "Flooring & moving", caption: "Moving truck loading", img: "/work/moving/moving-truck-loading.webp" },
 ];
 
 const categories: Category[] = [
@@ -90,7 +78,7 @@ export default function WorkPage() {
           className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,hsl(18_100%_96%/0.5),transparent_60%)]"
           aria-hidden
         />
-        <div className="layout-container pt-20 pb-8 sm:pt-24 sm:pb-12">
+        <div className="layout-container pt-16 pb-6 sm:pt-20 sm:pb-8 lg:pt-24 lg:pb-12">
           <div className="flex items-baseline gap-3">
             <span className="h-px w-10 bg-secondary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
@@ -98,14 +86,14 @@ export default function WorkPage() {
             </span>
           </div>
 
-          <h1 className="font-display mt-5 max-w-3xl text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem]">
+          <h1 className="font-display mt-4 max-w-3xl text-2xl font-extrabold leading-[1.05] tracking-tight text-secondary sm:mt-5 sm:text-3xl lg:text-5xl lg:text-[3.75rem]">
             What we build,{" "}
-            <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
+            <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[6px] sm:underline-offset-[8px]">
               by category.
             </em>
           </h1>
 
-          <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
+          <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-muted-foreground sm:mt-5 sm:text-base lg:text-lg lg:leading-[1.7]">
             Cabinets, kitchens, wardrobes, curtains, sofas, flooring, and
             furniture moving across Qatar. Filter below — and ask us for photos
             of finished jobs in your area.
@@ -116,13 +104,13 @@ export default function WorkPage() {
       {/* ────────  CATEGORY FILTER  ──────── */}
       <div className="border-y border-border bg-muted/40">
         <div className="layout-container">
-          <div className="flex gap-2 overflow-x-auto py-4 sm:gap-3 sm:py-5">
+          <div className="flex gap-1.5 overflow-x-auto py-3 sm:gap-2 sm:py-4">
             {categories.map((c) => (
               <button
                 key={c}
                 onClick={() => setActive(c)}
                 type="button"
-                className={`shrink-0 rounded-full border px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.18em] transition-colors sm:px-5 sm:py-2 sm:text-xs ${
+                className={`shrink-0 rounded-full border px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] transition-colors sm:px-4 sm:py-2 sm:text-[11px] ${
                   active === c
                     ? "border-secondary bg-secondary text-white"
                     : "border-border bg-background text-muted-foreground hover:border-secondary/40 hover:text-foreground"
@@ -135,10 +123,10 @@ export default function WorkPage() {
         </div>
       </div>
 
-      {/* ────────  GALLERY GRID  ──────── */}
-      <section className="layout-section pt-10">
+      {/* ────────  GALLERY GRID (responsive: 1-2 cols mobile, 3-4 desktop) ──────── */}
+      <section className="layout-section pt-8 sm:pt-10">
         <div className="layout-container">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+          <div className="grid gap-2.5 sm:gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {uniqueFiltered.map((t, i) => (
               <motion.figure
                 key={t.id}
@@ -146,7 +134,7 @@ export default function WorkPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
                 whileHover={{ y: -3 }}
-                className="group relative aspect-square overflow-hidden rounded-md bg-muted ring-1 ring-secondary/10"
+                className="group relative aspect-square overflow-hidden rounded-lg bg-muted ring-1 ring-secondary/10"
               >
                 <OptimizedImage
                   src={t.img}
@@ -167,10 +155,10 @@ export default function WorkPage() {
       </section>
 
       {/* ────────  SIGN-OFF  ──────── */}
-      <section className="layout-section pt-0">
+      <section className="layout-section pt-6 sm:pt-8">
         <div className="layout-container">
           <div className="mx-auto max-w-2xl">
-            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-8 shadow-xl sm:p-10">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-xl sm:rounded-[2rem] sm:p-8 lg:p-10">
               <span
                 className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-[-2deg] bg-primary/25"
                 aria-hidden
@@ -178,19 +166,19 @@ export default function WorkPage() {
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 — Want to see real jobs? —
               </p>
-              <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
+              <h2 className="font-display mt-2 text-xl font-bold leading-tight text-secondary sm:mt-3 sm:text-2xl lg:text-3xl">
                 Ask us — we&apos;ll send photos.
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:mt-3 sm:text-base lg:text-lg">
                 Tell us which category you&apos;re interested in and we&apos;ll
                 send photos of finished jobs by WhatsApp, plus a fixed quote for
                 yours.
               </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-5 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:gap-3">
                 <Button
                   size="lg"
-                  className="h-12 w-full gap-2 rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1"
+                  className="h-12 w-full gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1 sm:px-7 sm:text-base"
                   asChild
                 >
                   <Link href="/quote">
@@ -201,7 +189,7 @@ export default function WorkPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-12 w-full gap-2 rounded-full border-secondary/20 bg-background px-7 text-base font-medium text-secondary hover:bg-muted sm:w-auto"
+                  className="h-12 w-full gap-2 rounded-full border-secondary/20 bg-background px-6 text-sm font-medium text-secondary hover:bg-muted sm:w-auto sm:px-7 sm:text-base"
                   asChild
                 >
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
@@ -212,7 +200,7 @@ export default function WorkPage() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="h-12 w-full gap-2 rounded-full px-5 text-base font-medium text-muted-foreground hover:bg-muted sm:w-auto"
+                  className="h-12 w-full gap-2 rounded-full px-5 text-sm font-medium text-muted-foreground hover:bg-muted sm:w-auto sm:text-base"
                   asChild
                 >
                   <a href={`tel:${SITE.phoneE164}`}>

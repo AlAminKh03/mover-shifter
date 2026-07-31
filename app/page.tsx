@@ -8,11 +8,6 @@ import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-/* Curated, high-quality interior photography (Unsplash). Swap for your own
-   job photos by replacing the IDs. */
-const u = (id: string, w = 700) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
-
 /* What we do — a multi-service studio, cabinets shown first, and what we don't. */
 const services = [
   {
@@ -83,15 +78,20 @@ const faq: { q: string; a: string }[] = [
   },
 ];
 
-/* Recent-work gallery — curated interior photography. Replace IDs with your
-   own job photos when ready. */
-const gallery: { label: string; id: string; rot: number }[] = [
-  { label: "Wall cabinets", id: "1556909114-f6e7ad7d3136", rot: -2.5 },
-  { label: "Curtains & blinds", id: "1513161455079-7dc1de15ef3e", rot: 2 },
-  { label: "Custom sofas & majlis", id: "1555041469-a586c61ea9bc", rot: -1.5 },
-  { label: "Wardrobes & storage", id: "1672137233327-37b0c1049e77", rot: 2.5 },
-  { label: "SPC & wood flooring", id: "1581858726788-75bc0f6a952d", rot: -2 },
-  { label: "Furniture moving", id: "1715645948484-da40dd56bc93", rot: 1.5 },
+/* Recent-work gallery — real job photos from completed projects. */
+const gallery: { label: string; src: string; rot: number }[] = [
+  // Curtains & blinds
+  { label: "Luxury office curtains", src: "/work/curtains/luxury-office-curtains-doha.webp", rot: -2.5 },
+  // Sofas & seating
+  { label: "Modern sofa arrangement", src: "/work/sofas/modern-sofa-arrangement.webp", rot: 2 },
+  // Dining & kitchens
+  { label: "Elegant dining interior", src: "/work/dining/elegant-dining-interior.webp", rot: -1.5 },
+  // Chairs & upholstery
+  { label: "Cream upholstered chairs", src: "/work/chairs/cream-upholstered-chair-front.webp", rot: 2.5 },
+  // Curtains (another style)
+  { label: "Floor-to-ceiling curtains", src: "/work/curtains/floor-to-ceiling-curtains-qatar.webp", rot: -2 },
+  // Moving & shifting
+  { label: "Professional furniture moving", src: "/work/moving/moving-truck-loading.webp", rot: 1.5 },
 ];
 
 export default function Home() {
@@ -110,11 +110,11 @@ export default function Home() {
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
               What we do
             </p>
-            <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-display mt-3 text-2xl font-bold leading-tight tracking-tight text-foreground sm:text-3xl lg:text-4xl">
               Everything for the room — cabinets to curtains.
             </h2>
 
-            <ol className="mt-12">
+            <ol className="mt-8 sm:mt-12">
               {services.map((s, i) => (
                 <motion.li
                   key={s.title}
@@ -122,25 +122,26 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="grid grid-cols-[3rem_1fr] gap-x-4 gap-y-1 border-b border-border py-7 first:border-t sm:grid-cols-[5rem_auto_1fr] sm:gap-x-6 sm:py-9"
+                  className="grid gap-x-3 gap-y-1 border-b border-border py-5 first:border-t sm:grid-cols-[5rem_auto_1fr] sm:gap-x-6 sm:py-9"
+                  style={{ gridTemplateColumns: "2.5rem 1fr" }}
                 >
                   <span
-                    className="font-mono text-2xl font-bold tabular-nums text-primary/80 sm:text-3xl"
+                    className="font-mono text-xl font-bold tabular-nums text-primary/80 sm:text-2xl lg:text-3xl"
                     aria-hidden
                   >
                     .{String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display text-lg font-bold leading-tight text-secondary sm:text-2xl sm:col-start-2">
+                  <h3 className="font-display text-base font-bold leading-tight text-secondary sm:text-lg sm:col-start-2 lg:text-2xl">
                     {s.title}
                   </h3>
-                  <p className="col-start-2 text-sm leading-[1.7] text-muted-foreground sm:col-start-3 sm:text-base">
+                  <p className="col-start-2 text-sm leading-[1.6] text-muted-foreground sm:text-base lg:col-start-3 lg:text-base">
                     {s.text}
                   </p>
                 </motion.li>
               ))}
             </ol>
 
-            <div className="mt-10 flex flex-wrap gap-x-5 gap-y-2 pt-2">
+            <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 pt-2 sm:mt-10">
               <Link
                 href="/services"
                 className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
@@ -157,22 +158,22 @@ export default function Home() {
       <section className="layout-section">
         <div className="layout-container">
           <div className="mx-auto max-w-3xl">
-            <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8">
+            <div className="relative overflow-hidden rounded-xl border border-border bg-card p-5 shadow-sm sm:p-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
                 Featured service
               </p>
-              <h3 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
+              <h3 className="font-display mt-2 text-xl font-bold leading-tight text-secondary sm:mt-3 sm:text-2xl lg:text-3xl">
                 Curtains & blinds — measured, made, hung
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:mt-3 sm:text-base">
                 Sheers, blackout, roman and roller blinds, plus motorised tracks and an on-site fabric library. We measure, make and fit across Qatar.
               </p>
 
-              <div className="mt-5 flex gap-3">
-                <Link href="/services#curtains" className="inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground">
+              <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:gap-3">
+                <Link href="/services#curtains" className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
                   See curtains
                 </Link>
-                <Link href="/work" className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium text-secondary hover:bg-muted">
+                <Link href="/work" className="inline-flex items-center justify-center rounded-full border border-secondary/20 px-5 py-2.5 text-sm font-medium text-secondary hover:bg-muted transition-colors">
                   See curtain projects
                 </Link>
               </div>
@@ -181,9 +182,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────  HOW A JOB RUNS (horizontal timeline) ─────────── */}
+      {/* ────────────  HOW A JOB RUNS (vertical on mobile, horizontal on desktop) ─────────── */}
       <section className="border-y border-border bg-muted/40">
-        <div className="layout-container py-12 sm:py-16">
+        <div className="layout-container py-10 sm:py-12 lg:py-16">
           <div className="mx-auto max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
               How it works
@@ -193,7 +194,50 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="mt-10 -mx-4 overflow-x-auto px-4 pb-2">
+          {/* Mobile: Vertical stack */}
+          <div className="mt-8 space-y-6 sm:hidden">
+            {process.map((p, i) => (
+              <motion.div
+                key={p.stamp}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="relative flex gap-4 pb-6 last:pb-0"
+              >
+                <div className="relative flex flex-col items-center">
+                  <div
+                    className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 ${
+                      i === process.length - 1
+                        ? "border-primary bg-primary"
+                        : "border-secondary bg-background"
+                    }`}
+                  >
+                    {i === process.length - 1 && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                    )}
+                  </div>
+                  {i < process.length - 1 && (
+                    <div className="absolute top-6 bottom-0 w-px bg-secondary/20" />
+                  )}
+                </div>
+                <div className="flex-1 pt-1">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+                    {p.stamp}
+                  </p>
+                  <p className="mt-1 font-display text-lg font-extrabold text-secondary">
+                    {p.title}
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                    {p.note}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Desktop: Horizontal scroll */}
+          <div className="mt-10 -mx-4 hidden overflow-x-auto px-4 pb-2 sm:block">
             <ol className="relative flex min-w-max items-start gap-8 sm:gap-12">
               <span
                 className="absolute left-0 right-0 top-3 h-px bg-gradient-to-r from-transparent via-secondary/30 to-transparent"
@@ -243,7 +287,7 @@ export default function Home() {
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
                 Our work
               </p>
-              <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+              <h2 className="font-display mt-3 text-2xl font-bold leading-tight tracking-tight text-foreground sm:text-3xl lg:text-4xl">
                 What we cover, across Qatar.
               </h2>
             </div>
@@ -256,7 +300,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
+          <div className="mt-8 grid gap-4 grid-cols-2 sm:mt-12 sm:gap-6 sm:grid-cols-3 lg:gap-8">
             {gallery.map((g, i) => (
               <motion.figure
                 key={g.label}
@@ -265,15 +309,15 @@ export default function Home() {
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
                 whileHover={{ rotate: 0, scale: 1.05, zIndex: 10 }}
-                className="relative bg-white p-2.5 shadow-lg ring-1 ring-secondary/10 sm:p-3"
+                className="relative bg-white p-2 shadow-lg ring-1 ring-secondary/10 sm:p-2.5 lg:p-3"
                 style={{ transformOrigin: "center" }}
               >
-                <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+                <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded">
                   <Image
-                    src={u(g.id)}
+                    src={g.src}
                     alt={g.label}
                     fill
-                    sizes="(max-width: 640px) 50vw, 33vw"
+                    sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(33vw - 1.5rem), calc(25vw - 2rem)"
                     className="object-cover"
                   />
                 </div>
@@ -285,16 +329,16 @@ export default function Home() {
 
       {/* ────────────  FAQ (SEO-rich) ──────────────────── */}
       <section className="bg-secondary text-white">
-        <div className="layout-container py-16 sm:py-24">
+        <div className="layout-container py-12 sm:py-16 lg:py-24">
           <div className="mx-auto max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
               FAQ
             </p>
-            <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+            <h2 className="font-display mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl lg:text-4xl">
               The things people ask before booking.
             </h2>
 
-            <dl className="mt-12 divide-y divide-white/10 border-y border-white/10">
+            <dl className="mt-8 divide-y divide-white/10 border-y border-white/10 sm:mt-12">
               {faq.map((q, i) => (
                 <motion.div
                   key={q.q}
@@ -302,19 +346,19 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.35, delay: i * 0.04 }}
-                  className="grid gap-1 py-6 sm:grid-cols-[1fr_2fr] sm:gap-8 sm:py-8"
+                  className="grid gap-2 py-4 sm:gap-1 sm:py-6 lg:grid-cols-[1fr_2fr] lg:gap-8 lg:py-8"
                 >
-                  <dt className="font-display text-base font-bold leading-tight text-white sm:text-lg">
+                  <dt className="font-display text-sm font-bold leading-tight text-white sm:text-base lg:text-lg">
                     {q.q}
                   </dt>
-                  <dd className="text-sm leading-[1.7] text-white/70 sm:text-base">
+                  <dd className="text-xs leading-relaxed text-white/70 sm:text-sm sm:leading-[1.7] lg:text-base">
                     {q.a}
                   </dd>
                 </motion.div>
               ))}
             </dl>
 
-            <p className="mt-8 text-sm text-white/60">
+            <p className="mt-6 text-xs text-white/60 sm:mt-8 sm:text-sm">
               Question we didn&apos;t cover?{" "}
               <Link href="/contact" className="text-primary underline-offset-4 hover:underline">
                 Send us a message
@@ -355,7 +399,7 @@ export default function Home() {
       <section className="layout-section">
         <div className="layout-container">
           <div className="mx-auto max-w-2xl">
-            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-8 shadow-xl sm:p-12">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-xl sm:rounded-[2rem] sm:p-10 lg:p-12">
               <span
                 className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-[-2deg] bg-primary/25"
                 aria-hidden
@@ -364,19 +408,19 @@ export default function Home() {
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 — Get started —
               </p>
-              <h2 className="font-display mt-4 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
+              <h2 className="font-display mt-3 text-xl font-bold leading-tight text-secondary sm:mt-4 sm:text-2xl lg:text-3xl">
                 Free survey. Fixed quote in 48 hours.
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base lg:text-lg">
                 Tell us the room and what you want done — cabinets, a kitchen,
                 curtains, a sofa, flooring, a move, or a full fit-out. We survey
                 free and come back within 48 hours with a fixed, itemised quote.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-5 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
                 <Button
                   size="lg"
-                  className="h-12 w-full gap-2 rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1"
+                  className="h-12 w-full gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1 sm:px-7 sm:text-base"
                   asChild
                 >
                   <Link href="/quote">
@@ -387,7 +431,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-12 w-full gap-2 rounded-full border-secondary/20 bg-background px-7 text-base font-medium text-secondary hover:bg-muted sm:w-auto"
+                  className="h-12 w-full gap-2 rounded-full border-secondary/20 bg-background px-6 text-sm font-medium text-secondary hover:bg-muted sm:w-auto sm:px-7 sm:text-base"
                   asChild
                 >
                   <a
@@ -401,7 +445,7 @@ export default function Home() {
                 </Button>
               </div>
 
-              <p className="mt-7 text-right font-mono text-[11px] tracking-wider text-muted-foreground">
+              <p className="mt-5 text-right font-mono text-[10px] tracking-wider text-muted-foreground sm:mt-7 sm:text-[11px]">
                 — {SITE.name}
               </p>
             </div>

@@ -18,14 +18,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
-    locale: "en_QA",
+    locale: "en_US",
     type: "website",
   },
   alternates: {
     canonical: `${SITE.url}/about`,
-    languages: {
-      "ar-QA": `${SITE.url}/ar/about`,
-      "en-QA": `${SITE.url}/about`,
-    },
   },
 };
