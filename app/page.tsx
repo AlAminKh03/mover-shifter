@@ -2,6 +2,7 @@
 
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { Button } from "@/components/ui/button";
+import { TestimonialsVideo } from "@/components/TestimonialsVideo";
 import { SITE } from "@/config/site";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
@@ -86,12 +87,24 @@ const gallery: { label: string; src: string; rot: number }[] = [
   { label: "Modern sofa arrangement", src: "/work/sofas/modern-sofa-arrangement.webp", rot: 2 },
   // Dining & kitchens
   { label: "Elegant dining interior", src: "/work/dining/elegant-dining-interior.webp", rot: -1.5 },
-  // Chairs & upholstery
-  { label: "Cream upholstered chairs", src: "/work/chairs/cream-upholstered-chair-front.webp", rot: 2.5 },
-  // Curtains (another style)
+  // Sofas formal
+  { label: "Formal seating arrangement", src: "/work/sofas/formal-seating-arrangement.webp", rot: 2.5 },
+  // Curtains elegant
+  { label: "Elegant curtains design", src: "/work/curtains/elegant-curtains-interior-design.webp", rot: -2 },
+  // Dining luxury
+  { label: "Luxury dining set", src: "/work/dining/luxury-dining-set-formal.webp", rot: 1 },
+  // Chairs detail
+  { label: "Upholstered chair detail", src: "/work/chairs/upholstered-chair-detail.webp", rot: -1.5 },
+  // Moving careful
+  { label: "Careful furniture handling", src: "/work/moving/careful-furniture-handling.webp", rot: 2 },
+  // Floor to ceiling curtains
   { label: "Floor-to-ceiling curtains", src: "/work/curtains/floor-to-ceiling-curtains-qatar.webp", rot: -2 },
-  // Moving & shifting
+  // Moving truck
   { label: "Professional furniture moving", src: "/work/moving/moving-truck-loading.webp", rot: 1.5 },
+  // Chairs embroidery
+  { label: "Chair embroidery detail", src: "/work/chairs/chair-embroidery-detail.webp", rot: 2.5 },
+  // Cream chairs
+  { label: "Cream upholstered chairs", src: "/work/chairs/cream-upholstered-chair-front.webp", rot: -1 },
 ];
 
 export default function Home() {
@@ -279,6 +292,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ────────────  TESTIMONIALS VIDEO ──────────── */}
+      <TestimonialsVideo />
+
       {/* ────────────  WHAT WE COVER (service tile grid) ──────────── */}
       <section className="layout-section">
         <div className="layout-container">
@@ -315,12 +331,15 @@ export default function Home() {
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded">
                   <Image
                     src={g.src}
-                    alt={g.label}
+                    alt={`${g.label} - Doha Interiors Qatar`}
                     fill
                     sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(33vw - 1.5rem), calc(25vw - 2rem)"
                     className="object-cover"
+                    quality={85}
+                    priority={i < 3}
                   />
                 </div>
+                <figcaption className="sr-only">{g.label}</figcaption>
               </motion.figure>
             ))}
           </div>

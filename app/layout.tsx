@@ -1,6 +1,6 @@
 import { ContactButtons } from "@/components/ContactButtons";
 import Footer from "@/components/Footer";
-
+import { Breadcrumb, BreadcrumbSchema } from "@/components/Breadcrumb";
 import Navbar from "@/components/Navbar";
 import { SocialLinks } from "@/components/SocialLinks";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -151,10 +151,12 @@ export default function RootLayout({
           <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm">
             <TopBar />
             <Navbar />
+            <Breadcrumb />
           </div>
           <main className="flex min-h-0 w-full flex-1 flex-col">
             {children}
           </main>
+          <BreadcrumbSchema />
           <Footer />
           <SocialLinks />
           <ContactButtons />

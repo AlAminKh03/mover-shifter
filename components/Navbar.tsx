@@ -31,17 +31,22 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
 
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   const navLinkClass = (href: string) =>
     cn(
       "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-      pathname === href
-        ? "bg-primary text-primary-foreground shadow-sm"
+      isActive(href)
+        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
         : "text-muted-foreground hover:bg-muted hover:text-foreground"
     );
 
   return (
     <header className="border-b border-border/60 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/85">
-      <div className="layout-container flex h-14 items-center gap-3 md:h-[3.75rem]">
+      <div className="layout-container flex h-14 items-center gap-2 md:gap-3 md:h-[3.75rem]">
         <Link
           href="/"
           className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3"
@@ -94,12 +99,12 @@ const Navbar = () => {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex w-[min(100%,20rem)] flex-col gap-0 p-0">
-              <SheetHeader className="border-b border-border/60 px-6 py-4 text-left">
-                <SheetTitle className="font-display text-lg">Menu</SheetTitle>
+            <SheetContent side="right" className="flex w-[min(100%,16rem)] flex-col gap-0 p-0 sm:w-[18rem]">
+              <SheetHeader className="border-b border-border/60 px-4 py-3 text-left sm:px-6 sm:py-4">
+                <SheetTitle className="font-display text-base sm:text-lg">Menu</SheetTitle>
               </SheetHeader>
               <nav
-                className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-4"
+                className="flex flex-1 flex-col gap-0 overflow-y-auto px-2 py-2 sm:px-3 sm:py-4"
                 aria-label="Mobile"
               >
                 {menuItems.map((item) => (
@@ -108,17 +113,17 @@ const Navbar = () => {
                     href={item.href}
                     onClick={() => setSheetOpen(false)}
                     className={cn(
-                      "rounded-xl px-3 py-3 text-base font-medium transition-colors",
-                      pathname === item.href
-                        ? "bg-accent font-semibold text-primary"
+                      "rounded-lg px-3 py-2.5 text-sm sm:text-base font-medium transition-colors",
+                      isActive(item.href)
+                        ? "bg-primary text-primary-foreground font-semibold"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     )}
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="mt-4 px-1">
-                  <Button asChild className="w-full" size="lg">
+                <div className="mt-3 px-1 sm:mt-4">
+                  <Button asChild className="w-full text-sm sm:text-base" size="sm">
                     <Link href="/quote" onClick={() => setSheetOpen(false)}>
                       Get quote
                     </Link>
