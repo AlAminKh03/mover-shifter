@@ -1,0 +1,25 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Navy background -->
+  <rect width="512" height="512" rx="100" fill="#1a3a4d"/>
+
+  <!-- Orange accent stripe -->
+  <rect x="0" y="0" width="30" height="512" fill="#ea7623"/>
+
+  <!-- Cabinet doors (stylized) -->
+  <g transform="translate(100, 120)">
+    <!-- Door 1 -->
+    <rect x="0" y="0" width="80" height="180" rx="12" fill="#ea7623"/>
+    <circle cx="65" cy="90" r="6" fill="#1a3a4d"/>
+
+    <!-- Door 2 -->
+    <rect x="120" y="0" width="80" height="180" rx="12" fill="#ea7623"/>
+    <circle cx="185" cy="90" r="6" fill="#1a3a4d"/>
+
+    <!-- Door 3 -->
+    <rect x="240" y="0" width="80" height="180" rx="12" fill="#ea7623"/>
+    <circle cx="305" cy="90" r="6" fill="#1a3a4d"/>
+  </g>
+
+  <!-- Top accent line -->
+  <rect x="40" y="40" width="432" height="20" rx="10" fill="#ea7623"/>
+</svg>

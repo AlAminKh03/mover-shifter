@@ -46,6 +46,11 @@ export const metadata: Metadata = {
     "geo.placename": "Al Wakrah",
     "geo.position": "25.1654;51.6047",
     ICBM: "25.1654, 51.6047",
+    "color-scheme": "light dark",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": SITE.shortName,
+    "mobile-web-app-capable": "yes",
   },
   alternates: {
     canonical: SITE.url,
@@ -63,9 +68,19 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: `${SITE.name} — Qatar`,
+        type: "image/jpeg",
+      },
+      {
+        url: `${SITE.url}/social-banner.svg`,
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} — Home Interiors in Doha`,
+        type: "image/svg+xml",
       },
     ],
     locale: "en_US",
+    localeAlternate: ["ar_AE", "ar_SA"],
+    countryName: "Qatar",
   },
   twitter: {
     card: "summary_large_image",
@@ -73,7 +88,19 @@ export const metadata: Metadata = {
     description:
       "A Doha interiors studio — wall cabinets, kitchens, wardrobes, curtains & blinds, custom sofas & majlis, flooring, and furniture moving across Qatar.",
     images: [`${SITE.url}/social.jpg`],
+    creator: "@dohainteriors",
+    site: "@dohainteriors",
   },
+  appLinks: [
+    {
+      url: `${SITE.url}`,
+      app: {
+        name: "web",
+        id: undefined,
+      },
+      shouldFallback: true,
+    },
+  ],
   robots: {
     index: true,
     follow: true,
@@ -87,6 +114,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
       {
         url: "/favicon.ico",
         sizes: "any",
@@ -117,6 +148,7 @@ export const metadata: Metadata = {
       sizes: "180x180",
     },
   },
+  themeColor: "#ea7623",
   applicationName: SITE.shortName,
   authors: [{ name: SITE.name }],
   generator: "Next.js",
