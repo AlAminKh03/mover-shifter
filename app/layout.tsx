@@ -79,8 +79,6 @@ export const metadata: Metadata = {
       },
     ],
     locale: "en_US",
-    localeAlternate: ["ar_AE", "ar_SA"],
-    countryName: "Qatar",
   },
   twitter: {
     card: "summary_large_image",
