@@ -89,16 +89,6 @@ export const metadata: Metadata = {
     creator: "@dohainteriors",
     site: "@dohainteriors",
   },
-  appLinks: [
-    {
-      url: `${SITE.url}`,
-      app: {
-        name: "web",
-        id: undefined,
-      },
-      shouldFallback: true,
-    },
-  ],
   robots: {
     index: true,
     follow: true,
