@@ -2,8 +2,10 @@
 
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { Button } from "@/components/ui/button";
-import { TestimonialsVideo } from "@/components/TestimonialsVideo";
+import { MovingPackingVideo } from "@/components/MovingPackingVideo";
+import { WorkVideos } from "@/components/WorkVideos";
 import { SITE } from "@/config/site";
+import { ALL_WORK_PHOTOS } from "@/config/work-photos";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import Image from "next/image";
@@ -79,33 +81,15 @@ const faq: { q: string; a: string }[] = [
   },
 ];
 
-/* Recent-work gallery — real job photos from completed projects. */
-const gallery: { label: string; src: string; rot: number }[] = [
-  // Curtains & blinds
-  { label: "Luxury office curtains", src: "/work/curtains/luxury-office-curtains-doha.webp", rot: -2.5 },
-  // Sofas & seating
-  { label: "Modern sofa arrangement", src: "/work/sofas/modern-sofa-arrangement.webp", rot: 2 },
-  // Dining & kitchens
-  { label: "Elegant dining interior", src: "/work/dining/elegant-dining-interior.webp", rot: -1.5 },
-  // Sofas formal
-  { label: "Formal seating arrangement", src: "/work/sofas/formal-seating-arrangement.webp", rot: 2.5 },
-  // Curtains elegant
-  { label: "Elegant curtains design", src: "/work/curtains/elegant-curtains-interior-design.webp", rot: -2 },
-  // Dining luxury
-  { label: "Luxury dining set", src: "/work/dining/luxury-dining-set-formal.webp", rot: 1 },
-  // Chairs detail
-  { label: "Upholstered chair detail", src: "/work/chairs/upholstered-chair-detail.webp", rot: -1.5 },
-  // Moving careful
-  { label: "Careful furniture handling", src: "/work/moving/careful-furniture-handling.webp", rot: 2 },
-  // Floor to ceiling curtains
-  { label: "Floor-to-ceiling curtains", src: "/work/curtains/floor-to-ceiling-curtains-qatar.webp", rot: -2 },
-  // Moving truck
-  { label: "Professional furniture moving", src: "/work/moving/moving-truck-loading.webp", rot: 1.5 },
-  // Chairs embroidery
-  { label: "Chair embroidery detail", src: "/work/chairs/chair-embroidery-detail.webp", rot: 2.5 },
-  // Cream chairs
-  { label: "Cream upholstered chairs", src: "/work/chairs/cream-upholstered-chair-front.webp", rot: -1 },
-];
+/* Recent-work gallery — first-party job photos only, drawn from the shared
+   inventory so captions and alt text describe what is actually in each frame.
+   `rot` is the scattered-polaroid tilt; order is chosen to alternate subjects. */
+const galleryTilts = [-2.5, 2, -1.5, 2.5, -2, 1, -1.5, 2, -2, 1.5];
+
+const gallery = ALL_WORK_PHOTOS.map((photo, i) => ({
+  ...photo,
+  rot: galleryTilts[i % galleryTilts.length],
+}));
 
 export default function Home() {
   const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
@@ -135,8 +119,11 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="grid gap-x-3 gap-y-1 border-b border-border py-5 first:border-t sm:grid-cols-[5rem_auto_1fr] sm:gap-x-6 sm:py-9"
-                  style={{ gridTemplateColumns: "2.5rem 1fr" }}
+                  /* Columns are declared here rather than inline: an inline
+                     gridTemplateColumns wins over every responsive class, which
+                     left `lg:col-start-3` landing in an implicit auto-sized
+                     column that starved the title column of width. */
+                  className="grid grid-cols-[2.5rem_1fr] gap-x-3 gap-y-1 border-b border-border py-5 first:border-t sm:gap-x-6 sm:py-9 lg:grid-cols-[3.5rem_1fr_1.5fr]"
                 >
                   <span
                     className="font-mono text-xl font-bold tabular-nums text-primary/80 sm:text-2xl lg:text-3xl"
@@ -292,8 +279,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────  TESTIMONIALS VIDEO ──────────── */}
-      <TestimonialsVideo />
+      {/* ────────────  MOVING — VIDEO + REAL JOB STILLS ──────────── */}
+      <MovingPackingVideo />
+
+      {/* ────────────  FINISHED-WORK VIDEO WALKTHROUGHS ──────────── */}
+      <WorkVideos />
 
       {/* ────────────  WHAT WE COVER (service tile grid) ──────────── */}
       <section className="layout-section">
@@ -319,7 +309,7 @@ export default function Home() {
           <div className="mt-8 grid gap-4 grid-cols-2 sm:mt-12 sm:gap-6 sm:grid-cols-3 lg:gap-8">
             {gallery.map((g, i) => (
               <motion.figure
-                key={g.label}
+                key={g.src}
                 initial={{ opacity: 0, y: 30, rotate: 0 }}
                 whileInView={{ opacity: 1, y: 0, rotate: g.rot }}
                 viewport={{ once: true, margin: "-30px" }}
@@ -331,15 +321,14 @@ export default function Home() {
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded">
                   <Image
                     src={g.src}
-                    alt={`${g.label} - Doha Interiors Qatar`}
+                    alt={g.alt}
                     fill
                     sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(33vw - 1.5rem), calc(25vw - 2rem)"
                     className="object-cover"
-                    quality={85}
                     priority={i < 3}
                   />
                 </div>
-                <figcaption className="sr-only">{g.label}</figcaption>
+                <figcaption className="sr-only">{g.alt}</figcaption>
               </motion.figure>
             ))}
           </div>

@@ -19,7 +19,10 @@ export function Image({
         )}
         src={src}
         alt={alt}
-        quality={85}
+        /* No `quality`: this is a static export with images.unoptimized set, so
+           Next serves files byte-for-byte and the prop does nothing except trip
+           the images.qualities warning. Compression is baked into the webp
+           assets themselves. */
         unoptimized
         onLoadingComplete={() => setLoading(false)}
         {...props}

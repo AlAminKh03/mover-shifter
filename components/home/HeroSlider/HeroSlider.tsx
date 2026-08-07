@@ -2,32 +2,32 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import {
+  CURTAIN_PHOTOS,
+  KITCHEN_PHOTOS,
+  SOFA_PHOTOS,
+} from "@/config/work-photos";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-/* Curated, high-quality interior photography (Unsplash). Swap for your own
-   job photos by replacing the IDs. */
-const u = (id: string, w: number) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
-
+/* First-party photography only — see config/work-photos for the inventory and
+   for which frames are standing in for work we cannot yet illustrate. The
+   `label` sells the service; `alt` describes the actual photograph. */
 const showcase = {
   hero: {
-    src: u("1649361811423-a55616f7ab11", 1600),
-    alt: "Custom built-in cabinetry in a Qatar home",
+    ...KITCHEN_PHOTOS[0],
     label: "Cabinets",
   },
   side: [
     {
-      src: u("1513161455079-7dc1de15ef3e", 800),
-      alt: "Made-to-measure curtains in a living room",
+      ...CURTAIN_PHOTOS[0],
       label: "Curtains",
     },
     {
-      src: u("1715645948484-da40dd56bc93", 800),
-      alt: "Crew loading furniture for a Qatar move",
-      label: "Moving & shifting",
+      ...SOFA_PHOTOS[1],
+      label: "Sofas & majlis",
     },
   ],
 };

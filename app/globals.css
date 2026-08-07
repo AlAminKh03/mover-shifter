@@ -70,6 +70,11 @@
   body {
     @apply text-foreground relative min-h-screen antialiased;
     background-color: hsl(var(--background));
+    /* Headings share the body typeface. Declared here, not on :root, because
+       next/font defines --font-sans on <body> — a var() alias at :root would
+       fail substitution and drop headings to the ui-sans-serif fallback.
+       Point this at a second next/font variable to give display its own face. */
+    --font-display: var(--font-sans);
   }
   h1,
   h2,

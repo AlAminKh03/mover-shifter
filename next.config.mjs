@@ -8,6 +8,11 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true,
+    // Only two remote hosts are still reachable from the app: Unsplash for blog
+    // article headers (editorial illustration, not presented as our work) and
+    // placehold.co for OptimizedImage's load-failure fallback. Every marketing
+    // surface now serves first-party photography from /public/work — see
+    // config/work-photos. Don't re-add hosts without a matching usage.
     remotePatterns: [
       {
         protocol: "https",
@@ -15,27 +20,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "plus.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "dohainteriors.com",
-      },
-      {
-        protocol: "https",
         hostname: "placehold.co",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
-      {
-        protocol: "https",
-        hostname: "loremflickr.com",
-      },
-      {
-        protocol: "https",
-        hostname: "live.staticflickr.com",
       },
     ],
   },

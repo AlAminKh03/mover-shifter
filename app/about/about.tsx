@@ -2,15 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import {
+  CURTAIN_PHOTOS,
+  FLOORING_PHOTOS,
+  KITCHEN_PHOTOS,
+  SOFA_PHOTOS,
+  WARDROBE_PHOTOS,
+  STAND_IN,
+  TV_UNIT_PHOTOS,
+} from "@/config/work-photos";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MessageCircle, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-/* Curated, high-quality interior photography (Unsplash). Swap for your own
-   job photos by replacing the IDs. */
-const u = (id: string, w = 900) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
+/* Portrait hero — our fitted kitchen, the strongest proof shot we own. */
+const aboutHero = KITCHEN_PHOTOS[0];
 
 const principles = [
   {
@@ -39,13 +46,15 @@ const principles = [
   },
 ];
 
-const coverage: { label: string; id: string }[] = [
-  { label: "Wall cabinets", id: "1556909114-f6e7ad7d3136" },
-  { label: "Kitchens", id: "1649361811423-a55616f7ab11" },
-  { label: "Wardrobes & storage", id: "1558211583-d26f610c1eb1" },
-  { label: "Curtains & blinds", id: "1513161455079-7dc1de15ef3e" },
-  { label: "Sofas & majlis", id: "1555041469-a586c61ea9bc" },
-  { label: "Flooring & moving", id: "1581858726788-75bc0f6a952d" },
+/* `label` names the service; `src`/`alt` come from our own photography. Only
+   wall cabinets still lacks a real frame — see config/work-photos. */
+const coverage: { label: string; src: string; alt: string }[] = [
+  { label: "Wall cabinets", ...STAND_IN(TV_UNIT_PHOTOS[1]) },
+  { label: "Kitchens", ...KITCHEN_PHOTOS[0] },
+  { label: "TV units & joinery", ...TV_UNIT_PHOTOS[0] },
+  { label: "Curtains & blinds", ...CURTAIN_PHOTOS[0] },
+  { label: "Sofas & majlis", ...SOFA_PHOTOS[1] },
+  { label: "Flooring & moving", ...FLOORING_PHOTOS[0] },
 ];
 
 export default function AboutPage() {
@@ -110,8 +119,8 @@ export default function AboutPage() {
             <div className="lg:col-span-5">
               <div className="relative mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-2xl bg-muted ring-1 ring-secondary/10 shadow-2xl">
                 <Image
-                  src={u("1556909114-f6e7ad7d3136", 1000)}
-                  alt="Custom fitted cabinets by Doha Interiors"
+                  src={aboutHero.src}
+                  alt={aboutHero.alt}
                   fill
                   priority
                   sizes="(max-width: 1024px) 80vw, 30vw"
@@ -262,8 +271,8 @@ export default function AboutPage() {
                 className="relative aspect-square overflow-hidden rounded-xl bg-muted ring-1 ring-secondary/10"
               >
                 <Image
-                  src={u(c.id, 500)}
-                  alt={c.label}
+                  src={c.src}
+                  alt={c.alt}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                   className="object-cover"

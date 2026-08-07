@@ -1,53 +1,54 @@
-export function VideoSchema() {
-  const videos = [
-    {
-      url: 'https://dohainteriors.com/videos/testimonial-1.mp4',
-      thumbnail: 'https://dohainteriors.com/social.jpg',
-      title: 'Customer Testimonial - Doha Interiors',
-      description: 'Customer testimonial about our interior design and furniture services in Qatar',
-      uploadDate: new Date().toISOString().split('T')[0],
-      duration: 'PT0M30S',
-    },
-    {
-      url: 'https://dohainteriors.com/videos/testimonial-2.mp4',
-      thumbnail: 'https://dohainteriors.com/social.jpg',
-      title: 'Customer Testimonial - Doha Interiors',
-      description: 'Customer testimonial about our interior design and furniture services in Qatar',
-      uploadDate: new Date().toISOString().split('T')[0],
-      duration: 'PT0M30S',
-    },
-    {
-      url: 'https://dohainteriors.com/videos/testimonial-3.mp4',
-      thumbnail: 'https://dohainteriors.com/social.jpg',
-      title: 'Customer Testimonial - Doha Interiors',
-      description: 'Customer testimonial about our interior design and furniture services in Qatar',
-      uploadDate: new Date().toISOString().split('T')[0],
-      duration: 'PT0M30S',
-    },
-  ];
+import { SITE } from "@/config/site";
+import type { SiteVideo } from "@/config/videos";
 
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: videos.map((video, index) => ({
-      '@type': 'VideoObject',
-      position: index + 1,
-      name: video.title,
-      description: video.description,
-      thumbnailUrl: video.thumbnail,
-      uploadDate: video.uploadDate,
-      duration: video.duration,
-      contentUrl: video.url,
-      embedUrl: video.url,
-    })),
-  };
+/**
+ * VideoObject JSON-LD. Values come from `config/videos`, where every duration
+ * and frame size is measured from the real file — Google fetches the video and
+ * compares, so invented metadata costs the rich result.
+ *
+ * Pass the exact videos rendered on the page: schema describing a video the
+ * visitor cannot see is a structured-data violation.
+ */
+export function VideoSchema({ videos }: { videos: SiteVideo[] }) {
+  if (videos.length === 0) return null;
+
+  const toObject = (video: SiteVideo) => ({
+    "@type": "VideoObject",
+    name: video.title,
+    description: video.description,
+    // Fall back to the social card only when a video has no still of its own —
+    // better an approximate thumbnail than none, which drops the rich result.
+    thumbnailUrl: `${SITE.url}${video.poster ?? "/social.jpg"}`,
+    uploadDate: video.uploadDate,
+    duration: video.duration,
+    width: video.width,
+    height: video.height,
+    contentUrl: `${SITE.url}${video.src}`,
+    isFamilyFriendly: true,
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.url,
+    },
+  });
+
+  const schema =
+    videos.length === 1
+      ? { "@context": "https://schema.org", ...toObject(videos[0]) }
+      : {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          itemListElement: videos.map((video, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: toObject(video),
+          })),
+        };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema),
-      }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
 }

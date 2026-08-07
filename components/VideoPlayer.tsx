@@ -11,6 +11,12 @@ interface VideoPlayerProps {
   loop?: boolean;
   className?: string;
   title?: string;
+  /**
+   * Defaults to 'none' so a multi-megabyte clip costs nothing until someone
+   * presses play — these sit below the fold and would otherwise compete with
+   * the LCP image for bandwidth.
+   */
+  preload?: 'none' | 'metadata' | 'auto';
 }
 
 export function VideoPlayer({
@@ -21,6 +27,7 @@ export function VideoPlayer({
   loop = true,
   className = '',
   title = 'Video',
+  preload = 'none',
 }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(autoPlay);
 
@@ -33,6 +40,7 @@ export function VideoPlayer({
         muted={muted || isPlaying}
         loop={loop}
         playsInline
+        preload={preload}
         controls={isPlaying}
         className="w-full h-full object-cover"
         title={title}

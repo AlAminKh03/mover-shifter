@@ -6,25 +6,35 @@ import { SocialLinks } from "@/components/SocialLinks";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TopBar } from "@/components/TopBar";
 import { Toaster } from "@/components/ui/toaster";
-import type { Metadata } from "next";
-import { Figtree, Syne } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 
 import { SITE } from "@/config/site";
 
 import GoogleAnalytics from "./_components/GoogleAnalytics";
 import "./globals.css";
 
-const fontSans = Figtree({
-  subsets: ["latin"],
+/**
+ * Single-typeface system: Inter carries both body and display, matching the
+ * neo-grotesque setup the design reference uses (one family, no character
+ * contrast — photography does the work). `--font-display` is aliased to
+ * `--font-sans` in globals.css, so reintroducing a separate heading face later
+ * is a one-line change there plus a second font instance here.
+ *
+ * Self-hosted from app/fonts rather than `next/font/google`: the Google Fonts
+ * fetch is a hard build dependency, and an intermittent network failure there
+ * fails the whole deploy. These are the upstream Google Fonts woff2 files
+ * (variable, weights 100–900), committed so builds are fully offline.
+ */
+const fontSans = localFont({
+  src: [
+    { path: "./fonts/Inter-latin.woff2", style: "normal" },
+    { path: "./fonts/Inter-latin-ext.woff2", style: "normal" },
+  ],
   variable: "--font-sans",
   display: "swap",
-});
-
-const fontDisplay = Syne({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "100 900",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -136,7 +146,6 @@ export const metadata: Metadata = {
       sizes: "180x180",
     },
   },
-  themeColor: "#ea7623",
   applicationName: SITE.shortName,
   authors: [{ name: SITE.name }],
   generator: "Next.js",
@@ -146,6 +155,17 @@ export const metadata: Metadata = {
     address: true,
   },
   manifest: "/manifest.json",
+};
+
+/**
+ * themeColor belongs here, not in `metadata` — Next moved viewport-level tags
+ * out of the metadata export, and leaving it there warns on every route because
+ * root metadata merges into all of them.
+ *
+ * Declared once at the root; every page inherits it.
+ */
+export const viewport: Viewport = {
+  themeColor: "#ea7623",
 };
 
 export default function RootLayout({
@@ -158,8 +178,14 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
+      {/* suppressHydrationWarning on <body>: browser extensions (ColorZilla's
+          cz-shortcut-listen, Grammarly, LastPass) inject attributes here before
+          React hydrates, which React reports as a mismatch the site cannot fix.
+          This only silences attribute diffs on <body> itself, not its children,
+          so real mismatches inside the app still surface. */}
       <body
-        className={`${fontSans.variable} ${fontDisplay.variable} ${fontSans.className} flex min-h-screen flex-col bg-background`}
+        suppressHydrationWarning
+        className={`${fontSans.variable} ${fontSans.className} flex min-h-screen flex-col bg-background`}
       >
         <GoogleAnalytics GA_MEASUREMENT_ID="G-934R2JYRD8" />
         <ThemeProvider

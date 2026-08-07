@@ -36,3 +36,6 @@ next-env.d.ts
 
 # source images (pre-optimization)
 /_source-photos/
+
+# Raw photo sources — processed into public/work, not deployed
+_photo_source/

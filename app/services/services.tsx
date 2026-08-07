@@ -5,15 +5,25 @@ import { SITE } from "@/config/site";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import {
+  CURTAIN_PHOTOS,
+  FLOORING_PHOTOS,
+  KITCHEN_PHOTOS,
+  MOVING_PHOTOS,
+  SEATING_PHOTOS,
+  SOFA_PHOTOS,
+  WARDROBE_PHOTOS,
+  STAND_IN,
+  TV_UNIT_PHOTOS,
+} from "@/config/work-photos";
 import Link from "next/link";
 
 /* ──────────────────────────  DATA  ──────────────────────── */
 
-/* Curated, high-quality interior photography (Unsplash). Swap for your own
-   job photos by replacing the IDs. */
-const u = (id: string, w = 400) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=85&w=${w}`;
-
+/* First-party photography only — see config/work-photos. Wall cabinets,
+   wardrobes, and handyman have no photography yet, so those three cards carry
+   STAND_IN frames: the alt text stays true to the photograph while the title
+   and blurb sell the service. Grep STAND_IN for every slot awaiting a shoot. */
 type Service = { slug: string; title: string; blurb: string; img: string; alt: string };
 
 const cabinetServices: Service[] = [
@@ -22,32 +32,32 @@ const cabinetServices: Service[] = [
     title: "Wall cabinets",
     blurb:
       "Wall-mounted cabinets, storage walls, and display units — measured, built, and fitted flush and level. Soft-close hardware, your finish.",
-    img: u("1556909114-f6e7ad7d3136"),
-    alt: "Custom fitted wall cabinets",
+    img: STAND_IN(TV_UNIT_PHOTOS[1]).src,
+    alt: STAND_IN(TV_UNIT_PHOTOS[1]).alt,
   },
   {
     slug: "kitchen-cabinets",
     title: "Kitchen cabinets",
     blurb:
       "Full kitchen cabinetry to measure — base and wall units, tall larders, drawer banks. Moisture-resistant carcasses, soft-close throughout.",
-    img: u("1649361811423-a55616f7ab11"),
-    alt: "Fitted kitchen cabinetry",
+    img: KITCHEN_PHOTOS[0].src,
+    alt: KITCHEN_PHOTOS[0].alt,
   },
   {
     slug: "wardrobes",
     title: "Built-in wardrobes",
     blurb:
       "Measured, built, installed. Hinged or sliding doors, soft-close hardware, configured to your clothes.",
-    img: u("1558211583-d26f610c1eb1"),
-    alt: "Built-in wardrobe interior",
+    img: WARDROBE_PHOTOS[1].src,
+    alt: WARDROBE_PHOTOS[1].alt,
   },
   {
     slug: "tv-units",
     title: "TV units & storage joinery",
     blurb:
       "Media walls, TV units, shoe and entry storage, and bespoke shelving — built to the wall, finished to match.",
-    img: u("1672137233327-37b0c1049e77"),
-    alt: "Built-in storage joinery",
+    img: TV_UNIT_PHOTOS[0].src,
+    alt: TV_UNIT_PHOTOS[0].alt,
   },
 ];
 
@@ -57,32 +67,32 @@ const finishesServices: Service[] = [
     title: "Curtains & blinds",
     blurb:
       "Measure, make, hang, dress. Sheers, blackout, roman and roller blinds, motorised tracks — and our own fabric library on site.",
-    img: u("1513161455079-7dc1de15ef3e"),
-    alt: "Made-to-measure curtains in a living room",
+    img: CURTAIN_PHOTOS[0].src,
+    alt: CURTAIN_PHOTOS[0].alt,
   },
   {
     slug: "custom-sofas",
     title: "Custom sofas & majlis",
     blurb:
       "Made to measure. Frames, foam, fabric, and leather — built to the size and feel you want.",
-    img: u("1555041469-a586c61ea9bc"),
-    alt: "Custom sofa and majlis seating",
+    img: SOFA_PHOTOS[1].src,
+    alt: SOFA_PHOTOS[1].alt,
   },
   {
     slug: "reupholstery",
     title: "Reupholstery",
     blurb:
       "Frame check, refoam, refabric — leather and fabric. Pickup and return delivery across Qatar.",
-    img: u("1493663284031-b7e3aefcae8e"),
-    alt: "Reupholstered seating",
+    img: SOFA_PHOTOS[2].src,
+    alt: SOFA_PHOTOS[2].alt,
   },
   {
     slug: "flooring",
     title: "SPC & wood flooring",
     blurb:
       "Waterproof SPC, Barkiya PVC, and engineered wood. Subfloor prep and a clean handover.",
-    img: u("1581858726788-75bc0f6a952d"),
-    alt: "Wood-look flooring",
+    img: FLOORING_PHOTOS[0].src,
+    alt: FLOORING_PHOTOS[0].alt,
   },
 ];
 
@@ -92,24 +102,24 @@ const extrasServices: Service[] = [
     title: "Furniture moving & shifting",
     blurb:
       "Home, villa, and office moves across Qatar — wrap, load, drive, place. Bookable on its own or alongside a fit-out.",
-    img: u("1715645948484-da40dd56bc93"),
-    alt: "Crew loading furniture into a moving truck",
+    img: MOVING_PHOTOS[0].src,
+    alt: MOVING_PHOTOS[0].alt,
   },
   {
     slug: "packing",
     title: "Packing & transport",
     blurb:
       "Boxes, bubble wrap, blankets, wardrobe cartons, tape — supplied. Right-sized vehicles, glass and electronics handled with extra care.",
-    img: u("1530124566582-a618bc2615dc"),
-    alt: "Stacked moving boxes",
+    img: MOVING_PHOTOS[2].src,
+    alt: MOVING_PHOTOS[2].alt,
   },
   {
     slug: "handyman",
     title: "Handyman & small repairs",
     blurb:
       "Hanging shelves and TVs, adjusting hinges and handles, touch-up paint, loose fittings. One visit, one invoice.",
-    img: u("1581094794329-c8112a89af12"),
-    alt: "Hand tools on a workbench",
+    img: STAND_IN(SEATING_PHOTOS[0]).src,
+    alt: STAND_IN(SEATING_PHOTOS[0]).alt,
   },
 ];
 

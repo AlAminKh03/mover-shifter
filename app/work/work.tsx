@@ -2,6 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import {
+  BED_PHOTOS,
+  CURTAIN_PHOTOS,
+  DINING_PHOTOS,
+  FLOORING_PHOTOS,
+  KITCHEN_PHOTOS,
+  MOVING_PHOTOS,
+  SEATING_PHOTOS,
+  SOFA_PHOTOS,
+  TV_UNIT_PHOTOS,
+  WARDROBE_PHOTOS,
+} from "@/config/work-photos";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 import Image from "next/image";
@@ -11,56 +23,42 @@ import { useState } from "react";
 
 /* ──────────────────────────  DATA  ──────────────────────── */
 
-type Category =
-  | "All"
-  | "Wall cabinets"
-  | "Kitchens"
-  | "Wardrobes & storage"
-  | "Sofas"
-  | "Curtains"
-  | "Flooring & moving";
-
+/**
+ * Portfolio tiles. Categories describe what is genuinely in the photographs —
+ * a filter that resolves to nothing reads as "no track record", so a category
+ * only exists here once we have work to put in it. Cabinets, kitchens,
+ * wardrobes are absent by design until that shoot happens; add
+ * them back alongside the photos, not before.
+ */
 type Tile = {
-  id: string;
-  category: Exclude<Category, "All">;
+  category: string;
   caption: string;
   img: string;
 };
 
 const tiles: Tile[] = [
-  // Sofas & seating
-  { id: "sofa-1", category: "Sofas", caption: "Modern sofa arrangement", img: "/work/sofas/modern-sofa-arrangement.webp" },
-  { id: "sofa-4", category: "Sofas", caption: "Formal seating arrangement", img: "/work/sofas/formal-seating-arrangement.webp" },
-  { id: "chair-1", category: "Sofas", caption: "Cream upholstered chairs", img: "/work/chairs/cream-upholstered-chair-front.webp" },
-  { id: "chair-2", category: "Sofas", caption: "Chair embroidery detail", img: "/work/chairs/chair-embroidery-detail.webp" },
-  { id: "chair-4", category: "Sofas", caption: "Upholstered chair detail", img: "/work/chairs/upholstered-chair-detail.webp" },
-  { id: "dining-1", category: "Sofas", caption: "Luxury dining set", img: "/work/dining/luxury-dining-set-formal.webp" },
-  { id: "dining-2", category: "Sofas", caption: "Elegant dining interior", img: "/work/dining/elegant-dining-interior.webp" },
-
-  // Curtains
-  { id: "curtain-1", category: "Curtains", caption: "Luxury office curtains", img: "/work/curtains/luxury-office-curtains-doha.webp" },
-  { id: "curtain-2", category: "Curtains", caption: "Elegant curtains & blinds", img: "/work/curtains/elegant-curtains-interior-design.webp" },
-  { id: "curtain-3", category: "Curtains", caption: "Floor-to-ceiling curtains", img: "/work/curtains/floor-to-ceiling-curtains-qatar.webp" },
-
-  // Flooring & moving
-  { id: "moving-4", category: "Flooring & moving", caption: "Careful furniture handling", img: "/work/moving/careful-furniture-handling.webp" },
-  { id: "moving-5", category: "Flooring & moving", caption: "Moving truck loading", img: "/work/moving/moving-truck-loading.webp" },
+  ...KITCHEN_PHOTOS.map((p) => ({ category: "Kitchens", caption: p.alt, img: p.src })),
+  ...WARDROBE_PHOTOS.map((p) => ({ category: "Wardrobes", caption: p.alt, img: p.src })),
+  ...TV_UNIT_PHOTOS.map((p) => ({ category: "TV units & joinery", caption: p.alt, img: p.src })),
+  ...SOFA_PHOTOS.map((p) => ({ category: "Sofas & majlis", caption: p.alt, img: p.src })),
+  ...CURTAIN_PHOTOS.map((p) => ({ category: "Curtains & blinds", caption: p.alt, img: p.src })),
+  ...FLOORING_PHOTOS.map((p) => ({ category: "Flooring", caption: p.alt, img: p.src })),
+  ...BED_PHOTOS.map((p) => ({ category: "Beds & headboards", caption: p.alt, img: p.src })),
+  ...SEATING_PHOTOS.map((p) => ({ category: "Seating & upholstery", caption: p.alt, img: p.src })),
+  ...DINING_PHOTOS.map((p) => ({ category: "Dining furniture", caption: p.alt, img: p.src })),
+  ...MOVING_PHOTOS.map((p) => ({ category: "Moving & packing", caption: p.alt, img: p.src })),
 ];
 
-const categories: Category[] = [
+/* Derived from the tiles, so a category can never outlive its photos. */
+const categories: string[] = [
   "All",
-  "Wall cabinets",
-  "Kitchens",
-  "Wardrobes & storage",
-  "Sofas",
-  "Curtains",
-  "Flooring & moving",
+  ...Array.from(new Set(tiles.map((t) => t.category))),
 ];
 
 /* ──────────────────────────  PAGE  ─────────────────────── */
 
 export default function WorkPage() {
-  const [active, setActive] = useState<Category>("All");
+  const [active, setActive] = useState<string>("All");
   const filtered = tiles.filter((t) => active === "All" || t.category === active);
   // Remove tiles that reference the same image URL to avoid repetitive pictures
   const uniqueFiltered = filtered.filter(
@@ -129,7 +127,7 @@ export default function WorkPage() {
           <div className="grid gap-2.5 sm:gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {uniqueFiltered.map((t, i) => (
               <motion.figure
-                key={t.id}
+                key={t.img}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
