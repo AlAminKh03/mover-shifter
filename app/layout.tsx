@@ -180,6 +180,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        {/* Must stay inside <head>: Search Console's Google Analytics
+            ownership check rejects the snippet anywhere else. */}
+        <GoogleAnalytics GA_MEASUREMENT_ID="G-934R2JYRD8" />
       </head>
       {/* suppressHydrationWarning on <body>: browser extensions (ColorZilla's
           cz-shortcut-listen, Grammarly, LastPass) inject attributes here before
@@ -190,7 +193,6 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${fontSans.variable} ${fontSans.className} flex min-h-screen flex-col bg-background`}
       >
-        <GoogleAnalytics GA_MEASUREMENT_ID="G-934R2JYRD8" />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
