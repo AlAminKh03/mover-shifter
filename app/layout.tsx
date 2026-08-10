@@ -72,20 +72,20 @@ export const metadata: Metadata = {
       "A Doha interiors studio: wall cabinets, kitchens, and wardrobes, plus curtains & blinds, custom sofas & majlis, flooring, and furniture moving across Qatar.",
     url: SITE.url,
     siteName: SITE.name,
+    /**
+     * One JPG only. social-banner.svg used to be listed here as a second
+     * image, but no OG consumer (Facebook, X, LinkedIn, WhatsApp) renders
+     * SVG — it was dead weight that some scrapers pick as the primary image
+     * and then fail on. The vector twin still lives at /social-banner.svg for
+     * print and in-app use.
+     */
     images: [
       {
         url: `${SITE.url}/social.jpg`,
         width: 1200,
         height: 630,
-        alt: `${SITE.name} — Qatar`,
+        alt: `${SITE.name} — fitted wall cabinets and kitchens in Doha, Qatar`,
         type: "image/jpeg",
-      },
-      {
-        url: `${SITE.url}/social-banner.svg`,
-        width: 1200,
-        height: 630,
-        alt: `${SITE.name} — Home Interiors in Doha`,
-        type: "image/svg+xml",
       },
     ],
     locale: "en_US",
@@ -165,7 +165,10 @@ export const metadata: Metadata = {
  * Declared once at the root; every page inherits it.
  */
 export const viewport: Viewport = {
-  themeColor: "#ea7623",
+  // Exactly --primary (18 95% 55%) from globals.css, and the orange in the
+  // icon set. This used to be #ea7623 here and #ea580c in manifest.json, so
+  // the mobile browser chrome tinted a different orange to the installed app.
+  themeColor: "#F9611F",
 };
 
 export default function RootLayout({

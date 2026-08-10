@@ -1,34 +1,45 @@
-<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <!-- Navy background -->
-  <rect width="1200" height="630" fill="#1a3a4d"/>
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doha Interiors — wall cabinets, built to fit">
+  <!--
+    Vector twin of public/social.jpg, minus the photograph. Kept for print and
+    in-app use only: it is NOT wired into openGraph.images, because Facebook,
+    X, LinkedIn and WhatsApp all refuse to render an SVG share image and would
+    simply fall back to the JPG.
 
-  <!-- Orange accent stripe (left) -->
-  <rect x="0" y="0" width="20" height="630" fill="#ea7623"/>
+    Colours are the site tokens: #F9611F is the primary (18 95% 55%) exactly.
+  -->
+  <rect width="1200" height="630" fill="#12283F"/>
 
-  <!-- Decorative geometric shapes -->
-  <rect x="100" y="80" width="280" height="120" rx="15" fill="#ea7623" opacity="0.9"/>
-  <circle cx="950" cy="150" r="80" fill="#ea7623" opacity="0.15"/>
-  <polygon points="1050,500 1150,450 1150,550" fill="#ea7623" opacity="0.2"/>
-
-  <!-- Cabinet icon (simplified) -->
-  <g transform="translate(100, 350)">
-    <rect x="0" y="0" width="200" height="180" rx="8" fill="none" stroke="#ea7623" stroke-width="3"/>
-    <line x1="70" y1="0" x2="70" y2="180" stroke="#ea7623" stroke-width="2"/>
-    <line x1="140" y1="0" x2="140" y2="180" stroke="#ea7623" stroke-width="2"/>
-    <line x1="0" y1="90" x2="200" y2="90" stroke="#ea7623" stroke-width="2"/>
+  <!-- Cabinet mark, inverted (navy doors on an orange tile) -->
+  <g transform="translate(72 56) scale(0.1875)">
+    <rect width="512" height="512" rx="112" fill="#F9611F"/>
+    <rect x="120" y="76" width="120" height="320" rx="24" fill="#12283F"/>
+    <rect x="212" y="196" width="16" height="80" rx="8" fill="#F9611F"/>
+    <rect x="272" y="76" width="120" height="320" rx="24" fill="#12283F"/>
+    <rect x="284" y="196" width="16" height="80" rx="8" fill="#F9611F"/>
+    <rect x="152" y="396" width="28" height="40" rx="10" fill="#12283F"/>
+    <rect x="332" y="396" width="28" height="40" rx="10" fill="#12283F"/>
   </g>
 
-  <!-- Main text -->
-  <text x="450" y="220" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="#ffffff">DOHA</text>
-  <text x="450" y="340" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="#ea7623">INTERIORS</text>
+  <text x="188" y="122" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="44" font-weight="700" letter-spacing="3" fill="#FFFFFF">DOHA INTERIORS</text>
 
-  <!-- Subtext -->
-  <text x="450" y="420" font-family="Arial, sans-serif" font-size="42" fill="#ffffff">Custom Cabinets • Curtains • Sofas • Moving</text>
+  <text x="72" y="300" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="64" font-weight="700" fill="#FFFFFF">Wall cabinets,</text>
+  <text x="72" y="374" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="64" font-weight="700" fill="#F9611F">built to fit.</text>
 
-  <!-- Tagline -->
-  <text x="450" y="500" font-family="Arial, sans-serif" font-size="32" fill="#ffffff" opacity="0.85">Wall-to-Wall Solutions for Qatar Homes</text>
+  <text x="72" y="436" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="25" fill="#FAF8F5" opacity="0.88">Kitchens &#183; Wardrobes &#183; TV units &#183; Curtains</text>
+  <text x="72" y="472" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="25" fill="#FAF8F5" opacity="0.88">Sofas &amp; majlis &#183; Flooring &#183; Furniture moving</text>
 
-  <!-- Bottom accent -->
-  <rect x="0" y="590" width="1200" height="40" fill="#ea7623"/>
-  <text x="600" y="620" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#1a3a4d" text-anchor="middle">Free Survey • Fixed Quote in 48 Hours</text>
+  <!-- Faint oversized mark bleeding off the right edge, as a texture -->
+  <g transform="translate(840 60) scale(0.98)" opacity="0.06">
+    <rect x="120" y="76" width="120" height="320" rx="24" fill="#F9611F"/>
+    <rect x="272" y="76" width="120" height="320" rx="24" fill="#F9611F"/>
+  </g>
+
+  <rect x="0" y="550" width="1200" height="80" fill="#F9611F"/>
+  <text x="72" y="600" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="28" font-weight="700" fill="#12283F">Free survey &#183; Fixed quote in 48 hours &#183; +974 6661 9808</text>
 </svg>
