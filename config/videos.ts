@@ -44,7 +44,7 @@ export const WORK_VIDEOS: SiteVideo[] = [
     description:
       "A fitted walk-in wardrobe in a light oak finish — glazed upper cabinets, full-height hanging, and a built-in dressing table with mirror and drawers.",
     duration: "PT0M4S",
-    uploadDate: "2026-08-03",
+    uploadDate: "2026-08-03T00:00:00Z",
     width: 368,
     height: 492,
   },
@@ -55,7 +55,7 @@ export const WORK_VIDEOS: SiteVideo[] = [
     description:
       "A run of white floor-to-ceiling built-in wardrobes with overhead storage boxes, fitted flush to the wall on installation day.",
     duration: "PT0M5S",
-    uploadDate: "2026-08-03",
+    uploadDate: "2026-08-03T00:00:00Z",
     width: 368,
     height: 650,
   },
@@ -66,7 +66,7 @@ export const WORK_VIDEOS: SiteVideo[] = [
     description:
       "A wall-mounted console table and full-height mirror installed against a fluted feature wall in a Qatar majlis.",
     duration: "PT0M8S",
-    uploadDate: "2026-08-03",
+    uploadDate: "2026-08-03T00:00:00Z",
     width: 368,
     height: 492,
   },
@@ -84,7 +84,7 @@ export const PACKING_VIDEO: SiteVideo = {
   description:
     "Wrapping and boxing kitchenware and fragile items ahead of a home move in Qatar — packed by the same crew that loads and delivers.",
   duration: "PT0M45S",
-  uploadDate: "2026-08-07",
+  uploadDate: "2026-08-07T00:00:00Z",
   width: 576,
   height: 1024,
 };
