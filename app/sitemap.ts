@@ -20,13 +20,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // stamping them with the build timestamp on every deploy would misrepresent
   // freshness to crawlers.
   const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
-    url: `${SITE.url}${r.path}`,
+    url: `${SITE.url}${r.path}/`,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
 
   const blogEntries: MetadataRoute.Sitemap = posts.map((p) => ({
-    url: `${SITE.url}/blog/${p.slug}`,
+    url: `${SITE.url}/blog/${p.slug}/`,
     lastModified: new Date(p.dateModified),
     changeFrequency: "monthly",
     priority: 0.6,
