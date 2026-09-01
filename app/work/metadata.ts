@@ -15,7 +15,12 @@ export const metadata: Metadata = {
     "SPC flooring portfolio",
   ],
   alternates: {
-    canonical: `${SITE.url}/work`,
+    canonical: `${SITE.url}/en/work/`,
+    languages: {
+      "en": `${SITE.url}/en/work/`,
+      "ar": `${SITE.url}/ar/work/`,
+      "x-default": `${SITE.url}/en/work/`,
+    },
   },
   openGraph: {
     title: `Look book | ${SITE.name}`,

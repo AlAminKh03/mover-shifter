@@ -13,7 +13,12 @@ export const metadata: Metadata = {
     "furniture workshop Doha",
   ],
   alternates: {
-    canonical: `${SITE.url}/contact`,
+    canonical: `${SITE.url}/en/contact/`,
+    languages: {
+      "en": `${SITE.url}/en/contact/`,
+      "ar": `${SITE.url}/ar/contact/`,
+      "x-default": `${SITE.url}/en/contact/`,
+    },
   },
   openGraph: {
     title: `Contact | ${SITE.name}`,

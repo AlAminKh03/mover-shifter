@@ -22,7 +22,12 @@ export const metadata: Metadata = {
     "interior fit-out Doha",
   ],
   alternates: {
-    canonical: `${SITE.url}/services`,
+    canonical: `${SITE.url}/en/services/`,
+    languages: {
+      "en": `${SITE.url}/en/services/`,
+      "ar": `${SITE.url}/ar/services/`,
+      "x-default": `${SITE.url}/en/services/`,
+    },
   },
   openGraph: {
     title: `Services | ${SITE.name}`,

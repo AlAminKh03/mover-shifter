@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     type: "website",
   },
   alternates: {
-    canonical: `${SITE.url}/about`,
+    canonical: `${SITE.url}/en/about/`,
+    languages: {
+      "en": `${SITE.url}/en/about/`,
+      "ar": `${SITE.url}/ar/about/`,
+      "x-default": `${SITE.url}/en/about/`,
+    },
   },
 };

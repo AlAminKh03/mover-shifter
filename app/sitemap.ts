@@ -1,5 +1,6 @@
 import { SITE } from "@/config/site";
 import { MetadataRoute } from "next";
+import { ALL_VIDEOS } from "@/config/videos";
 
 import { posts } from "./blog/posts";
 
@@ -16,9 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   ];
 
-  // No lastModified: these pages don't track real per-page edit dates, and
-  // stamping them with the build timestamp on every deploy would misrepresent
-  // freshness to crawlers.
   const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
     url: `${SITE.url}${r.path}/`,
     changeFrequency: r.changeFrequency,

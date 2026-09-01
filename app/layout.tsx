@@ -63,7 +63,12 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
   },
   alternates: {
-    canonical: SITE.url,
+    canonical: `${SITE.url}/en/`,
+    languages: {
+      "en": `${SITE.url}/en/`,
+      "ar": `${SITE.url}/ar/`,
+      "x-default": `${SITE.url}/en/`,
+    },
   },
   openGraph: {
     type: "website",

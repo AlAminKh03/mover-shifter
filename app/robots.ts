@@ -8,11 +8,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
+        allow: ["/", "/videos/"],
         disallow: ["/api/"],
       },
     ],
-    sitemap: `${SITE.url}/sitemap.xml`,
+    sitemap: [
+      `${SITE.url}/sitemap.xml`,
+      `${SITE.url}/sitemap-videos.xml`,
+    ],
     host: SITE.url,
   };
 }
