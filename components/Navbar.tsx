@@ -1,11 +1,13 @@
 "use client";
 
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { cn } from "@/lib/utils";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -17,22 +19,38 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 
-const menuItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/work", label: "Our Work" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-] as const;
+const menuItemsByLocale: Record<Locale, { href: string; label: string }[]> = {
+  en: [
+    { href: "", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/services", label: "Services" },
+    { href: "/work", label: "Our Work" },
+    { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+  ],
+  ar: [
+    { href: "", label: "الرئيسية" },
+    { href: "/about", label: "عن الشركة" },
+    { href: "/services", label: "الخدمات" },
+    { href: "/work", label: "أعمالنا" },
+    { href: "/blog", label: "المدونة" },
+    { href: "/contact", label: "اتصل بنا" },
+  ],
+};
 
-const Navbar = () => {
+const Navbar = ({ locale }: { locale: Locale }) => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+  const isAr = locale === "ar";
+  const menuItems = menuItemsByLocale[locale].map((item) => ({
+    ...item,
+    href: `/${locale}${item.href}`,
+  }));
+  const quoteLabel = isAr ? "احصل على عرض سعر" : "Get quote";
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
+    if (href === `/${locale}`) return pathname === href || pathname === `${href}/`;
     return pathname.startsWith(href);
   };
 
@@ -48,7 +66,7 @@ const Navbar = () => {
     <header className="border-b border-border/60 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/85">
       <div className="layout-container flex h-14 items-center gap-2 md:gap-3 md:h-[3.75rem]">
         <Link
-          href="/"
+          href={`/${locale}`}
           className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3"
         >
           <Logo className="h-10 w-10 sm:h-11 sm:w-11" />
@@ -71,6 +89,8 @@ const Navbar = () => {
         </nav>
 
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
+          <LanguageSwitcher locale={locale} className="hidden sm:inline-flex" />
+
           <Button
             variant="ghost"
             size="icon"
@@ -84,7 +104,7 @@ const Navbar = () => {
 
           <div className="hidden md:block">
             <Button asChild>
-              <Link href="/quote">Get quote</Link>
+              <Link href={`/${locale}/quote`}>{quoteLabel}</Link>
             </Button>
           </div>
 
@@ -101,7 +121,7 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="right" className="flex w-[min(100%,16rem)] flex-col gap-0 p-0 sm:w-[18rem]">
               <SheetHeader className="border-b border-border/60 px-4 py-3 text-left sm:px-6 sm:py-4">
-                <SheetTitle className="font-display text-base sm:text-lg">Menu</SheetTitle>
+                <SheetTitle className="font-display text-base sm:text-lg">{isAr ? "القائمة" : "Menu"}</SheetTitle>
               </SheetHeader>
               <nav
                 className="flex flex-1 flex-col gap-0 overflow-y-auto px-2 py-2 sm:px-3 sm:py-4"
@@ -122,10 +142,13 @@ const Navbar = () => {
                     {item.label}
                   </Link>
                 ))}
+                <div className="mt-3 flex items-center justify-between gap-2 px-1 sm:mt-4">
+                  <LanguageSwitcher locale={locale} />
+                </div>
                 <div className="mt-3 px-1 sm:mt-4">
                   <Button asChild className="w-full text-sm sm:text-base" size="sm">
-                    <Link href="/quote" onClick={() => setSheetOpen(false)}>
-                      Get quote
+                    <Link href={`/${locale}/quote`} onClick={() => setSheetOpen(false)}>
+                      {quoteLabel}
                     </Link>
                   </Button>
                 </div>

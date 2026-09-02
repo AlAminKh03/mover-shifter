@@ -12,10 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: [
-      `${SITE.url}/sitemap.xml`,
-      `${SITE.url}/sitemap-videos.xml`,
-    ],
+    sitemap: `${SITE.url}/sitemap.xml`,
     host: SITE.url,
   };
 }

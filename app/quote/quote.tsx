@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { quoteServiceGroups } from "@/config/quote-services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
@@ -12,20 +13,54 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-const formSchema = z.object({
-  name: z.string().min(2, "Tell us your name"),
-  phone: z.string().min(8, "Phone number please"),
-  email: z.string().email("Valid email please"),
-  location: z.string().min(2, "Where is the job?"),
-  services: z.array(z.string()).min(1, "Pick at least one service"),
-  notes: z.string().optional(),
-});
+/**
+ * Display-only Arabic labels for the fixed English option/group values in
+ * quote-services.ts. The value actually submitted (and read by the business
+ * over email) stays the English string — only what's shown to an Arabic
+ * visitor changes.
+ */
+const groupLabelsAR: Record<string, string> = {
+  "Wall cabinets & joinery": "خزائن الحائط والنجارة",
+  "Curtains, sofas & finishes": "الستائر والأرائك والتشطيبات",
+  "Moving & extras": "النقل والخدمات الإضافية",
+  Other: "أخرى",
+};
 
-type FormValues = z.infer<typeof formSchema>;
+const optionLabelsAR: Record<string, string> = {
+  "Wall cabinets": "خزائن الحائط",
+  "Kitchen cabinets": "خزائن المطبخ",
+  "Built-in wardrobe": "دولاب مدمج",
+  "TV unit or media wall": "وحدة تلفزيون أو جدار وسائط",
+  "Storage / shelving joinery": "تخزين / رفوف نجارة",
+  "Rework or re-door existing cabinets": "إعادة عمل أو تغيير أبواب الخزائن الحالية",
+  "Curtains or blinds": "ستائر أو مظلات",
+  "Custom sofa or majlis": "أريكة أو مجلس مخصص",
+  Reupholstery: "إعادة تنجيد",
+  "SPC or wood flooring": "أرضيات SPC أو خشبية",
+  "Furniture moving / shifting": "نقل / ترحيل الأثاث",
+  "Packing & transport": "التغليف والنقل",
+  "Handyman & small repairs": "أعمال صيانة وإصلاحات صغيرة",
+  "Not sure yet": "لست متأكدًا بعد",
+};
 
-export default function QuotePage() {
+function buildFormSchema(isAr: boolean) {
+  return z.object({
+    name: z.string().min(2, isAr ? "أخبرنا باسمك" : "Tell us your name"),
+    phone: z.string().min(8, isAr ? "رقم الهاتف من فضلك" : "Phone number please"),
+    email: z.string().email(isAr ? "بريد إلكتروني صالح من فضلك" : "Valid email please"),
+    location: z.string().min(2, isAr ? "أين تقع المهمة؟" : "Where is the job?"),
+    services: z.array(z.string()).min(1, isAr ? "اختر خدمة واحدة على الأقل" : "Pick at least one service"),
+    notes: z.string().optional(),
+  });
+}
+
+type FormValues = z.infer<ReturnType<typeof buildFormSchema>>;
+
+export default function QuotePage({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formSchema = buildFormSchema(isAr);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -74,15 +109,15 @@ export default function QuotePage() {
       if (!response.ok) throw new Error("Submission failed");
 
       toast({
-        title: "Sent — we'll come back within 48 hours.",
+        title: isAr ? "تم الإرسال — سنعود إليك خلال 48 ساعة." : "Sent — we'll come back within 48 hours.",
         duration: 5000,
       });
       form.reset();
     } catch (error) {
       console.error(error);
       toast({
-        title: "Could not send",
-        description: "Try again, or reach us on WhatsApp.",
+        title: isAr ? "تعذر الإرسال" : "Could not send",
+        description: isAr ? "حاول مرة أخرى، أو تواصل معنا عبر واتساب." : "Try again, or reach us on WhatsApp.",
         variant: "destructive",
         duration: 5000,
       });
@@ -97,10 +132,10 @@ export default function QuotePage() {
         {/* Header */}
         <div className="text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-            Ask for a quote
+            {isAr ? "اطلب عرض سعر" : "Ask for a quote"}
           </p>
           <h1 className="font-display mt-2 text-xl font-extrabold leading-[1.2] tracking-tight text-secondary sm:text-2xl">
-            A few details. Quote in 48h.
+            {isAr ? "بعض التفاصيل. عرض سعر خلال 48 ساعة." : "A few details. Quote in 48h."}
           </h1>
         </div>
 
@@ -115,15 +150,15 @@ export default function QuotePage() {
 
           <div className="space-y-4 p-5 sm:p-6">
             <Row>
-              <Field label="Name" required error={form.formState.errors.name?.message}>
+              <Field label={isAr ? "الاسم" : "Name"} required error={form.formState.errors.name?.message}>
                 <Input
                   {...form.register("name")}
                   autoComplete="name"
-                  placeholder="Khalid"
+                  placeholder={isAr ? "خالد" : "Khalid"}
                   className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
                 />
               </Field>
-              <Field label="Phone" required error={form.formState.errors.phone?.message}>
+              <Field label={isAr ? "الهاتف" : "Phone"} required error={form.formState.errors.phone?.message}>
                 <Input
                   type="tel"
                   {...form.register("phone")}
@@ -134,7 +169,7 @@ export default function QuotePage() {
               </Field>
             </Row>
 
-            <Field label="Email" required error={form.formState.errors.email?.message}>
+            <Field label={isAr ? "البريد الإلكتروني" : "Email"} required error={form.formState.errors.email?.message}>
               <Input
                 type="email"
                 {...form.register("email")}
@@ -144,17 +179,17 @@ export default function QuotePage() {
               />
             </Field>
 
-            <Field label="Location" required error={form.formState.errors.location?.message}>
+            <Field label={isAr ? "الموقع" : "Location"} required error={form.formState.errors.location?.message}>
               <Input
                 {...form.register("location")}
-                placeholder="e.g. Lusail apartment — kitchen + 2 wardrobes"
+                placeholder={isAr ? "مثال: شقة في لوسيل — مطبخ ودولابان" : "e.g. Lusail apartment — kitchen + 2 wardrobes"}
                 className="h-11 rounded-lg border-border bg-background focus-visible:ring-primary"
               />
             </Field>
 
             <div>
               <p className="text-sm font-semibold text-secondary">
-                Services <span className="text-primary">*</span>
+                {isAr ? "الخدمات" : "Services"} <span className="text-primary">*</span>
               </p>
               <Controller
                 control={form.control}
@@ -164,7 +199,7 @@ export default function QuotePage() {
                     {quoteServiceGroups.map((group) => (
                       <div key={group.label}>
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                          {group.label}
+                          {isAr ? groupLabelsAR[group.label] ?? group.label : group.label}
                         </p>
                         <div className="mt-1.5 flex flex-wrap gap-1.5">
                           {group.options.map((option) => {
@@ -192,7 +227,7 @@ export default function QuotePage() {
                                     strokeWidth={3}
                                   />
                                 )}
-                                {option}
+                                {isAr ? optionLabelsAR[option] ?? option : option}
                               </button>
                             );
                           })}
@@ -209,11 +244,11 @@ export default function QuotePage() {
               />
             </div>
 
-            <Field label="Notes (optional)">
+            <Field label={isAr ? "ملاحظات (اختياري)" : "Notes (optional)"}>
               <Textarea
                 rows={3}
                 {...form.register("notes")}
-                placeholder="Rough sizes, finish ideas, deadline — anything that helps us quote."
+                placeholder={isAr ? "المقاسات التقريبية، أفكار التشطيب، الموعد النهائي — أي شيء يساعدنا في تحديد السعر." : "Rough sizes, finish ideas, deadline — anything that helps us quote."}
                 className="rounded-lg border-border bg-background focus-visible:ring-primary resize-none"
               />
             </Field>
@@ -222,9 +257,9 @@ export default function QuotePage() {
           {/* Submit footer */}
           <div className="flex flex-col items-center justify-between gap-3 border-t border-border bg-muted/30 px-5 py-4 sm:flex-row sm:px-6">
             <p className="text-[11px] text-muted-foreground sm:text-left">
-              Goes to{" "}
+              {isAr ? "يُرسل إلى" : "Goes to"}{" "}
               <span className="font-mono text-foreground">{SITE.email}</span>
-              {" · "}Never shared.
+              {isAr ? " · لا يُشارك أبدًا." : " · Never shared."}
             </p>
             <Button
               type="submit"
@@ -234,11 +269,11 @@ export default function QuotePage() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Sending
+                  {isAr ? "جارٍ الإرسال" : "Sending"}
                 </>
               ) : (
                 <>
-                  Send
+                  {isAr ? "إرسال" : "Send"}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </>
               )}

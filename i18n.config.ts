@@ -1,5 +1,3 @@
-import type { Config } from 'next-i18next';
-
 export const i18nConfig = {
   locales: ['en', 'ar'],
   defaultLocale: 'en',

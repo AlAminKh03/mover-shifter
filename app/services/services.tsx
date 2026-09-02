@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
@@ -26,7 +27,7 @@ import Link from "next/link";
    and blurb sell the service. Grep STAND_IN for every slot awaiting a shoot. */
 type Service = { slug: string; title: string; blurb: string; img: string; alt: string };
 
-const cabinetServices: Service[] = [
+const cabinetServicesEN: Service[] = [
   {
     slug: "wall-cabinets",
     title: "Wall cabinets",
@@ -61,7 +62,42 @@ const cabinetServices: Service[] = [
   },
 ];
 
-const finishesServices: Service[] = [
+const cabinetServicesAR: Service[] = [
+  {
+    slug: "wall-cabinets",
+    title: "خزائن الحائط",
+    blurb:
+      "خزائن معلقة على الحائط، جدران تخزين، ووحدات عرض — تُقاس وتُصنع وتُركّب بشكل مستوٍ ومحكم. إغلاق ناعم، وبالتشطيب الذي تختاره.",
+    img: STAND_IN(TV_UNIT_PHOTOS[1]).src,
+    alt: STAND_IN(TV_UNIT_PHOTOS[1]).alt,
+  },
+  {
+    slug: "kitchen-cabinets",
+    title: "خزائن المطبخ",
+    blurb:
+      "خزائن مطبخ كاملة حسب المقاس — وحدات سفلية وعلوية، خزائن طويلة، وأدراج. هياكل مقاومة للرطوبة، وإغلاق ناعم في كل مكان.",
+    img: KITCHEN_PHOTOS[0].src,
+    alt: KITCHEN_PHOTOS[0].alt,
+  },
+  {
+    slug: "wardrobes",
+    title: "الدواليب المدمجة",
+    blurb:
+      "تُقاس، تُصنع، وتُركّب. أبواب مفصلية أو منزلقة، إغلاق ناعم، ومُهيأة حسب احتياجك من الملابس.",
+    img: WARDROBE_PHOTOS[1].src,
+    alt: WARDROBE_PHOTOS[1].alt,
+  },
+  {
+    slug: "tv-units",
+    title: "وحدات التلفزيون ونجارة التخزين",
+    blurb:
+      "جدران وسائط، وحدات تلفزيون، تخزين للأحذية والمدخل، ورفوف مخصصة — تُبنى على الحائط وتُنجز لتناسب المكان.",
+    img: TV_UNIT_PHOTOS[0].src,
+    alt: TV_UNIT_PHOTOS[0].alt,
+  },
+];
+
+const finishesServicesEN: Service[] = [
   {
     slug: "curtains",
     title: "Curtains & blinds",
@@ -96,7 +132,42 @@ const finishesServices: Service[] = [
   },
 ];
 
-const extrasServices: Service[] = [
+const finishesServicesAR: Service[] = [
+  {
+    slug: "curtains",
+    title: "الستائر والمظلات",
+    blurb:
+      "نقيس، نصنع، نُعلّق، ونُنسّق. ستائر شفافة، معتمة، رومانية ولفافة، وسكك آلية — ومكتبة أقمشة خاصة بنا في الموقع.",
+    img: CURTAIN_PHOTOS[0].src,
+    alt: CURTAIN_PHOTOS[0].alt,
+  },
+  {
+    slug: "custom-sofas",
+    title: "الأرائك والمجالس المخصصة",
+    blurb:
+      "مصنوعة حسب المقاس. هياكل، إسفنج، قماش، وجلد — بالحجم والإحساس الذي تريده.",
+    img: SOFA_PHOTOS[1].src,
+    alt: SOFA_PHOTOS[1].alt,
+  },
+  {
+    slug: "reupholstery",
+    title: "إعادة التنجيد",
+    blurb:
+      "فحص الهيكل، إعادة الحشو، وإعادة التغطية — جلد وقماش. استلام وتوصيل في جميع أنحاء قطر.",
+    img: SOFA_PHOTOS[2].src,
+    alt: SOFA_PHOTOS[2].alt,
+  },
+  {
+    slug: "flooring",
+    title: "أرضيات SPC والخشب",
+    blurb:
+      "أرضيات SPC مقاومة للماء، بي في سي باركيا، وخشب هندسي. تجهيز الأرضية السفلية وتسليم نظيف.",
+    img: FLOORING_PHOTOS[0].src,
+    alt: FLOORING_PHOTOS[0].alt,
+  },
+];
+
+const extrasServicesEN: Service[] = [
   {
     slug: "furniture-moving",
     title: "Furniture moving & shifting",
@@ -123,13 +194,44 @@ const extrasServices: Service[] = [
   },
 ];
 
-const allServices = [...cabinetServices, ...finishesServices, ...extrasServices];
+const extrasServicesAR: Service[] = [
+  {
+    slug: "furniture-moving",
+    title: "نقل وترحيل الأثاث",
+    blurb:
+      "نقل المنازل والفلل والمكاتب في جميع أنحاء قطر — تغليف، تحميل، نقل، وترتيب. يمكن حجزها بمفردها أو مع أعمال التجهيز.",
+    img: MOVING_PHOTOS[0].src,
+    alt: MOVING_PHOTOS[0].alt,
+  },
+  {
+    slug: "packing",
+    title: "التغليف والنقل",
+    blurb:
+      "صناديق، بابل رول، بطانيات، كراتين للدواليب، وشريط لاصق — كلها متوفرة. مركبات بالحجم المناسب، وعناية إضافية بالزجاج والإلكترونيات.",
+    img: MOVING_PHOTOS[2].src,
+    alt: MOVING_PHOTOS[2].alt,
+  },
+  {
+    slug: "handyman",
+    title: "أعمال الصيانة والإصلاحات الصغيرة",
+    blurb:
+      "تعليق الرفوف والتلفزيونات، ضبط المفصلات والمقابض، دهان تجميلي، وتثبيت القطع المفكوكة. زيارة واحدة، فاتورة واحدة.",
+    img: STAND_IN(SEATING_PHOTOS[0]).src,
+    alt: STAND_IN(SEATING_PHOTOS[0]).alt,
+  },
+];
 
 /* ──────────────────────────  PAGE  ─────────────────────── */
 
-export default function ServicesPage() {
+export default function ServicesPage({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
+  const cabinetServices = isAr ? cabinetServicesAR : cabinetServicesEN;
+  const finishesServices = isAr ? finishesServicesAR : finishesServicesEN;
+  const extrasServices = isAr ? extrasServicesAR : extrasServicesEN;
+  const allServices = [...cabinetServices, ...finishesServices, ...extrasServices];
+
   const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    "Hi! I'd like a quote.",
+    isAr ? "مرحباً! أرغب في الحصول على عرض سعر." : "Hi! I'd like a quote.",
   )}`;
 
   return (
@@ -144,22 +246,32 @@ export default function ServicesPage() {
           <div className="flex items-baseline gap-3">
             <span className="h-px w-10 bg-secondary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-              Services
+              {isAr ? "الخدمات" : "Services"}
             </span>
           </div>
 
           <h1 className="font-display mt-5 max-w-3xl text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem]">
-            Everything for the room,{" "}
-            <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
-              one team.
-            </em>
+            {isAr ? (
+              <>
+                كل ما تحتاجه للغرفة،{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
+                  فريق واحد.
+                </em>
+              </>
+            ) : (
+              <>
+                Everything for the room,{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
+                  one team.
+                </em>
+              </>
+            )}
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
-            Wall cabinets, kitchens, and wardrobes — alongside curtains and
-            blinds, custom sofas and majlis, flooring, and furniture moving.
-            Book one or several: one free survey, one fixed quote within 48
-            hours.
+            {isAr
+              ? "خزائن الحائط والمطابخ والدواليب — إلى جانب الستائر والمظلات، الأرائك والمجالس المخصصة، الأرضيات، ونقل الأثاث. احجز خدمة واحدة أو عدة خدمات: مسح مجاني واحد، وعرض سعر ثابت واحد خلال 48 ساعة."
+              : "Wall cabinets, kitchens, and wardrobes — alongside curtains and blinds, custom sofas and majlis, flooring, and furniture moving. Book one or several: one free survey, one fixed quote within 48 hours."}
           </p>
         </div>
       </section>
@@ -170,20 +282,24 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-3xl">
             <div className="rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                Curtains & blinds
+                {isAr ? "الستائر والمظلات" : "Curtains & blinds"}
               </p>
               <h3 className="font-display mt-2 text-xl font-bold leading-tight text-secondary">
-                Measure, make, hang — an end-to-end curtains service
+                {isAr
+                  ? "قياس، تصنيع، تعليق — خدمة ستائر متكاملة"
+                  : "Measure, make, hang — an end-to-end curtains service"}
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                We offer sheers, blackout, roman and roller blinds, motorised tracks and an on-site fabric library. Tell us the window and we&apos;ll advise the best finish.
+                {isAr
+                  ? "نقدم الستائر الشفافة، المعتمة، الرومانية واللفافة، السكك الآلية، ومكتبة أقمشة في الموقع. أخبرنا بمقاس النافذة وسننصحك بأفضل تشطيب."
+                  : "We offer sheers, blackout, roman and roller blinds, motorised tracks and an on-site fabric library. Tell us the window and we'll advise the best finish."}
               </p>
               <div className="mt-4 flex gap-3">
-                <Link href="/quote" className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-                  Request a curtain quote
+                <Link href={`/${locale}/quote`} className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+                  {isAr ? "اطلب عرض سعر للستائر" : "Request a curtain quote"}
                 </Link>
-                <Link href="/work" className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium text-secondary hover:bg-muted">
-                  See curtain projects
+                <Link href={`/${locale}/work`} className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium text-secondary hover:bg-muted">
+                  {isAr ? "شاهد مشاريع الستائر" : "See curtain projects"}
                 </Link>
               </div>
             </div>
@@ -197,17 +313,17 @@ export default function ServicesPage() {
           <div className="grid gap-12 border-t border-border pt-12 lg:grid-cols-3 lg:gap-12">
             <ServiceColumn
               roman="I"
-              chapter="Cabinets & joinery"
+              chapter={isAr ? "الخزائن والنجارة" : "Cabinets & joinery"}
               services={cabinetServices}
             />
             <ServiceColumn
               roman="II"
-              chapter="Curtains, sofas & finishes"
+              chapter={isAr ? "الستائر والأرائك والتشطيبات" : "Curtains, sofas & finishes"}
               services={finishesServices}
             />
             <ServiceColumn
               roman="III"
-              chapter="Moving & extras"
+              chapter={isAr ? "النقل والخدمات الإضافية" : "Moving & extras"}
               services={extrasServices}
             />
           </div>
@@ -224,15 +340,15 @@ export default function ServicesPage() {
                 aria-hidden
               />
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                — Get a quote —
+                {isAr ? "— احصل على عرض سعر —" : "— Get a quote —"}
               </p>
               <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                Tell us about the job.
+                {isAr ? "أخبرنا عن المهمة." : "Tell us about the job."}
               </h2>
               <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                The room, the address, and roughly what you want done.
-                We&apos;ll come back within 48 hours with a fixed, itemised
-                quote.
+                {isAr
+                  ? "الغرفة، العنوان، وما تريد تنفيذه تقريبًا. سنعود إليك خلال 48 ساعة بعرض سعر ثابت ومفصل."
+                  : "The room, the address, and roughly what you want done. We'll come back within 48 hours with a fixed, itemised quote."}
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -241,8 +357,8 @@ export default function ServicesPage() {
                   className="h-12 w-full gap-2 rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1"
                   asChild
                 >
-                  <Link href="/quote">
-                    Get a free quote
+                  <Link href={`/${locale}/quote`}>
+                    {isAr ? "احصل على عرض سعر مجاني" : "Get a free quote"}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -265,7 +381,7 @@ export default function ServicesPage() {
                 >
                   <a href={`tel:${SITE.phoneE164}`}>
                     <Phone className="h-4 w-4" />
-                    Call
+                    {isAr ? "اتصل" : "Call"}
                   </a>
                 </Button>
               </div>
@@ -284,9 +400,10 @@ export default function ServicesPage() {
               "@type": "Service",
               name: s.title,
               description: s.blurb,
-              url: `${SITE.url}/services#${s.slug}`,
+              url: `${SITE.url}/${locale}/services#${s.slug}`,
               provider: { "@id": `${SITE.url}#business` },
               areaServed: { "@type": "Country", name: "Qatar" },
+              inLanguage: locale,
             })),
           ),
         }}

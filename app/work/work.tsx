@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import {
   BED_PHOTOS,
   CURTAIN_PHOTOS,
@@ -16,7 +17,6 @@ import {
 } from "@/config/work-photos";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
-import Image from "next/image";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import Link from "next/link";
 import { useState } from "react";
@@ -29,6 +29,9 @@ import { useState } from "react";
  * only exists here once we have work to put in it. Cabinets, kitchens,
  * wardrobes are absent by design until that shoot happens; add
  * them back alongside the photos, not before.
+ *
+ * `category` stays a fixed English key used for filtering; `categoryLabels`
+ * below maps it to the label shown in each locale.
  */
 type Tile = {
   category: string;
@@ -55,9 +58,24 @@ const categories: string[] = [
   ...Array.from(new Set(tiles.map((t) => t.category))),
 ];
 
+const categoryLabelsAR: Record<string, string> = {
+  All: "الكل",
+  Kitchens: "المطابخ",
+  Wardrobes: "الدواليب",
+  "TV units & joinery": "وحدات التلفزيون والنجارة",
+  "Sofas & majlis": "الأرائك والمجالس",
+  "Curtains & blinds": "الستائر والمظلات",
+  Flooring: "الأرضيات",
+  "Beds & headboards": "الأسرة ورؤوس الأسرة",
+  "Seating & upholstery": "المقاعد والتنجيد",
+  "Dining furniture": "أثاث الطعام",
+  "Moving & packing": "النقل والتغليف",
+};
+
 /* ──────────────────────────  PAGE  ─────────────────────── */
 
-export default function WorkPage() {
+export default function WorkPage({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
   const [active, setActive] = useState<string>("All");
   const filtered = tiles.filter((t) => active === "All" || t.category === active);
   // Remove tiles that reference the same image URL to avoid repetitive pictures
@@ -65,7 +83,7 @@ export default function WorkPage() {
     (t, i, arr) => arr.findIndex((x) => x.img === t.img) === i,
   );
   const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    "Hi! I'd like a quote.",
+    isAr ? "مرحباً! أرغب في الحصول على عرض سعر." : "Hi! I'd like a quote.",
   )}`;
 
   return (
@@ -80,21 +98,32 @@ export default function WorkPage() {
           <div className="flex items-baseline gap-3">
             <span className="h-px w-10 bg-secondary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-              Our work
+              {isAr ? "أعمالنا" : "Our work"}
             </span>
           </div>
 
           <h1 className="font-display mt-4 max-w-3xl text-2xl font-extrabold leading-[1.05] tracking-tight text-secondary sm:mt-5 sm:text-3xl lg:text-5xl lg:text-[3.75rem]">
-            What we build,{" "}
-            <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[6px] sm:underline-offset-[8px]">
-              by category.
-            </em>
+            {isAr ? (
+              <>
+                ما نصنعه،{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[6px] sm:underline-offset-[8px]">
+                  حسب الفئة.
+                </em>
+              </>
+            ) : (
+              <>
+                What we build,{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[6px] sm:underline-offset-[8px]">
+                  by category.
+                </em>
+              </>
+            )}
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-muted-foreground sm:mt-5 sm:text-base lg:text-lg lg:leading-[1.7]">
-            Cabinets, kitchens, wardrobes, curtains, sofas, flooring, and
-            furniture moving across Qatar. Filter below — and ask us for photos
-            of finished jobs in your area.
+            {isAr
+              ? "خزائن، مطابخ، دواليب، ستائر، أرائك، أرضيات، ونقل أثاث في جميع أنحاء قطر. صنّف أدناه — واطلب منا صورًا لأعمال منجزة في منطقتك."
+              : "Cabinets, kitchens, wardrobes, curtains, sofas, flooring, and furniture moving across Qatar. Filter below — and ask us for photos of finished jobs in your area."}
           </p>
         </div>
       </section>
@@ -114,7 +143,7 @@ export default function WorkPage() {
                     : "border-border bg-background text-muted-foreground hover:border-secondary/40 hover:text-foreground"
                 }`}
               >
-                {c}
+                {isAr ? categoryLabelsAR[c] ?? c : c}
               </button>
             ))}
           </div>
@@ -146,7 +175,7 @@ export default function WorkPage() {
 
           {uniqueFiltered.length === 0 && (
             <p className="mt-12 text-center text-sm text-muted-foreground">
-              Nothing in this category yet.
+              {isAr ? "لا يوجد شيء في هذه الفئة بعد." : "Nothing in this category yet."}
             </p>
           )}
         </div>
@@ -162,15 +191,15 @@ export default function WorkPage() {
                 aria-hidden
               />
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                — Want to see real jobs? —
+                {isAr ? "— تريد رؤية أعمال حقيقية؟ —" : "— Want to see real jobs? —"}
               </p>
               <h2 className="font-display mt-2 text-xl font-bold leading-tight text-secondary sm:mt-3 sm:text-2xl lg:text-3xl">
-                Ask us — we&apos;ll send photos.
+                {isAr ? "اسألنا — سنرسل لك الصور." : "Ask us — we'll send photos."}
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:mt-3 sm:text-base lg:text-lg">
-                Tell us which category you&apos;re interested in and we&apos;ll
-                send photos of finished jobs by WhatsApp, plus a fixed quote for
-                yours.
+                {isAr
+                  ? "أخبرنا بالفئة التي تهمك وسنرسل صورًا لأعمال منجزة عبر واتساب، مع عرض سعر ثابت لمشروعك."
+                  : "Tell us which category you're interested in and we'll send photos of finished jobs by WhatsApp, plus a fixed quote for yours."}
               </p>
 
               <div className="mt-5 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:gap-3">
@@ -179,8 +208,8 @@ export default function WorkPage() {
                   className="h-12 w-full gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90 sm:flex-1 sm:px-7 sm:text-base"
                   asChild
                 >
-                  <Link href="/quote">
-                    Get a free quote
+                  <Link href={`/${locale}/quote`}>
+                    {isAr ? "احصل على عرض سعر مجاني" : "Get a free quote"}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -203,7 +232,7 @@ export default function WorkPage() {
                 >
                   <a href={`tel:${SITE.phoneE164}`}>
                     <Phone className="h-4 w-4" />
-                    Call
+                    {isAr ? "اتصل" : "Call"}
                   </a>
                 </Button>
               </div>

@@ -1,29 +1,35 @@
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-const Footer = () => {
+const Footer = ({ locale }: { locale: Locale }) => {
+  const isAr = locale === "ar";
+
   return (
     <footer className="mt-auto border-t border-border/60 bg-card">
       <div className="layout-container py-12 pb-10 md:py-16 md:pb-14">
         <div className="mb-12 rounded-2xl border border-border/70 bg-gradient-to-br from-primary/[0.12] via-card to-secondary/35 p-8 md:flex md:items-center md:justify-between md:gap-8 md:p-10">
           <div className="max-w-xl">
             <p className="font-display text-xl font-semibold text-foreground md:text-2xl">
-              Planning cabinets, curtains, or a full fit-out in Doha?
+              {isAr
+                ? "تخطط لخزائن أو ستائر أو تجهيز كامل في الدوحة؟"
+                : "Planning cabinets, curtains, or a full fit-out in Doha?"}
             </p>
             <p className="mt-2 text-sm text-muted-foreground md:text-base">
-              Send your room sizes or a few photos — we&apos;ll reply with a
-              clear plan and a fixed quote.
+              {isAr
+                ? "أرسل لنا مقاسات الغرفة أو بعض الصور — سنرد بخطة واضحة وعرض سعر ثابت."
+                : "Send your room sizes or a few photos — we'll reply with a clear plan and a fixed quote."}
             </p>
           </div>
           <div className="mt-6 flex shrink-0 flex-col gap-3 sm:flex-row md:mt-0">
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link href="/quote">Get a quote</Link>
+              <Link href={`/${locale}/quote`}>{isAr ? "احصل على عرض سعر" : "Get a quote"}</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-              <Link href="/contact">Contact</Link>
+              <Link href={`/${locale}/contact`}>{isAr ? "اتصل بنا" : "Contact"}</Link>
             </Button>
           </div>
         </div>
@@ -35,29 +41,41 @@ const Footer = () => {
               <span className="font-display text-lg font-bold">{SITE.name}</span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-              {SITE.tagline} One Qatar team — surveyed free, made, delivered,
-              and fitted across Qatar.
+              {isAr
+                ? `${SITE.tagline} فريق واحد في قطر — مسح مجاني، صنع، توصيل، وتركيب في جميع أنحاء قطر.`
+                : `${SITE.tagline} One Qatar team — surveyed free, made, delivered, and fitted across Qatar.`}
             </p>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-2">
             <div>
               <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                Explore
+                {isAr ? "استكشف" : "Explore"}
               </h3>
               <ul className="mt-4 space-y-2.5">
-                {[
-                  ["/", "Home"],
-                  ["/about", "About"],
-                  ["/services", "Services"],
-                  ["/work", "Our work"],
-                  ["/blog", "Blog"],
-                  ["/contact", "Contact"],
-                  ["/quote", "Get a quote"],
-                ].map(([href, label]) => (
+                {(isAr
+                  ? [
+                      ["", "الرئيسية"],
+                      ["/about", "عن الشركة"],
+                      ["/services", "الخدمات"],
+                      ["/work", "أعمالنا"],
+                      ["/blog", "المدونة"],
+                      ["/contact", "اتصل بنا"],
+                      ["/quote", "احصل على عرض سعر"],
+                    ]
+                  : [
+                      ["", "Home"],
+                      ["/about", "About"],
+                      ["/services", "Services"],
+                      ["/work", "Our work"],
+                      ["/blog", "Blog"],
+                      ["/contact", "Contact"],
+                      ["/quote", "Get a quote"],
+                    ]
+                ).map(([href, label]) => (
                   <li key={href}>
                     <Link
-                      href={href}
+                      href={`/${locale}${href}`}
                       className="text-sm text-foreground/90 transition-colors hover:text-primary"
                     >
                       {label}
@@ -68,20 +86,31 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                What we do
+                {isAr ? "ماذا نقدم" : "What we do"}
               </h3>
               <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-                <li>Wall cabinets, kitchens & wardrobes</li>
-                <li>Curtains & blinds</li>
-                <li>Custom sofas, majlis & reupholstery</li>
-                <li>Flooring & furniture moving</li>
+                {isAr ? (
+                  <>
+                    <li>خزائن الحائط والمطابخ والدواليب</li>
+                    <li>الستائر والمظلات</li>
+                    <li>الأرائك المخصصة والمجالس وإعادة التنجيد</li>
+                    <li>الأرضيات ونقل الأثاث</li>
+                  </>
+                ) : (
+                  <>
+                    <li>Wall cabinets, kitchens & wardrobes</li>
+                    <li>Curtains & blinds</li>
+                    <li>Custom sofas, majlis & reupholstery</li>
+                    <li>Flooring & furniture moving</li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Contact
+              {isAr ? "اتصل بنا" : "Contact"}
             </h3>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex gap-2">
@@ -114,7 +143,7 @@ const Footer = () => {
 
         <div className="mt-12 border-t border-border/60 pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. {isAr ? "جميع الحقوق محفوظة." : "All rights reserved."}
           </p>
           <p className="mt-2 text-center text-xs text-muted-foreground">
             Developed by{" "}

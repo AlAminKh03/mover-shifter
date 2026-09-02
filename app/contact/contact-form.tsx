@@ -5,24 +5,29 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().optional(),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
+function buildFormSchema(isAr: boolean) {
+  return z.object({
+    name: z.string().min(2, isAr ? "الاسم يجب أن يكون حرفين على الأقل" : "Name must be at least 2 characters"),
+    email: z.string().email(isAr ? "الرجاء إدخال بريد إلكتروني صحيح" : "Please enter a valid email"),
+    phone: z.string().optional(),
+    message: z.string().min(10, isAr ? "الرسالة يجب أن تكون 10 أحرف على الأقل" : "Message must be at least 10 characters"),
+  });
+}
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<ReturnType<typeof buildFormSchema>>;
 
-export default function ContactForm() {
+export default function ContactForm({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formSchema = buildFormSchema(isAr);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,16 +63,16 @@ export default function ContactForm() {
       if (!response.ok) throw new Error("Submission failed");
 
       toast({
-        title: "Message sent",
-        description: "We will get back to you shortly.",
+        title: isAr ? "تم إرسال الرسالة" : "Message sent",
+        description: isAr ? "سنعاود التواصل معك قريبًا." : "We will get back to you shortly.",
         duration: 5000,
       });
       form.reset();
     } catch (error) {
       console.error(error);
       toast({
-        title: "Could not send",
-        description: "Please try again or reach us on WhatsApp.",
+        title: isAr ? "تعذر الإرسال" : "Could not send",
+        description: isAr ? "حاول مرة أخرى أو تواصل معنا عبر واتساب." : "Please try again or reach us on WhatsApp.",
         variant: "destructive",
         duration: 5000,
       });
@@ -82,18 +87,18 @@ export default function ContactForm() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
-              Or send a note
+              {isAr ? "أو أرسل رسالة" : "Or send a note"}
             </p>
             <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-              Tell us a bit about the job.
+              {isAr ? "أخبرنا قليلاً عن المهمة." : "Tell us a bit about the job."}
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              The more you can share — addresses, dates, what&apos;s
-              involved — the closer the first quote lands. We reply within
-              48 hours, usually faster.
+              {isAr
+                ? "كلما شاركت تفاصيل أكثر — العناوين، التواريخ، ما هو مطلوب — كان عرض السعر الأول أقرب للدقة. نرد خلال 48 ساعة، وعادةً أسرع."
+                : "The more you can share — addresses, dates, what's involved — the closer the first quote lands. We reply within 48 hours, usually faster."}
             </p>
             <p className="mt-6 text-sm text-muted-foreground">
-              Form goes to{" "}
+              {isAr ? "يصل النموذج إلى" : "Form goes to"}{" "}
               <span className="font-mono text-foreground">{SITE.email}</span>
             </p>
           </div>
@@ -107,20 +112,20 @@ export default function ContactForm() {
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <Field
                   id="name"
-                  label="Your name"
+                  label={isAr ? "اسمك" : "Your name"}
                   error={form.formState.errors.name?.message}
                 >
                   <Input
                     id="name"
                     {...form.register("name")}
                     autoComplete="name"
-                    placeholder="Khalid"
+                    placeholder={isAr ? "خالد" : "Khalid"}
                     className="h-11 rounded-lg"
                   />
                 </Field>
                 <Field
                   id="email"
-                  label="Email"
+                  label={isAr ? "البريد الإلكتروني" : "Email"}
                   error={form.formState.errors.email?.message}
                 >
                   <Input
@@ -135,7 +140,7 @@ export default function ContactForm() {
               </div>
 
               <div className="mt-5">
-                <Field id="phone" label="Phone (optional)">
+                <Field id="phone" label={isAr ? "الهاتف (اختياري)" : "Phone (optional)"}>
                   <Input
                     id="phone"
                     type="tel"
@@ -150,14 +155,14 @@ export default function ContactForm() {
               <div className="mt-5">
                 <Field
                   id="message"
-                  label="What's the job?"
+                  label={isAr ? "ما هي المهمة؟" : "What's the job?"}
                   error={form.formState.errors.message?.message}
                 >
                   <Textarea
                     id="message"
                     rows={6}
                     {...form.register("message")}
-                    placeholder="Dates, address, rough scope — anything that helps us quote."
+                    placeholder={isAr ? "التواريخ، العنوان، نطاق العمل التقريبي — أي شيء يساعدنا في تحديد السعر." : "Dates, address, rough scope — anything that helps us quote."}
                     className="rounded-lg"
                   />
                 </Field>
@@ -172,16 +177,19 @@ export default function ContactForm() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending…
+                    {isAr ? "جارٍ الإرسال…" : "Sending…"}
                   </>
+                ) : isAr ? (
+                  "إرسال الرسالة"
                 ) : (
                   "Send message"
                 )}
               </Button>
 
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                We&apos;ll never share your details. No newsletter, no
-                spam — just a reply about the job.
+                {isAr
+                  ? "لن نشارك بياناتك أبدًا. لا نشرة إخبارية، لا رسائل مزعجة — فقط رد على مهمتك."
+                  : "We'll never share your details. No newsletter, no spam — just a reply about the job."}
               </p>
             </form>
           </div>

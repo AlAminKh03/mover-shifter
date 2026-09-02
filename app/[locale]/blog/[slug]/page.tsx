@@ -7,14 +7,15 @@ import { ArrowLeft, ArrowRight, Clock, MessageCircle, Phone } from "lucide-react
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 
-import { ArticleBody } from "../_components/ArticleBody";
-import { PhotoCredit } from "../_components/PhotoCredit";
-import { getPost, posts } from "../posts";
+import { ArticleBody } from "@/app/blog/_components/ArticleBody";
+import { PhotoCredit } from "@/app/blog/_components/PhotoCredit";
+import { getPost, posts } from "@/app/blog/posts";
 
-type Params = { slug: string };
+type Params = { locale: Locale; slug: string };
 
-export function generateStaticParams(): Params[] {
+export function generateStaticParams(): { slug: string }[] {
   return posts.map((p) => ({ slug: p.slug }));
 }
 
@@ -23,17 +24,23 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
 
-  const url = `${SITE.url}/blog/${post.slug}`;
+  const url = `${SITE.url}/${locale}/blog/${post.slug}`;
   return {
-    // Brand suffix is appended automatically by the root layout's title template.
     title: post.title,
     description: post.excerpt,
     keywords: post.keywords,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${SITE.url}/en/blog/${post.slug}`,
+        ar: `${SITE.url}/ar/blog/${post.slug}`,
+        "x-default": `${SITE.url}/en/blog/${post.slug}`,
+      },
+    },
     openGraph: {
       type: "article",
       title: post.title,
@@ -43,7 +50,7 @@ export async function generateMetadata({
       publishedTime: post.datePublished,
       modifiedTime: post.dateModified,
       images: [{ url: post.heroImage, width: 1200, height: 630, alt: post.heroAlt }],
-      locale: "en_US",
+      locale: locale === "ar" ? "ar_AR" : "en_US",
     },
     twitter: {
       card: "summary_large_image",
@@ -59,11 +66,11 @@ export default async function BlogPostPage({
 }: {
   params: Promise<Params>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
 
-  const url = `${SITE.url}/blog/${post.slug}`;
+  const url = `${SITE.url}/${locale}/blog/${post.slug}`;
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   const articleLd = {
@@ -76,7 +83,7 @@ export default async function BlogPostPage({
     dateModified: post.dateModified,
     articleSection: post.category,
     keywords: post.keywords.join(", "),
-    inLanguage: "en",
+    inLanguage: locale,
     author: { "@type": "Organization", name: SITE.name, url: SITE.url },
     publisher: {
       "@type": "Organization",
@@ -91,8 +98,8 @@ export default async function BlogPostPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
-      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE.url}/blog` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE.url}/${locale}/blog` },
       { "@type": "ListItem", position: 3, name: post.title, item: url },
     ],
   };
@@ -111,7 +118,7 @@ export default async function BlogPostPage({
       <div className="layout-container">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
-          <Link href="/blog" className="inline-flex items-center gap-1.5 hover:text-primary">
+          <Link href={`/${locale}/blog`} className="inline-flex items-center gap-1.5 hover:text-primary">
             <ArrowLeft className="h-4 w-4" aria-hidden />
             All guides
           </Link>
@@ -167,7 +174,7 @@ export default async function BlogPostPage({
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/quote">
+              <Link href={`/${locale}/quote`}>
                 Get a free quote
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
               </Link>
@@ -201,7 +208,7 @@ export default async function BlogPostPage({
               {related.map((r) => (
                 <Link
                   key={r.slug}
-                  href={`/blog/${r.slug}`}
+                  href={`/${locale}/blog/${r.slug}`}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-shadow hover:shadow-lg"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">

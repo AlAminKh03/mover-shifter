@@ -11,6 +11,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { Locale } from "@/i18n.config";
 
 /* First-party photography only — see config/work-photos for the inventory and
    for which frames are standing in for work we cannot yet illustrate. The
@@ -41,7 +42,7 @@ const trades = [
   "Furniture moving",
 ];
 
-export function HeroSlider() {
+export function HeroSlider({ locale }: { locale: Locale }) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -109,7 +110,7 @@ export function HeroSlider() {
                 className="group h-12 w-full gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg hover:bg-primary/90 glow-orange sm:h-14 sm:w-auto sm:px-8 sm:text-base"
                 asChild
               >
-                <Link href="/quote">
+                <Link href={`/${locale}/quote`}>
                   Get a free quote
                   <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
                 </Link>

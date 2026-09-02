@@ -82,8 +82,55 @@ export async function generateMetadata({
           type: "image/jpeg",
         },
       ],
-      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+      locale: locale === 'ar' ? 'ar_AR' : 'en_US',
     },
+    twitter: {
+      card: "summary_large_image",
+      title: isArabic
+        ? `${SITE.name} | خزائن وستائر وأرائك وأكثر في قطر`
+        : `${SITE.name} | Cabinets, curtains & sofas in Qatar`,
+      description: isArabic
+        ? "استوديو ديكور داخلي في الدوحة: خزائن حائط، مطابخ، ودواليب، بالإضافة إلى الستائر والعمى، أرائك وسدادات مخصصة، أرضيات، ونقل أثاث عبر قطر."
+        : "A Doha interiors studio — wall cabinets, kitchens, wardrobes, curtains & blinds, custom sofas & majlis, flooring, and furniture moving across Qatar.",
+      images: [`${SITE.url}/social.jpg`],
+      creator: "@dohainteriors",
+      site: "@dohainteriors",
+    },
+    category: "cabinet maker, joinery, interior fit-out, Qatar business",
+    verification: {
+      google: "wuWIEoRpkPuTjhHF6OVoAPH5lxltE5qq5qeKfgC-7fs",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+        { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+        { url: "/android-chrome-192x192.png", type: "image/png", sizes: "192x192" },
+        { url: "/android-chrome-512x512.png", type: "image/png", sizes: "512x512" },
+      ],
+      apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+    },
+    applicationName: SITE.shortName,
+    authors: [{ name: SITE.name }],
+    generator: "Next.js",
+    publisher: SITE.name,
+    formatDetection: {
+      telephone: true,
+      address: true,
+    },
+    manifest: "/manifest.json",
   };
 }
 
@@ -170,10 +217,98 @@ export default async function LocaleLayout({
                 addressRegion: "Qatar",
                 addressCountry: "QA",
               },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 25.1654,
+                longitude: 51.6047,
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ],
+                opens: "00:00",
+                closes: "23:59",
+              },
+              sameAs: (Object.values(SITE.socials) as string[]).filter(
+                (u) => u.length > 0,
+              ),
+              hasMap:
+                "https://www.google.com/maps/place/Al+Wakrah,+Qatar/@25.1654,51.6047,14z/",
               areaServed: {
                 "@type": "State",
                 name: "Qatar",
+                containsPlace: [
+                  { "@type": "City", name: "Doha" },
+                  { "@type": "City", name: "Al Wakrah" },
+                  { "@type": "City", name: "Al Rayyan" },
+                  { "@type": "City", name: "Al Khor" },
+                  { "@type": "City", name: "Lusail" },
+                  { "@type": "City", name: "The Pearl" },
+                ],
               },
+              makesOffer: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Custom wall cabinets",
+                    description:
+                      "Wall-mounted cabinets and storage units measured, built, and installed across Qatar",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Kitchen cabinets",
+                    description:
+                      "Made-to-measure kitchen cabinetry with soft-close hardware, fitted in Doha",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Built-in wardrobes & TV units",
+                    description:
+                      "Built-in wardrobes, TV units, and storage joinery configured to your space",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Curtains & blinds",
+                    description:
+                      "Made-to-measure curtains, blinds, and motorised tracks fitted across Qatar",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Custom sofas & majlis",
+                    description:
+                      "Bespoke sofas, majlis builds, and reupholstery in fabric or leather",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Flooring & furniture moving",
+                    description:
+                      "SPC and wood flooring, plus home, villa, and office furniture moving across Qatar",
+                  },
+                },
+              ],
             }),
           }}
         />

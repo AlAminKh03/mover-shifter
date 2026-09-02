@@ -1,8 +1,11 @@
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
 
-export function TopBar() {
+export function TopBar({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
+
   return (
     <div className="border-b border-border/50 bg-primary/[0.07] text-muted-foreground">
       <div className="layout-container flex min-h-9 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-1.5 text-xs sm:text-sm">
@@ -23,10 +26,10 @@ export function TopBar() {
           </a>
         </div>
         <Link
-          href="/quote"
+          href={`/${locale}/quote`}
           className="shrink-0 font-semibold text-primary transition-colors hover:underline"
         >
-          Request a quote →
+          {isAr ? "اطلب عرض سعر ←" : "Request a quote →"}
         </Link>
       </div>
     </div>

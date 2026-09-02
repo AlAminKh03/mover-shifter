@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 import {
   CURTAIN_PHOTOS,
   FLOORING_PHOTOS,
@@ -19,7 +20,7 @@ import Link from "next/link";
 /* Portrait hero — our fitted kitchen, the strongest proof shot we own. */
 const aboutHero = KITCHEN_PHOTOS[0];
 
-const principles = [
+const principlesEN = [
   {
     title: "Free survey first.",
     text: "Every job starts with a site measure. No surprises on fit day, no padded estimate after.",
@@ -30,7 +31,7 @@ const principles = [
   },
   {
     title: "Built right.",
-    text: "Square carcasses, aligned doors, soft-close set. If it isn’t level and flush, it isn’t finished.",
+    text: "Square carcasses, aligned doors, soft-close set. If it isn't level and flush, it isn't finished.",
   },
   {
     title: "One job, one invoice.",
@@ -46,9 +47,36 @@ const principles = [
   },
 ];
 
+const principlesAR = [
+  {
+    title: "المسح المجاني أولاً.",
+    text: "تبدأ كل مهمة بقياس الموقع. لا مفاجآت يوم التركيب، ولا تقدير مبالغ فيه لاحقًا.",
+  },
+  {
+    title: "فريق واحد، من البداية للنهاية.",
+    text: "الفريق الذي يقيس هو نفسه من يصنع ويركب. لا شيء يُسند لمقاولين من الباطن.",
+  },
+  {
+    title: "مبني بإتقان.",
+    text: "هياكل مستقيمة، أبواب متراصفة، وإغلاق ناعم. إن لم يكن مستويًا ومحكمًا، فهو غير منجز.",
+  },
+  {
+    title: "مهمة واحدة، فاتورة واحدة.",
+    text: "خزائن، ستائر، أرائك، أرضيات، نقل — كلها ضمن عرض سعر ثابت واحد.",
+  },
+  {
+    title: "نعرف طبيعة الوصول.",
+    text: "المجمعات السكنية، الأبراج، قواعد عطلة نهاية الأسبوع — نخطط للتوصيل والتركيب قبل تقديم السعر.",
+  },
+  {
+    title: "عروض أسعار ثابتة خلال 48 ساعة.",
+    text: "سعر مفصل يمكنك الاعتماد عليه، خلال يومي عمل من المسح.",
+  },
+];
+
 /* `label` names the service; `src`/`alt` come from our own photography. Only
    wall cabinets still lacks a real frame — see config/work-photos. */
-const coverage: { label: string; src: string; alt: string }[] = [
+const coverageEN: { label: string; src: string; alt: string }[] = [
   { label: "Wall cabinets", ...STAND_IN(TV_UNIT_PHOTOS[1]) },
   { label: "Kitchens", ...KITCHEN_PHOTOS[0] },
   { label: "TV units & joinery", ...TV_UNIT_PHOTOS[0] },
@@ -57,9 +85,22 @@ const coverage: { label: string; src: string; alt: string }[] = [
   { label: "Flooring & moving", ...FLOORING_PHOTOS[0] },
 ];
 
-export default function AboutPage() {
+const coverageAR: { label: string; src: string; alt: string }[] = [
+  { label: "خزائن الحائط", ...STAND_IN(TV_UNIT_PHOTOS[1]) },
+  { label: "المطابخ", ...KITCHEN_PHOTOS[0] },
+  { label: "وحدات التلفزيون والنجارة", ...TV_UNIT_PHOTOS[0] },
+  { label: "الستائر والمظلات", ...CURTAIN_PHOTOS[0] },
+  { label: "الأرائك والمجالس", ...SOFA_PHOTOS[1] },
+  { label: "الأرضيات والنقل", ...FLOORING_PHOTOS[0] },
+];
+
+export default function AboutPage({ locale }: { locale: Locale }) {
+  const isAr = locale === "ar";
+  const principles = isAr ? principlesAR : principlesEN;
+  const coverage = isAr ? coverageAR : coverageEN;
+
   const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    "Hi! I'd like a quote.",
+    isAr ? "مرحباً! أرغب في الحصول على عرض سعر." : "Hi! I'd like a quote.",
   )}`;
 
   return (
@@ -75,37 +116,46 @@ export default function AboutPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 lg:items-center">
             <div className="lg:col-span-7">
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-muted-foreground">
-                About us
+                {isAr ? "من نحن" : "About us"}
               </p>
               <div className="mt-3 flex items-baseline gap-3">
                 <span className="h-px w-12 bg-secondary" />
                 <span className="text-xs font-mono text-muted-foreground">
-                  AL WOKRA — QATAR
+                  {isAr ? "الوكرة — قطر" : "AL WOKRA — QATAR"}
                 </span>
               </div>
 
               <h1 className="font-display mt-7 text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem] xl:text-[4.25rem]">
-                Cabinets, curtains &amp; full{" "}
-                <em className="not-italic underline decoration-primary decoration-[6px] underline-offset-[8px]">
-                  fit-outs
-                </em>{" "}
-                in Qatar.
+                {isAr ? (
+                  <>
+                    خزائن، ستائر، وتجهيزات{" "}
+                    <em className="not-italic underline decoration-primary decoration-[6px] underline-offset-[8px]">
+                      كاملة
+                    </em>{" "}
+                    في قطر.
+                  </>
+                ) : (
+                  <>
+                    Cabinets, curtains &amp; full{" "}
+                    <em className="not-italic underline decoration-primary decoration-[6px] underline-offset-[8px]">
+                      fit-outs
+                    </em>{" "}
+                    in Qatar.
+                  </>
+                )}
               </h1>
 
               <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {SITE.name} is an interiors team based in Al Wokra, Qatar. We
-                make and fit wall cabinets, kitchens, and wardrobes, and we
-                handle curtains, custom sofas and majlis, flooring, and
-                furniture moving — one team for the whole room.
+                {isAr
+                  ? `${SITE.name} فريق تصميم داخلي مقره الوكرة، قطر. نصنع ونركب خزائن الحائط والمطابخ والدواليب، ونتولى أيضًا الستائر، الأرائك والمجالس المخصصة، الأرضيات، ونقل الأثاث — فريق واحد للغرفة بأكملها.`
+                  : `${SITE.name} is an interiors team based in Al Wokra, Qatar. We make and fit wall cabinets, kitchens, and wardrobes, and we handle curtains, custom sofas and majlis, flooring, and furniture moving — one team for the whole room.`}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-                {[
-                  "Al Wokra-based",
-                  "Free site surveys",
-                  "Fixed quotes in 48h",
-                  "One team, one invoice",
-                ].map((point) => (
+                {(isAr
+                  ? ["مقرنا الوكرة", "مسح مجاني للموقع", "عروض أسعار خلال 48 ساعة", "فريق واحد، فاتورة واحدة"]
+                  : ["Al Wokra-based", "Free site surveys", "Fixed quotes in 48h", "One team, one invoice"]
+                ).map((point) => (
                   <span
                     key={point}
                     className="font-display font-semibold text-foreground"
@@ -136,12 +186,20 @@ export default function AboutPage() {
       <section className="bg-secondary text-white">
         <div className="layout-container">
           <div className="grid grid-cols-2 divide-x divide-white/10 border-y border-white/10 sm:grid-cols-4">
-            {[
-              { n: "8", label: "services in-house" },
-              { n: "6", label: "cities we cover" },
-              { n: "48h", label: "quote turnaround" },
-              { n: "Free", label: "site surveys" },
-            ].map((s, i) => (
+            {(isAr
+              ? [
+                  { n: "8", label: "خدمات داخلية" },
+                  { n: "6", label: "مدن نغطيها" },
+                  { n: "48 ساعة", label: "مدة تقديم العرض" },
+                  { n: "مجاني", label: "مسح الموقع" },
+                ]
+              : [
+                  { n: "8", label: "services in-house" },
+                  { n: "6", label: "cities we cover" },
+                  { n: "48h", label: "quote turnaround" },
+                  { n: "Free", label: "site surveys" },
+                ]
+            ).map((s, i) => (
               <div
                 key={s.label}
                 className={`px-3 py-6 text-center sm:py-8 ${
@@ -165,40 +223,59 @@ export default function AboutPage() {
         <div className="layout-container">
           <div className="mx-auto max-w-2xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Who we are
+              {isAr ? "من نحن" : "Who we are"}
             </p>
             <h2 className="font-display mt-3 text-2xl font-bold leading-tight tracking-tight text-foreground sm:text-3xl">
-              One Qatar team for the whole room.
+              {isAr ? "فريق قطري واحد للغرفة بأكملها." : "One Qatar team for the whole room."}
             </h2>
 
             <div className="mt-7 space-y-5 text-base leading-[1.85] text-foreground/85 sm:text-[17px]">
-              <p>
-                We started with cabinets — wall units, kitchens, and built-in
-                wardrobes made to measure and fitted across Doha. That&apos;s
-                still the core of what we do, and what we&apos;re known for.
-              </p>
-              <p>
-                Clients kept asking us to handle the rest of the room too:
-                curtains and blinds, a new majlis, the flooring, moving the old
-                place out. So we built those into the service. Today one team
-                surveys, makes, delivers, and fits the lot — across Doha,
-                Lusail, The Pearl, Al Wakrah, Al Rayyan, and Al Khor.
-              </p>
+              {isAr ? (
+                <>
+                  <p>
+                    بدأنا بالخزائن — وحدات حائط، مطابخ، ودواليب مدمجة تُصنع حسب
+                    المقاس وتُركب في جميع أنحاء الدوحة. ولا يزال هذا جوهر عملنا،
+                    وما نشتهر به.
+                  </p>
+                  <p>
+                    استمر العملاء بطلب أن نتولى بقية الغرفة أيضًا: الستائر
+                    والمظلات، مجلس جديد، الأرضيات، ونقل المكان القديم. فأضفنا كل
+                    ذلك إلى خدماتنا. واليوم يقوم فريق واحد بالمسح والتصنيع
+                    والتوصيل والتركيب — في الدوحة، لوسيل، اللؤلؤة، الوكرة،
+                    الريان، والخور.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    We started with cabinets — wall units, kitchens, and built-in
+                    wardrobes made to measure and fitted across Doha. That&apos;s
+                    still the core of what we do, and what we&apos;re known for.
+                  </p>
+                  <p>
+                    Clients kept asking us to handle the rest of the room too:
+                    curtains and blinds, a new majlis, the flooring, moving the old
+                    place out. So we built those into the service. Today one team
+                    surveys, makes, delivers, and fits the lot — across Doha,
+                    Lusail, The Pearl, Al Wakrah, Al Rayyan, and Al Khor.
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-border pt-6">
               <Link
-                href="/services"
+                href={`/${locale}/services`}
                 className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
               >
-                See all services
+                {isAr ? "شاهد جميع الخدمات" : "See all services"}
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <Link
-                href="/work"
+                href={`/${locale}/work`}
                 className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
               >
-                Browse our work
+                {isAr ? "تصفح أعمالنا" : "Browse our work"}
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
@@ -212,10 +289,10 @@ export default function AboutPage() {
           <div className="layout-container">
             <div className="mx-auto max-w-3xl">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                How we work
+                {isAr ? "كيف نعمل" : "How we work"}
               </p>
               <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-                Six things you can count on.
+                {isAr ? "ستة أمور يمكنك الاعتماد عليها." : "Six things you can count on."}
               </h2>
 
               <ol className="mt-12">
@@ -253,10 +330,10 @@ export default function AboutPage() {
         <div className="layout-container">
           <div className="mx-auto max-w-2xl text-center">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              What we cover
+              {isAr ? "ما نغطيه" : "What we cover"}
             </p>
             <h2 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
-              Every part of the room.
+              {isAr ? "كل جزء من الغرفة." : "Every part of the room."}
             </h2>
           </div>
 
@@ -294,15 +371,15 @@ export default function AboutPage() {
               />
 
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                — Get started —
+                {isAr ? "— ابدأ الآن —" : "— Get started —"}
               </p>
               <h2 className="font-display mt-4 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                Free survey. Fixed quote in 48 hours.
+                {isAr ? "مسح مجاني. عرض سعر ثابت خلال 48 ساعة." : "Free survey. Fixed quote in 48 hours."}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Tell us the room and what you want done. We survey free and come
-                back within 48 hours with a fixed, itemised quote — cabinets,
-                curtains, a full fit-out, or anything in between.
+                {isAr
+                  ? "أخبرنا عن الغرفة وما تريد تنفيذه. نقوم بالمسح مجانًا ونعود إليك خلال 48 ساعة بعرض سعر ثابت ومفصل — خزائن، ستائر، تجهيز كامل، أو أي شيء بينهما."
+                  : "Tell us the room and what you want done. We survey free and come back within 48 hours with a fixed, itemised quote — cabinets, curtains, a full fit-out, or anything in between."}
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -311,8 +388,8 @@ export default function AboutPage() {
                   className="h-12 w-full gap-2 rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90 sm:w-auto sm:flex-1"
                   asChild
                 >
-                  <Link href="/quote">
-                    Get a free quote
+                  <Link href={`/${locale}/quote`}>
+                    {isAr ? "احصل على عرض سعر مجاني" : "Get a free quote"}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -339,7 +416,7 @@ export default function AboutPage() {
                 >
                   <a href={`tel:${SITE.phoneE164}`}>
                     <Phone className="h-4 w-4" />
-                    Call
+                    {isAr ? "اتصل" : "Call"}
                   </a>
                 </Button>
               </div>

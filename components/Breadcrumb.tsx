@@ -3,28 +3,43 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import type { Locale } from '@/i18n.config';
 
-const breadcrumbLabels: Record<string, string> = {
-  '/': 'Home',
-  '/about': 'About',
-  '/services': 'Services',
-  '/work': 'Our Work',
-  '/blog': 'Blog',
-  '/contact': 'Contact',
-  '/quote': 'Get a Quote',
+const breadcrumbLabelsByLocale: Record<Locale, Record<string, string>> = {
+  en: {
+    '': 'Home',
+    'about': 'About',
+    'services': 'Services',
+    'work': 'Our Work',
+    'blog': 'Blog',
+    'contact': 'Contact',
+    'quote': 'Get a Quote',
+  },
+  ar: {
+    '': 'الرئيسية',
+    'about': 'عن الشركة',
+    'services': 'الخدمات',
+    'work': 'أعمالنا',
+    'blog': 'المدونة',
+    'contact': 'اتصل بنا',
+    'quote': 'احصل على عرض سعر',
+  },
 };
 
-export function Breadcrumb() {
+export function Breadcrumb({ locale }: { locale: Locale }) {
   const pathname = usePathname();
+  const labels = breadcrumbLabelsByLocale[locale];
 
-  if (pathname === '/') return null;
+  // Strip the leading /en or /ar before building crumbs — root of that
+  // locale (the homepage) gets no breadcrumb trail.
+  const segments = pathname.split('/').filter(Boolean).slice(1);
+  if (segments.length === 0) return null;
 
-  const segments = pathname.split('/').filter(Boolean);
   const breadcrumbs = [
-    { href: '/', label: 'Home' },
+    { href: `/${locale}`, label: labels[''] },
     ...segments.map((segment, index) => {
-      const href = '/' + segments.slice(0, index + 1).join('/');
-      const label = breadcrumbLabels[href] || segment.charAt(0).toUpperCase() + segment.slice(1);
+      const href = `/${locale}/` + segments.slice(0, index + 1).join('/');
+      const label = labels[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
       return { href, label };
     }),
   ];
@@ -54,18 +69,18 @@ export function Breadcrumb() {
   );
 }
 
-export function BreadcrumbSchema() {
+export function BreadcrumbSchema({ locale }: { locale: Locale }) {
   const pathname = usePathname();
+  const labels = breadcrumbLabelsByLocale[locale];
 
-  if (pathname === '/') return null;
+  const segments = pathname.split('/').filter(Boolean).slice(1);
+  if (segments.length === 0) return null;
 
-  const segments = pathname.split('/').filter(Boolean);
   const breadcrumbs = [
-    { url: 'https://dohainteriors.com/', name: 'Home' },
+    { url: `https://dohainteriors.com/${locale}/`, name: labels[''] },
     ...segments.map((segment, index) => {
-      const href = '/' + segments.slice(0, index + 1).join('/');
-      const labels: Record<string, string> = breadcrumbLabels;
-      const name = labels[href] || segment.charAt(0).toUpperCase() + segment.slice(1);
+      const href = `/${locale}/` + segments.slice(0, index + 1).join('/');
+      const name = labels[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
       return {
         url: `https://dohainteriors.com${href}`,
         name,

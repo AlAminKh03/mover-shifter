@@ -1,12 +1,75 @@
 import { SITE } from "@/config/site";
+import type { Metadata } from "next";
+import type { Locale } from "@/i18n.config";
 import Link from "next/link";
-import ContactForm from "./contact-form";
+import ContactForm from "@/app/contact/contact-form";
 
-export { metadata } from "./metadata";
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isAr = locale === "ar";
 
-export default function Contact() {
+  return {
+    title: isAr ? `تواصل مع ${SITE.name} — الدوحة، قطر` : `Contact ${SITE.name} — Doha, Qatar`,
+    description: isAr
+      ? `واتساب، هاتف، أو بريد إلكتروني — اختر ما يناسبك. ورشتنا في ${SITE.addressLine}، ${SITE.city}. رد خلال 48 ساعة، وعادةً أسرع.`
+      : `WhatsApp, phone, or email — pick what suits you. Workshop in ${SITE.addressLine}, ${SITE.city}. Replies within 48 hours, usually faster.`,
+    keywords: [
+      "contact cabinet maker Qatar",
+      "wall cabinets phone Doha",
+      "curtains Qatar contact",
+      "WhatsApp interiors studio Qatar",
+      "Al Wokra joinery workshop",
+      "furniture workshop Doha",
+    ],
+    alternates: {
+      canonical: `${SITE.url}/${locale}/contact/`,
+      languages: {
+        en: `${SITE.url}/en/contact/`,
+        ar: `${SITE.url}/ar/contact/`,
+        "x-default": `${SITE.url}/en/contact/`,
+      },
+    },
+    openGraph: {
+      title: `Contact | ${SITE.name}`,
+      description: isAr
+        ? "واتساب، هاتف، أو بريد إلكتروني — اختر ما يناسبك. ورشتنا في الوكرة، قطر."
+        : "WhatsApp, phone, or email — pick what suits you. Workshop in Al Wokra, Qatar.",
+      url: `${SITE.url}/${locale}/contact/`,
+      siteName: SITE.name,
+      images: [
+        {
+          url: `${SITE.url}/social.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `${SITE.name} — Contact`,
+        },
+      ],
+      type: "website",
+      locale: isAr ? "ar_AR" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Contact | ${SITE.name}`,
+      description: isAr ? "تواصل معنا — واتساب، هاتف، أو بريد إلكتروني." : "Get in touch — WhatsApp, phone, or email.",
+      images: [`${SITE.url}/social.jpg`],
+    },
+  };
+}
+
+export default async function Contact({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+
   const whatsappUrl = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    "Hi! I'd like to talk about a job.",
+    isAr ? "مرحباً! أرغب في التحدث عن مهمة." : "Hi! I'd like to talk about a job.",
   )}`;
 
   const mapQuery = encodeURIComponent(
@@ -25,20 +88,32 @@ export default function Contact() {
           <div className="flex items-baseline gap-3">
             <span className="h-px w-10 bg-secondary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-              Get in touch
+              {isAr ? "تواصل معنا" : "Get in touch"}
             </span>
           </div>
 
           <h1 className="font-display mt-5 max-w-3xl text-[2.25rem] font-extrabold leading-[1.05] tracking-tight text-secondary sm:text-5xl lg:text-[3.75rem]">
-            Pick the way{" "}
-            <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
-              that suits you.
-            </em>
+            {isAr ? (
+              <>
+                اختر الطريقة{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
+                  التي تناسبك.
+                </em>
+              </>
+            ) : (
+              <>
+                Pick the way{" "}
+                <em className="not-italic underline decoration-primary decoration-[5px] underline-offset-[8px]">
+                  that suits you.
+                </em>
+              </>
+            )}
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-[1.7] text-muted-foreground sm:text-lg">
-            WhatsApp gets the fastest reply. Email is best for forwarding photos
-            or a building plan. Phone if you&apos;d rather talk it through.
+            {isAr
+              ? "واتساب يمنحك أسرع رد. البريد الإلكتروني هو الأفضل لإرسال الصور أو مخطط المبنى. الهاتف إذا كنت تفضل التحدث مباشرة."
+              : "WhatsApp gets the fastest reply. Email is best for forwarding photos or a building plan. Phone if you'd rather talk it through."}
           </p>
         </div>
       </section>
@@ -50,31 +125,31 @@ export default function Contact() {
             <ContactPill
               kind="whatsapp"
               label="WhatsApp"
-              value="Fastest reply"
+              value={isAr ? "أسرع رد" : "Fastest reply"}
               href={whatsappUrl}
               external
-              note="We aim to reply within an hour during the day."
+              note={isAr ? "نهدف للرد خلال ساعة واحدة خلال النهار." : "We aim to reply within an hour during the day."}
             />
             <ContactPill
               kind="phone"
-              label="Phone"
+              label={isAr ? "الهاتف" : "Phone"}
               value={SITE.phoneDisplay}
               href={`tel:${SITE.phoneE164}`}
-              note="24/7 Support"
+              note={isAr ? "دعم على مدار الساعة" : "24/7 Support"}
             />
             <ContactPill
               kind="email"
-              label="Email"
+              label={isAr ? "البريد الإلكتروني" : "Email"}
               value={SITE.email}
               href={`mailto:${SITE.email}`}
-              note="Best for plans, photos, or detailed lists."
+              note={isAr ? "الأفضل للمخططات والصور والقوائم التفصيلية." : "Best for plans, photos, or detailed lists."}
             />
           </ul>
         </div>
       </section>
 
       {/* ────────  FORM  ──────── */}
-      <ContactForm />
+      <ContactForm locale={locale} />
 
       {/* ────────  MAP  ──────── */}
       <section className="layout-section pt-0">
@@ -82,21 +157,21 @@ export default function Contact() {
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12 lg:items-start">
             <div className="lg:col-span-4">
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
-                Find us
+                {isAr ? "موقعنا" : "Find us"}
               </p>
               <h2 className="font-display mt-3 text-2xl font-bold leading-tight text-secondary sm:text-3xl">
-                Our Al Wokra workshop.
+                {isAr ? "ورشتنا في الوكرة." : "Our Al Wokra workshop."}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Site measures are done at your place — no need to come over.
-                But if you&apos;d like to see the workshop or check door and
-                finish samples, you&apos;re welcome to drop in.
+                {isAr
+                  ? "يتم قياس الموقع في مكانك — لا حاجة للحضور إلينا. لكن إن أردت رؤية الورشة أو معاينة عينات الأبواب والتشطيبات، فأنت مرحب بالزيارة."
+                  : "Site measures are done at your place — no need to come over. But if you'd like to see the workshop or check door and finish samples, you're welcome to drop in."}
               </p>
 
               <dl className="mt-6 space-y-4 text-sm">
                 <div>
                   <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    Address
+                    {isAr ? "العنوان" : "Address"}
                   </dt>
                   <dd className="mt-1 font-display text-base font-bold text-secondary">
                     {SITE.city}, {SITE.country}
@@ -104,14 +179,26 @@ export default function Contact() {
                 </div>
                 <div>
                   <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    Hours
+                    {isAr ? "ساعات العمل" : "Hours"}
                   </dt>
                   <dd className="mt-1 text-foreground/85">
-                    Sun – Thu · 8am – 6pm
-                    <br />
-                    Sat · By appointment
-                    <br />
-                    Fri · Closed
+                    {isAr ? (
+                      <>
+                        الأحد – الخميس · 8 صباحًا – 6 مساءً
+                        <br />
+                        السبت · بموعد مسبق
+                        <br />
+                        الجمعة · مغلق
+                      </>
+                    ) : (
+                      <>
+                        Sun – Thu · 8am – 6pm
+                        <br />
+                        Sat · By appointment
+                        <br />
+                        Fri · Closed
+                      </>
+                    )}
                   </dd>
                 </div>
               </dl>
@@ -122,7 +209,7 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
               >
-                Open in Google Maps →
+                {isAr ? "افتح في خرائط جوجل ←" : "Open in Google Maps →"}
               </Link>
             </div>
 

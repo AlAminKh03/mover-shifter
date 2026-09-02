@@ -45,17 +45,20 @@ export function getLocaleMetadata(locale: Locale) {
   };
 }
 
+// No flags here on purpose — this is a Qatar business, and neither language
+// belongs to a single country (English isn't British, Arabic isn't Saudi).
+// `abbr` is a plain text badge instead.
 export const localeConfig = {
   en: {
     name: 'English',
     dir: 'ltr',
-    flag: '🇬🇧',
+    abbr: 'EN',
     hreflang: 'en',
   },
   ar: {
     name: 'العربية',
     dir: 'rtl',
-    flag: '🇸🇦',
+    abbr: 'ع',
     hreflang: 'ar',
   },
 };

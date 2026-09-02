@@ -5,74 +5,92 @@ import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 
 import { SITE } from "@/config/site";
+import type { Locale } from "@/i18n.config";
 
-import { posts } from "./posts";
+import { posts } from "@/app/blog/posts";
 
-export const metadata: Metadata = {
-  // Brand suffix is appended automatically by the root layout's title template.
-  title: "Interiors Journal — Guides & Ideas for Qatar Homes",
-  description:
-    "Practical guides on kitchens, wardrobes, curtains, majlis design, flooring and home moving in Qatar — from the team at " +
-    SITE.name +
-    ". Real advice for real Qatari homes.",
-  keywords: [
-    "interior design blog Qatar",
-    "home improvement Qatar",
-    "kitchen ideas Doha",
-    "wardrobe ideas Qatar",
-    "curtains guide Qatar",
-    "majlis design Qatar",
-    "flooring Qatar",
-    "moving Qatar",
-  ],
-  alternates: {
-    canonical: `${SITE.url}/blog`,
-  },
-  openGraph: {
-    title: `Interiors Journal | ${SITE.name}`,
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  return {
+    title: "Interiors Journal — Guides & Ideas for Qatar Homes",
     description:
-      "Practical guides on kitchens, wardrobes, curtains, majlis, flooring and moving for homes across Qatar.",
-    url: `${SITE.url}/blog`,
-    siteName: SITE.name,
-    images: [
-      {
-        url: `${SITE.url}/social.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${SITE.name} — Interiors Journal`,
-      },
+      "Practical guides on kitchens, wardrobes, curtains, majlis design, flooring and home moving in Qatar — from the team at " +
+      SITE.name +
+      ". Real advice for real Qatari homes.",
+    keywords: [
+      "interior design blog Qatar",
+      "home improvement Qatar",
+      "kitchen ideas Doha",
+      "wardrobe ideas Qatar",
+      "curtains guide Qatar",
+      "majlis design Qatar",
+      "flooring Qatar",
+      "moving Qatar",
     ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Interiors Journal | ${SITE.name}`,
-    description:
-      "Practical interiors and home guides for Qatar — kitchens, wardrobes, curtains, majlis, flooring and moving.",
-    images: [`${SITE.url}/social.jpg`],
-  },
-};
+    alternates: {
+      canonical: `${SITE.url}/${locale}/blog/`,
+      languages: {
+        en: `${SITE.url}/en/blog/`,
+        ar: `${SITE.url}/ar/blog/`,
+        "x-default": `${SITE.url}/en/blog/`,
+      },
+    },
+    openGraph: {
+      title: `Interiors Journal | ${SITE.name}`,
+      description:
+        "Practical guides on kitchens, wardrobes, curtains, majlis, flooring and moving for homes across Qatar.",
+      url: `${SITE.url}/${locale}/blog/`,
+      siteName: SITE.name,
+      images: [
+        {
+          url: `${SITE.url}/social.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `${SITE.name} — Interiors Journal`,
+        },
+      ],
+      locale: locale === "ar" ? "ar_AR" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Interiors Journal | ${SITE.name}`,
+      description:
+        "Practical interiors and home guides for Qatar — kitchens, wardrobes, curtains, majlis, flooring and moving.",
+      images: [`${SITE.url}/social.jpg`],
+    },
+  };
+}
 
 const sorted = [...posts].sort((a, b) =>
   a.datePublished < b.datePublished ? 1 : -1,
 );
 
-export default function BlogIndexPage() {
+export default async function BlogIndexPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
   const [featured, ...rest] = sorted;
 
   const collectionLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
     name: `${SITE.name} — Interiors Journal`,
-    url: `${SITE.url}/blog`,
+    url: `${SITE.url}/${locale}/blog/`,
     description:
       "Guides and ideas on kitchens, wardrobes, curtains, majlis, flooring and home moving in Qatar.",
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
     blogPost: sorted.map((p) => ({
       "@type": "BlogPosting",
       headline: p.title,
-      url: `${SITE.url}/blog/${p.slug}`,
+      url: `${SITE.url}/${locale}/blog/${p.slug}`,
       datePublished: p.datePublished,
       dateModified: p.dateModified,
     })),
@@ -102,7 +120,7 @@ export default function BlogIndexPage() {
       {/* Featured post */}
       {featured && (
         <Link
-          href={`/blog/${featured.slug}`}
+          href={`/${locale}/blog/${featured.slug}`}
           className="group mt-12 grid overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition-shadow hover:shadow-xl md:grid-cols-2"
         >
           <div className="relative aspect-[16/10] md:aspect-auto">
@@ -145,7 +163,7 @@ export default function BlogIndexPage() {
         {rest.map((post) => (
           <Link
             key={post.slug}
-            href={`/blog/${post.slug}`}
+            href={`/${locale}/blog/${post.slug}`}
             className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-shadow hover:shadow-lg"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
